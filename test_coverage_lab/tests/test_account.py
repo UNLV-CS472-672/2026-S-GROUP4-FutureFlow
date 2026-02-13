@@ -1,5 +1,10 @@
 """
-Test Cases for Account Model
+===========================
+Test: Test deposit with zero/negative values
+Author: Jonathan Davis
+Date: 2026-02-16
+Description: Test deposit with zero/negative values
+===========================
 """
 import json
 from random import randrange
@@ -115,6 +120,17 @@ Each test should include:
 # Student 5: Test deposit with zero/negative values
 # - Ensure zero or negative deposits are rejected.
 # Target Method: deposit()
+def test_invalid_deposit():
+    account = setup_account
+
+    # zero deposit test
+    with pytest.raises(DataValidationError):
+        account.deposit(0)
+
+    # negative deposit test
+    with pytest.raises(DataValidationError):
+        account.deposit(-100)
+
 
 # Student 6: Test valid withdrawal
 # - Verify that withdrawing a valid amount correctly decreases the balance.
