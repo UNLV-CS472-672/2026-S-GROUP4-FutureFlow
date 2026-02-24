@@ -42,15 +42,16 @@ cd <project folder>
 
 We'll be following this structure for our commits: `type(scope): short description`
 
-**Types:**
-`feat:` Commits that add, adjust or remove a new feature to the API or UI
-`fix:`Commits that fix an API or UI bug (correlates with `patch` for versioning)
-`test:` Commits that add missing tests or correct existing ones
-`style:` Commits that address code style (i.e white-space, formatting, etc) and don't affect application behavior
-`docs:` Commits that affect documentation
-`build:` Commits that affect build-related components like project version, dependencies, etc
-`ops:` Commits that affect operational aspects like CI/CD pipelines, deployment scripts, etc
-`chore:` Commits for administrative/supportive tasks that don't impact production code like modifying `.gitignore`, renaming files, etc
+**Types:** <br>
+`feat:` Commits that add, adjust or remove a new feature to the API or UI<br>
+`fix:`Commits that fix an API or UI bug (correlates with `patch` for versioning)<br>
+`test:` Commits that add missing tests or correct existing ones<br>
+`style:` Commits that address code style (i.e white-space, formatting, etc) and don't affect application behavior<br>
+`docs:` Commits that affect documentation<br>
+`build:` Commits that affect build-related components like project version, dependencies, etc <br>
+`ops:` Commits that affect operational aspects like CI/CD pipelines, deployment scripts, etc <br>
+`chore:` Commits for administrative/supportive tasks that don't impact production code like modifying<br>
+`.gitignore`, renaming files, etc
 
 **Scope:** This is optional but it helps clarify what type of commits you're making; it adds contextual info. A scope is and MUST be a noun describing the section you're working on 
 
