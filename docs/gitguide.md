@@ -7,12 +7,16 @@
 
 ## Development Setup <a name="DevelopmentSetup"></a>
 
-**Clone the Repository:**
+1. **Clone the Repository:**
 ```
 git clone <https://github.com/UNLV-CS472-672/2026-S-GROUP4-FutureFlow>
 cd <project folder>
-```
+``` 
 
+2. **Switch from `main` into `develop` branch**
+- Do not commit/push to main unless it's production ready
+
+3. **Branch from the `develop` branch**
 *More instructions will be added later on*
 
 ## Branching <a name="Branch"></a>
