@@ -83,5 +83,14 @@ There are structured PR templates to help with ease and maintain consistency, so
 **!! Please do not push directly to main !!**
 
 ## Project Structure <a name="struct"></a>
-
-*Content will be added in the future*
+```
+2026-S-GROUP4-FUTUREFLOW<br>
+├── README.md<br>
+├── .gitignore<br>
+└── docs<br>
+    ├── PR_templates<br>
+    │   ├── bug_PR_temp.md<br>
+    │   ├── doc_PR_temp.md<br>
+    │   └── feat_PR_temp.md<br>
+    └── git_guide.md<br>
+```
