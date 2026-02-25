@@ -17,12 +17,12 @@ cd <project folder>
 
 ## Branching <a name="Branch"></a>
 
-**Main Branches**
-`main` = Production Ready Code
-`develop` = branch for features
+**Main Branches**<br>
+`main` = Production Ready Code<br>
+`develop` = branch for features<br>
 
-**Supporting Branches**
-`feat/<feature-name>`: These branches are used for developing new features i.e `feat/login-system`
+**Supporting Branches**<br>
+`feat/<feature-name>`: These branches are used for developing new features i.e `feat/login-system`<br>
 
 `bug/<bug-name>`: These branches are used to fix bugs in the code i.e `bug/header-styling`
 
@@ -32,7 +32,7 @@ cd <project folder>
 - Naming scheme for release name: 
  - Major Edit: v2.0.0
  - Minor Edit: v2.1.0
- - Patch Edit: v2.1.1
+ - Patch Edit: v2.1.1<br>
 
 `doc/<doc-name>`: These branches are used to write, update, or fix documentation like README.md etc [i.e docs/api-endpoints]
 
