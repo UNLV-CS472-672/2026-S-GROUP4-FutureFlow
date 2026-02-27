@@ -1,0 +1,161 @@
+openapi: 3.0.3
+
+info:
+  title: FutureFlow API
+  description: API Contract for FutureFlow.
+  version: 1.0.0
+
+# Litterally a tag to identify each paths to be identified. Does not impact logic.
+tags:
+
+# Identify what server the API is running on. 
+servers:
+
+# Left for jason to do
+paths:
+
+# Components section: Reusable pieces for the paths to use.
+components:
+  schemas:
+    #Specific Schema for logging in / Registration
+    User:
+      type: object #Object refers to a JSON object. In this case, the User schema is defined as an object that contains specific properties.
+      properties:
+        email:
+          type: string
+          format: email
+          description: The user's email address.
+        password:
+          type: string
+          description: The user's password.
+    #Profile schema for the profile page? Im not sure if this needed and the properties can definitely change
+    Profile:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The user's name.
+        education_level:
+          type: integer
+          description: The user's education level.
+        major:
+          type: string
+          description: The user's major field of study.
+        phone_number:
+          type: integer
+          description: The user's phone number.
+    #Dashboard schema for displaying the dashboard content. Depending on the difference with profile, it will be merged or further broken down
+    Dashboard:
+      #Content to be determined
+    #Upload schema for uploading files. This needs to be modified due to a specific formatting of the file upload in paths.
+    Upload:
+      type: object
+      properties:
+        file:
+          type: string
+          format: binary
+          description: The file to be uploaded.
+        file_type:
+          type: string
+          description: Either resume or transcript.
+    #Course schema. May be reused depending on the context of te paths. More properties can be added
+    Course:
+      type: object
+      properties:
+        course_name:
+          type: string
+          description: The name of the course.
+        course_code:
+          type: string
+          description: The code of the course.
+        course_price:
+          type: integer
+          description: The price of the course.
+    #Not sure if pulling from transcript parsing requires an array.
+    Course_array:
+      type: array
+      items:
+        $ref: '#/components/schemas/Course'
+    #Academic plan / Course plan. Depending on how these are stored this will change
+    Academic_plan:
+      type: object
+      properties:
+        courses:
+          type: array
+          items:
+            $ref: '#/components/schemas/Course'
+    #Similarly, depending on how we store the completed courses, this may be used. 
+    #Its inherently the same but im not sure if we need to differentiate. Now maybe the course schema needs to contain a completed boolean check
+    Completed_courses:
+      type: object
+      properties:
+        courses:
+          type: array
+          items:
+            $ref: '#/components/schemas/Course'
+    #Career Schema. More properties can be added
+    Career:
+      type: object
+      properties:
+        career_name:
+          type: string
+          description: The name of the career.
+        career_description:
+          type: string
+          description: A brief description of the career.
+        career_salary:
+          type: integer
+          description: The average salary for the career.
+        career_skills:
+          type: array
+          items:
+            type: string
+          description: A list of skills required for the career.
+    Career_Bookmark:
+      type: array
+      items:
+        $ref: '#/components/schemas/Career'
+      #Job schema. More properties can be added
+    Jobs:
+      type: object
+      properties:
+        job_title:
+          type: string
+          description: The title of the job.
+        job_description:
+          type: string
+          description: A brief description of the job.
+        job_salary:
+          type: integer
+          description: The average salary for the job.
+        job_skills:
+          type: array
+          items:
+            type: string
+          description: A list of skills required for the job.
+    Job_Listings:
+      type: array
+      items:
+        $ref: '#/components/schemas/Jobs'
+    #Most likely used for parsed objects from Resume
+    Skills:
+      type: object
+      properties:
+        skill_name:
+          type: string
+          description: The name of the skill.
+        skill_description:
+          type: string
+          description: A brief description of the skill.
+    Experiences:
+      type: object
+      properties:
+        experience_title:
+          type: string
+          description: The title of the experience.
+        experience_description:
+          type: string
+          description: A brief description of the experience.
+    
+    
+      
