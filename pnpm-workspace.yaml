@@ -1,0 +1,10 @@
+# This file is used to define the workspace configuration for pnpm.
+
+# list of folders that should be treated as workspace packages
+packages:
+
+    # Frontend and backend applications
+  - "apps/*" # include all packages in the apps folder 
+
+  # Shared libraries and components used across apps
+  - "packages/*" # include all packages in the packages folder

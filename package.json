@@ -1,0 +1,15 @@
+{
+    "name": "futureflow",
+    "private": true,
+    "projectManager": "pnpm",
+    "workspaces": [
+        "apps/*",
+        "packages/*"
+    ],
+    "scripts": {
+        "dev": "pnpm -r dev",
+        "build": "pnpm -r build",
+        "lint": "pnpm -r lint",
+        "test": "pnpm -r test"
+    }
+}
