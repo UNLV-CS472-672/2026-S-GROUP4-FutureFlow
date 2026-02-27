@@ -1,0 +1,276 @@
+openapi: 3.0.3
+
+info:
+  title: FutureFlow API
+  version: 1.0.0
+
+servers:
+  url: #Add later
+
+paths:
+  /auth/register:
+    post:
+      tags: [auth]
+      summary: Register a new user into the database
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: #Add later
+      
+      responses:
+        "201":
+          description: User created
+          content:
+            application/json:
+              schema:
+                $ref: #Add later
+      
+        "400":
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: #Add later
+        
+        "409":
+          description: Username or email already exists
+          content:
+            application/json:
+              schema:
+                $ref: #Add later
+
+    /auth/profile:
+      post:
+        tags: [auth]
+        summary: Pull information on a user
+        content:
+          application/json:
+            schema:
+              $ref: #Add later
+        
+        responses:
+          "201":
+            description: Profile information successfully pulled
+        
+          "400":
+            description: Profile info does not exist
+
+
+        
+
+  /auth/login:
+  post:
+    tags:
+      - auth
+    summary: Log in with username and password
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: #Add later
+    responses:
+      "200":
+        description: Login successful
+        content:
+          application/json:
+            schema:
+              $ref: #Add later
+
+      "401":
+        description: Invalid username or password
+
+  /auth/logout:
+    post:
+      tags:
+       - auth
+      summary: Log out
+      #security:
+        #Add here later if we choose to
+      responses:
+        "204":
+          description: Logged out
+        "401":
+          description: Not authenticated
+  
+  /document/upload-transcript:
+    post:
+      tags: documents
+      summary: Upload a transcript file
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: #add here
+
+    responses:
+      "200":
+        description: File upload successful
+      "400":
+        description: Invalid file
+      "401":
+        description: Not authenticated
+
+  /document/upload-resume:
+    post:
+      tags: documents
+      summary: Upload a resume file
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: #add here
+
+    responses:
+      "200":
+        description: File upload successful
+      "400":
+        description: Invalid file
+      "401":
+        description: Not authenticated
+
+  /document/upload-manual-transcript:
+    post:
+      tags: documents
+      summary: Takes in information as entered manually by a user
+      requestBody:
+        required:: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [text]
+              properties:
+                text:
+                  type: string
+                  description: the classes typed in by the user
+              institution:
+                type: string
+                description: Label for where the class is offered
+                example: UNLV
+    responses:
+      "200":
+        description: Classes successfully processed
+        content:
+          application/json: 
+            schema:
+              type: object
+              properties:
+                message:
+                  type: string
+                  example: Classes recieved
+                parsedCoursesCount:
+                  type: integer
+      "400":
+        description: Invalid or empty text
+        content:
+          application/json:
+            schema:
+              $ref: #add later
+
+  /institutions/unlv/courses:
+    post:
+      tags: [institutions]
+      summary: Import courses from UNLV
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                term:
+                  type: string
+                  example: "2025-Fall"
+                subject:
+                  type: string
+                  example: "CS"
+                price:
+                  type: integer
+                  example: "$1200"
+                dryRun:
+                  type: boolean
+                  default: false
+      responses:
+        "202":
+          description: Import started
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jobId:
+                    type: string
+                  status:
+                    type: string
+                    example: "queued"
+        "400":
+          description: Invalid parameters
+
+
+  /academic-plan:
+    post:
+      tags: academic
+      summary: Creates an academic plan
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: #Add later
+
+      responses:
+        "202":
+          description: Academic plan successfully built
+        "400":
+          description: No information provided
+
+    get:
+      tags: academic
+      summary: Gets academic plan from the servers
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: #Add later
+
+      responses:
+
+
+  /Career{careerName}:
+    get:
+      tags: career
+      summary: Builds an career plan
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: #Add later
+
+      responses:
+  
+  /Career{jobName}:
+    get:
+      tags: career
+      summary: Returns a list of jobs
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: #Add later
+
+
+
+  
+    
+
+  
+
+components:
