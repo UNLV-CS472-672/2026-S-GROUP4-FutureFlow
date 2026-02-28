@@ -14,10 +14,10 @@ export default function DashboardPage() {
 
       <div className="grid grid-cols-3 gap-8 p-8">
         {/* Left Column - Centers */}
-        <div className="space-y-8">
+        <div className="space-y-8 flex flex-col items-center">
           {/* Degree Center */}
-          <div className="bg-white border-2 border-blue-700 rounded-3xl p-8 shadow-lg">
-            <h2 className="text-3xl mb-4 text-blue-800">Degree Center</h2>
+          <div className="bg-white border-2 border-blue-700 rounded-3xl p-8 shadow-lg w-full max-w-sm">
+            <h2 className="text-3xl mb-4 text-blue-800 text-center">Degree Center</h2>
             <p className="text-center mb-6 text-gray-700">
               "Small explanation/purpose of this box/list of bullet points."
             </p>
@@ -32,8 +32,8 @@ export default function DashboardPage() {
           </div>
 
           {/* Career Center */}
-          <div className="bg-white border-2 border-green-600 rounded-3xl p-8 shadow-lg">
-            <h2 className="text-3xl mb-4 text-green-700">Career Center</h2>
+          <div className="bg-white border-2 border-green-600 rounded-3xl p-8 shadow-lg w-full max-w-sm">
+            <h2 className="text-3xl mb-4 text-green-700 text-center">Career Center</h2>
             <p className="text-center mb-6 text-gray-700">
               "Small explanation/purpose of this box/list of bullet points."
             </p>
@@ -67,11 +67,17 @@ export default function DashboardPage() {
           {/* Degree Progress */}
           <div>
             <h3 className="text-4xl mb-4 text-gray-800">Degree Progress</h3>
+            
+            {/* Percentage Label */}
+            <p className="text-right mb-2 text-lg font-semibold text-gray-700">{progress}% Complete</p>
+            
             <div className="relative h-16 bg-gray-200 rounded-full overflow-hidden">
               <div
-                className="absolute top-0 left-0 h-full bg-gradient-to-r from-blue-700 to-green-600 rounded-full transition-all"
+                className="absolute top-0 left-0 h-full bg-gradient-to-r from-blue-700 to-green-600 rounded-full transition-all flex items-center justify-center text-white font-bold"
                 style={{ width: `${progress}%` }}
-              ></div>
+              >
+                {progress}%
+              </div>
             </div>
           </div>
         </div>
