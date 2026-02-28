@@ -13,11 +13,11 @@ This file defines the repo as a pnpm monorepo, links all the sub-packages togeth
 
 ```
 "workspaces": [
-        "apps/*",
+        "app/*",
         "packages/*"
     ],
 ```
-- Tells pnpm to treat every folder inside `apps/` and `packages/` as a package
+- Tells pnpm to treat every folder inside `app/` and `packages/` as a package
 - pnpm links each folder to have its own package.json automatically, so we can share dependencies, internal package imports, and centralized installs
 
 `"dev": "pnpm -r dev",`
@@ -29,7 +29,7 @@ This file defines the repo as a pnpm monorepo, links all the sub-packages togeth
 - runs `build` in every workspace all at once; i.e builds frontend, builds backend
 
 `"lint": "pnpm -r lint",`
-- runs linting across all apps and packages
+- runs linting across all app and packages
 
 `"test": "pnpm -r test"`
 - runs test scripts in every workspace package
