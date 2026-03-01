@@ -6,7 +6,7 @@
 5. [Pull Request Process](#pull-request-process)
 6. [Project Structure](#project-structure)
 
-## Development Setup <a name="DevelopmentSetup"></a>
+## Development Setup
 
 **1. Clone the Repository:** <br>
 ```
@@ -31,7 +31,7 @@ Example: git checkout -b feat/your-feature-name
 
 *More instructions will be added later on*
 
-## Github Workflow <a name="work"></a>
+## Github Workflow
 We'll use a two-main-branch workflow:
 ### Branches We Use <br>
 `main` (Production):
@@ -86,7 +86,7 @@ git push -u origin feat/your-feature
 ### Forking
 We won't need to fork for our repo because it's mainly for contributors who don't have write access. Since our team members all have admin access and are collaborating in the same repo, then our approach will follow: branches in same repo + PRs + reviews. It helps keep everything centralized and avoids the overhead + confusion of multiple forks
 
-## Branching <a name="Branch"></a>
+## Branching
 
 ### Main Branches<br>
 `main` = Production Ready Code<br>
@@ -126,7 +126,7 @@ All supporting branches should be created from `develop`, except in special case
 2. PR `hotfix/...` -> `main` ASAP
 3. Open PR to merge hotfix into `develop` so the fix isn't lost
 
-## Commit Conventions <a name="Commit"></a>
+## Commit Conventions
 
 We'll be following this structure for our commits: `type(scope): short description`
 
@@ -148,7 +148,7 @@ We'll be following this structure for our commits: `type(scope): short descripti
 - `feat(button): added a button`
 - `style: removed empty lines`
 
-## Pull Request Process <a name="Pull"></a>
+## Pull Request Process
 
 **General Requirements**
 Each PR must:
@@ -172,13 +172,19 @@ There are structured PR templates to help with ease and maintain consistency, so
 
 ## Project Structure <a name="struct"></a>
 ```
-2026-S-GROUP4-FUTUREFLOW<br>
-├── README.md<br>
-├── .gitignore<br>
-└── docs<br>
-    ├── PR_templates<br>
-    │   ├── bug_PR_temp.md<br>
-    │   ├── doc_PR_temp.md<br>
-    │   └── feat_PR_temp.md<br>
-    └── git_guide.md<br>
+2026-S-GROUP4-FUTUREFLOW
+├── README.md
+├── .gitignore
+├── package.json
+├── pnpm-lock.yaml
+├── pnpm-workspace.yaml
+├── tsconfig.base.json
+├── app
+│   ├── api/ # Backend
+│   ├── web/ # Frontend
+│   └── ui-prototype/ # Figma/UI prototype assets
+├── docs
+│   ├── PR_templates/ # Pull Requests Templates
+│   └── git_guide.md
+└── packages/ #Shared Utilities
 ```
