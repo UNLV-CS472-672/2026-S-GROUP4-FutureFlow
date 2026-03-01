@@ -5,7 +5,7 @@ It uses React Router for client-side routing and includes a simple navigation me
 The App component is wrapped in a BrowserRouter to enable routing functionality.
 */
 
-import { BrowserRouter, Routes, Route} from "react-router-dom"; // Import necessary components from react-router-dom for client-side routing
+import { BrowserRouter, Routes, Route, Navigate} from "react-router-dom"; // Import necessary components from react-router-dom for client-side routing
 import Login from "./routes/Login"; // Import the Login component for the login page
 import Dashboard from "./routes/Dashboard"; // Import the Dashboard component for the dashboard page
 import NotFound from "./routes/NotFound"; // Import the NotFound component for handling 404 errors
@@ -15,6 +15,7 @@ export default function App() {
     return (
         <BrowserRouter>
             <Routes>
+                <Route path="/" element={<Navigate to="/login" replace />} /> {/* Redirect root path to login page */}
                 <Route path="/login" element={<Login />} /> {/* Define a route for the login page */}
                 <Route path="/dashboard" 
                 /* Define a protected route for the dashboard page, wrapped in AuthGuard to ensure only authenticated users can access it */
