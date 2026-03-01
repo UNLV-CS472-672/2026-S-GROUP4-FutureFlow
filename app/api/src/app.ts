@@ -5,10 +5,10 @@ for creating, configuring, and returning an instance of an Express app*/
 import express from "express";
 import cors from "cors";
 import helmet from "helmet";
-import { healthRouter } from "./routes/health";
-import { authRouter } from "./routes/auth"; // not implemented yet
-import { meRouter } from "./routes/me"; // not implemented yet
-import { errorHandler } from "./middleware/error"; // not implemented yet
+import { healthRouter } from "./routes/health.js"; // Import the health check router to handle health check endpoints
+import { authRouter } from "./routes/auth.js"; // not implemented yet
+import { meRouter } from "./routes/me.js"; // not implemented yet
+import { errorHandler } from "./middleware/error.js"; // not implemented yet
 
 export function createApp() {
     const app = express();
