@@ -9,6 +9,7 @@ import CareerCenterPage from './pages/CareerCenterPage';
 import SettingsPage from './pages/SettingsPage';
 import AboutPage from './pages/AboutPage';
 import EducationPage from './pages/EducationPage';
+import ResumeUploadPage from './pages/ResumeUploadPage';
 
 interface User {
   firstName: string;
@@ -95,6 +96,11 @@ function App() {
           <Route
             path="/education"
             element={user ? <EducationPage /> : <Navigate to="/login" />}
+          />
+          {/* Resume Upload Page Addition */}
+          <Route
+            path="/resume-upload"
+            element={user ? <ResumeUploadPage /> : <Navigate to="/login" />}
           />
         </Routes>
       </Router>
