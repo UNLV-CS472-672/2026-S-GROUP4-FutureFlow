@@ -9,6 +9,7 @@ import CareerCenterPage from './pages/CareerCenterPage';
 import SettingsPage from './pages/SettingsPage';
 import AboutPage from './pages/AboutPage';
 import EducationPage from './pages/EducationPage';
+import CareerQuiz from './pages/CareerQuiz';
 
 interface User {
   firstName: string;
@@ -95,6 +96,10 @@ function App() {
           <Route
             path="/education"
             element={user ? <EducationPage /> : <Navigate to="/login" />}
+          />
+          <Route
+            path="/career-quiz"
+            element={user ? <CareerQuiz /> : <Navigate to="/login" />}
           />
         </Routes>
       </Router>

@@ -58,9 +58,10 @@ export default function CareerCenterPage() {
             {/* Quiz */}
             <div className="text-center pl-8">
               <h3 className="text-4xl mb-8 text-gray-800">Quiz</h3>
-              <button className="bg-blue-700 hover:bg-blue-800 text-white px-8 py-3 rounded-full transition-colors">
-                &lt;Quiz button&gt;
-              </button>
+              <button 
+                onClick = {() => navigate('/career-quiz')}
+                className="bg-blue-700 hover:bg-blue-800 text-white px-8 py-3 rounded-full transition-colors"
+              >
             </div>
           </div>
         </div>
