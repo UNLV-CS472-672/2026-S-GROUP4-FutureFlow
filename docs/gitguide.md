@@ -170,7 +170,7 @@ There are structured PR templates to help with ease and maintain consistency, so
 
 **!! Please do not push directly to main !!**
 
-## Project Structure <a name="struct"></a>
+## Project Structure
 ```
 2026-S-GROUP4-FUTUREFLOW
 ├── README.md
