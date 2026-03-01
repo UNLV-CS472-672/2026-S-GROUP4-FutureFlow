@@ -11,6 +11,7 @@ import AboutPage from './pages/AboutPage';
 import EducationPage from './pages/EducationPage';
 import ResumeUploadPage from './pages/ResumeUploadPage';
 import CareerQuiz from './pages/CareerQuiz';
+import CoursePlanPage from './pages/CoursePlanPage';
 
 interface User {
   firstName: string;
@@ -106,6 +107,10 @@ function App() {
           <Route
             path="/career-quiz"
             element={user ? <CareerQuiz /> : <Navigate to="/login" />}
+          />
+          <Route
+            path="/course-plan"
+            element={user ? <CoursePlanPage /> : <Navigate to="/login" />}
           />
         </Routes>
       </Router>

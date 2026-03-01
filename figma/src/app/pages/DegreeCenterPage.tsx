@@ -23,7 +23,9 @@ export default function DegreeCenterPage() {
               ></div>
             </div>
           </div>
-          <button className="bg-blue-700 hover:bg-blue-800 text-white px-8 py-3 rounded-full transition-colors">
+          <button className="bg-blue-700 hover:bg-blue-800 text-white px-8 py-3 rounded-full transition-colors"
+            onClick={() => navigate('/course-plan')}
+          >
             View Course Plan
           </button>
         </div>
