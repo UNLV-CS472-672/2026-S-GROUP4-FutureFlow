@@ -49,9 +49,9 @@ export default function EducationPage() {
   };
 
   return (
-    <div className="min-h-screen" style={{ background: '#fafbfc' }}>
+    <div className="min-h-screen pt-5" style={{ background: '#fafbfc' }}>
       {/* Header */}
-      <header className="sticky top-0 z-40 backdrop-blur-lg" style={{ background: 'rgba(255, 255, 255, 0.8)', borderBottom: '1px solid var(--border-light)' }}>
+      <header className="sticky top-0 z-40 backdrop-blur-lg mx-5 rounded-full" style={{ background: 'rgba(255, 255, 255, 0.8)', borderBottom: '1px solid var(--border-light)' }}>
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center text-white font-semibold text-lg" style={{ background: 'var(--gradient-primary)' }}>
@@ -61,7 +61,7 @@ export default function EducationPage() {
           </div>
           <nav className="flex items-center gap-6">
             <button onClick={() => navigate('/dashboard')} className="text-base hover:opacity-70 transition-opacity" style={{ color: 'var(--muted)' }}>
-              Dashboard
+              Home
             </button>
             <button onClick={() => navigate('/career-center')} className="text-base hover:opacity-70 transition-opacity" style={{ color: 'var(--muted)' }}>
               Career Center
