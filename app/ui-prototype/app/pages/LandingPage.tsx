@@ -10,33 +10,46 @@ export default function LandingPage() {
       {/* Hero Section */}
       <div className="bg-blue-50 rounded-3xl mx-5 mt-5 px-8 py-6">
         {/* Header */}
-        <header className="bg-white rounded-full px-6 py-4 flex items-center justify-between mb-12 shadow-sm">
+        <header className="bg-white rounded-full px-6 py-4 flex items-center justify-between mb-12 shadow-lg">
           <Logo size="medium" />
+          <p className="text-xl mb-5 text-blue-800 flex gap-8 self-end mb-2">
+            "Insert catchy mission statement/slogan right here!"</p>
           <nav className="flex gap-8">
+            <button
+              onClick={() => navigate('/career-center')}
+              className="hover:underline text-blue-800"
+            >
+              CAREER
+            </button>
+            <button
+              onClick={() => navigate('/degree-center')}
+              className="hover:underline text-blue-800"
+            >
+              DEGREE
+            </button>
             <button
               onClick={() => navigate('/about')}
               className="hover:underline text-blue-800"
             >
-              About Us
+              ABOUT US
             </button>
             <button
               onClick={() => navigate('/login')}
               className="hover:underline text-blue-800"
             >
-              Login/Sign-Up
+              LOGIN/SIGN-UP
             </button>
           </nav>
         </header>
 
         {/* Hero Content */}
         <div className="text-center py-12">
-          <h1 className="text-7xl mb-4 text-blue-900">FutureFlow</h1>
-          <p className="text-xl mb-8 text-blue-800">"Insert catchy mission statement/slogan right here!"</p>
+          <h1 className="text-8xl mb-4 text-blue-900">FutureFlow</h1>
           <button
             onClick={() => navigate('/signup')}
             className="bg-blue-700 hover:bg-blue-800 text-white px-12 py-4 rounded-full text-lg transition-colors"
           >
-            &lt;Get Started Button&gt;
+            Get Started
           </button>
         </div>
       </div>
@@ -54,7 +67,7 @@ export default function LandingPage() {
               onClick={() => navigate('/career-center')}
               className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 rounded-full transition-colors"
             >
-              &lt;Explore Careers Button&gt;
+              Explore Careers
             </button>
           </div>
         </div>
@@ -70,7 +83,7 @@ export default function LandingPage() {
               onClick={() => navigate('/degree-center')}
               className="bg-blue-700 hover:bg-blue-800 text-white px-8 py-3 rounded-full transition-colors"
             >
-              &lt;Explore Degrees Button&gt;
+              Explore Degrees
             </button>
           </div>
         </div>
