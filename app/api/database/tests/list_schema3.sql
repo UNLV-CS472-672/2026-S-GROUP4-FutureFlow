@@ -1,1 +1,0 @@
-DESCRIBE user_info;
