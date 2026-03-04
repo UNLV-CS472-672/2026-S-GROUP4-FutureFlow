@@ -1,1 +1,0 @@
-DESCRIBE job_info;

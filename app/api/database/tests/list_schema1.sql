@@ -1,1 +1,0 @@
-DESCRIBE career_infol
