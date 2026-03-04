@@ -1,5 +1,5 @@
 /// resumes.handlers.ts
-import { http, HttpResponse, delay } from "../../../../msw/";
+import { http, HttpResponse, delay } from "msw";
 import { mockResume } from "../data/resume.data.ts";
 
 export const resumeHandlers = [
