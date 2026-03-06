@@ -10,6 +10,23 @@ export default function LandingPage() {
       {/* Hero Section */}
       <div className="bg-blue-50 rounded-3xl mx-5 mt-5 px-8 py-6">
         {/* Header */}
+        <header className="bg-white rounded-full px-6 py-4 flex items-center justify-between mb-12 shadow-lg text-md">
+          <Logo size="medium" />
+          <p className="text-xl mb-5 text-blue-800 flex gap-8 self-end mb-2">
+            "Insert SHORT slogan right here!"</p>
+          <nav className="flex gap-4">
+            <button
+              onClick={() => navigate('/career-center')}
+              className="hover:underline text-blue-800"
+            >
+              CAREER CENTER
+            </button>
+            <button
+              onClick={() => navigate('/degree-center')}
+              className="hover:underline text-blue-800"
+            >
+              DEGREE CENTER
+            </button>
         <header className="bg-white rounded-full px-6 py-4 flex items-center justify-between mb-12 shadow-lg">
           <Logo size="medium" />
           <p className="text-xl mb-5 text-blue-800 flex gap-8 self-end mb-2">

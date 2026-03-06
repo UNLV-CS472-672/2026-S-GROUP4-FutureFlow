@@ -8,7 +8,7 @@ export default function DegreeCenterPage() {
   const [progress] = useState(65); // Mock progress percentage
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 pt-5">
       <AuthHeader title="Degree Center" />
 
       <div className="p-8 space-y-8">

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router';
 import { AuthHeader } from '../components/AuthHeader';
 import { Upload } from 'lucide-react';
@@ -15,7 +15,7 @@ export default function CareerCenterPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 pt-5">
       <AuthHeader title="Career Center" />
 
       {/* Progress Bar 
@@ -38,6 +38,7 @@ export default function CareerCenterPage() {
           </div>
         </div>
       </div>
+        
 
       <div className="p-8 space-y-8">
         {/* Explore Careers Section */}
@@ -84,44 +85,12 @@ export default function CareerCenterPage() {
                 onClick = {() => navigate('/career-quiz')}
                 className="bg-blue-700 hover:bg-blue-800 text-white px-8 py-3 rounded-full transition-colors"
               >
-            </div>
-          </div>
-        </div>
-
-        {/* Career Upload Section */}
-        <div id="resume-upload-section" className="bg-white rounded-3xl p-12 shadow-lg">
-          <div className="flex items-center justify-center gap-4 mb-8">
-            <Logo />
-            <h2 className="text-5xl text-green-700">FutureFlow</h2>
-          </div>
-          <h3 className="text-4xl text-center mb-12 text-gray-800">Career</h3>
-          <div className="grid grid-cols-2 gap-16 max-w-4xl mx-auto">
-            {/* Have resume */}
-            <div className="text-center">
-              <p className="text-xl mb-6 text-gray-700">Have a resume? Drop it below!</p>
-              <div className="bg-green-50 border-2 border-green-600 rounded-2xl p-12 flex items-center justify-center min-h-[200px] hover:bg-green-100 transition-colors cursor-pointer">
-                <Upload className="w-24 h-24 text-green-700" />
-              </div>
-            </div>
-
-            {/* No resume */}
-            <div className="text-center">
-              <p className="text-xl mb-6 text-gray-700">No resume? No problem!</p>
-              <div className="bg-gray-100 border-2 border-gray-300 rounded-2xl p-12 flex items-center justify-center min-h-[200px]">
-                <span className="text-gray-500">Placeholder</span>
-              </div>
+                Quiz
+              </button>
             </div>
           </div>
         </div>
       </div>
-    </div>
-  );
-}
-
-function Logo() {
-  return (
-    <div className="w-16 h-16 rounded-full bg-green-600 flex items-center justify-center text-sm text-white">
-      logo
     </div>
   );
 }
