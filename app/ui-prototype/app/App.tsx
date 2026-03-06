@@ -12,6 +12,9 @@ import EducationPage from './pages/EducationPage';
 import ResumeUploadPage from './pages/ResumeUploadPage';
 import CareerQuiz from './pages/CareerQuiz';
 
+import CareerQuiz from './pages/CareerQuiz';
+import ResumeUploadPage from './pages/ResumeUploadPage';
+
 interface User {
   firstName: string;
   lastName: string;
@@ -98,14 +101,16 @@ function App() {
             path="/education"
             element={user ? <EducationPage /> : <Navigate to="/login" />}
           />
+          
+          <Route
+            path="/career-quiz"
+            element={user ? <CareerQuiz /> : <Navigate to="/login" />}
+          />
+          
           {/* Resume Upload Page Addition */}
           <Route
             path="/resume-upload"
             element={user ? <ResumeUploadPage /> : <Navigate to="/login" />}
-          />
-          <Route
-            path="/career-quiz"
-            element={user ? <CareerQuiz /> : <Navigate to="/login" />}
           />
         </Routes>
       </Router>

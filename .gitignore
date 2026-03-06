@@ -1,0 +1,50 @@
+# Node/Package Managers
+node_modules/
+.pnpm-store/
+.pnp/
+.pnp.js
+
+# Build Outputs
+dist/
+build/
+.vite/
+coverage/
+.next/
+out/
+
+# Environment Variables
+.env
+.env.*
+!.env.example
+
+# Logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+# IDE/Editor Files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Typescript
+*.tsbuildinfo
+
+# Prisma
+prisma/migrations/dev.db
+prisma/migrations/dev.db-journal
+*.sqlite
+
+# Jest/Testing
+coverage/
+jest-cache/
+
+# Vite
+*.local
