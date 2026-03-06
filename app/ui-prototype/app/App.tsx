@@ -11,6 +11,7 @@ import AboutPage from './pages/AboutPage';
 import EducationPage from './pages/EducationPage';
 import ResumeUploadPage from './pages/ResumeUploadPage';
 import CareerQuiz from './pages/CareerQuiz';
+import CoursePlanPage from './pages/CoursePlanPage';
 
 import CareerQuiz from './pages/CareerQuiz';
 import ResumeUploadPage from './pages/ResumeUploadPage';
@@ -111,6 +112,14 @@ function App() {
           <Route
             path="/resume-upload"
             element={user ? <ResumeUploadPage /> : <Navigate to="/login" />}
+          />
+          <Route
+            path="/career-quiz"
+            element={user ? <CareerQuiz /> : <Navigate to="/login" />}
+          />
+          <Route
+            path="/course-plan"
+            element={user ? <CoursePlanPage /> : <Navigate to="/login" />}
           />
         </Routes>
       </Router>
