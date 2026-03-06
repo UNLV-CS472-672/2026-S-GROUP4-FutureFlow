@@ -39,6 +39,7 @@ export default function CareerCenterPage() {
         </div>
       </div>
         
+
       <div className="p-8 space-y-8">
         {/* Explore Careers Section */}
         <div className="text-center">

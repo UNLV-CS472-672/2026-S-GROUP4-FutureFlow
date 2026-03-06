@@ -27,6 +27,23 @@ export default function LandingPage() {
             >
               DEGREE CENTER
             </button>
+        <header className="bg-white rounded-full px-6 py-4 flex items-center justify-between mb-12 shadow-lg">
+          <Logo size="medium" />
+          <p className="text-xl mb-5 text-blue-800 flex gap-8 self-end mb-2">
+            "Insert catchy mission statement/slogan right here!"</p>
+          <nav className="flex gap-8">
+            <button
+              onClick={() => navigate('/career-center')}
+              className="hover:underline text-blue-800"
+            >
+              CAREER
+            </button>
+            <button
+              onClick={() => navigate('/degree-center')}
+              className="hover:underline text-blue-800"
+            >
+              DEGREE
+            </button>
             <button
               onClick={() => navigate('/about')}
               className="hover:underline text-blue-800"
