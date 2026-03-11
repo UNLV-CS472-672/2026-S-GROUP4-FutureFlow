@@ -12,6 +12,7 @@ import EducationPage from './pages/EducationPage';
 import ResumeUploadPage from './pages/ResumeUploadPage';
 import CareerQuiz from './pages/CareerQuiz';
 import CoursePlanPage from './pages/CoursePlanPage';
+import TranscriptUploadPage from './pages/TranscriptUploadPage';
 
 import CareerQuiz from './pages/CareerQuiz';
 import ResumeUploadPage from './pages/ResumeUploadPage';
@@ -120,6 +121,10 @@ function App() {
           <Route
             path="/course-plan"
             element={user ? <CoursePlanPage /> : <Navigate to="/login" />}
+          />
+          <Route
+            path="/transcript-upload"
+            element={user ? <TranscriptUploadPage /> : <Navigate to="/login" />}
           />
         </Routes>
       </Router>

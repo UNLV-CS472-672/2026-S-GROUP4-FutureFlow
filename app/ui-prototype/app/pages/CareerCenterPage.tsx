@@ -5,7 +5,6 @@ import { Upload } from 'lucide-react';
 
 export default function CareerCenterPage() {
   const navigate = useNavigate();
-  const [progress] = useState(65); // Mock progress percentage
 
   const scrollToResumeSection = () => {
     const resumeSection = document.getElementById('resume-upload-section');
@@ -15,7 +14,7 @@ export default function CareerCenterPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 pt-5">
+    <div className="min-h-screen bg-gray-50 pt-5 flex flex-col">
       <AuthHeader title="Career Center" />
 
       {/* Progress Bar 
@@ -52,8 +51,10 @@ export default function CareerCenterPage() {
             />
           </div>
         </div>
+      </div>
 
-        {/* Main Content Grid */}
+      {/* Main Content Grid */}
+      <div className="mx-8 mb-8">
         <div className="bg-white rounded-3xl p-12 shadow-lg">
           <div className="grid grid-cols-3 gap-8">
             {/* Resume Analysis */}
