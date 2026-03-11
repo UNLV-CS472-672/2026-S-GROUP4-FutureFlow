@@ -17,7 +17,29 @@ export default function CareerCenterPage() {
     <div className="min-h-screen bg-gray-50 pt-5 flex flex-col">
       <AuthHeader title="Career Center" />
 
-      <div className="p-8 space-y-8 flex-grow flex flex-col justify-center">
+      {/* Progress Bar 
+        SC 02/28/27: added percentage number
+      */}
+      
+      <div className="p-8 space-y-8">
+        {/* Progress Section */}
+        <div className="text-center">
+          <h2 className="text-5xl mb-6 text-blue-800">Your Current Progress</h2>
+          <div className="max-w-3xl mx-auto mb-6">
+            <div className="relative h-16 bg-gray-200 rounded-full overflow-hidden">
+              <div
+                className="absolute top-0 left-0 h-full bg-gradient-to-r from-blue-700 to-green-600 rounded-full transition-all
+                text-white font-bold flex items-center justify-center text-lg"
+                style={{ width: `${progress}%` }}>
+                {progress}%
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+        
+
+      <div className="p-8 space-y-8">
         {/* Explore Careers Section */}
         <div className="text-center">
           <h2 className="text-5xl mb-6 text-green-700">Explore Careers</h2>
