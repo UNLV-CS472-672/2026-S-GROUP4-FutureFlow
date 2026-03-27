@@ -1,10 +1,17 @@
-/// recommendations.api.ts
-import { request } from "./http";
-import type { RecommendationsRequest, RecommendationsResponse } from "../types/api.types";
+// recommendations.api.ts
+// API functions for course and learning recommendations.
 
-export function getRecommendations(payload: RecommendationsRequest): Promise<RecommendationsResponse> {
-  return request<RecommendationsResponse>("/api/v1/recommendations", {
-    method: "POST",
-    body: payload,
-  });
+import { remotePost } from "./remote.api";
+import type {
+  RecommendationsRequest,
+  RecommendationsResponse,
+} from "../types/api.types";
+
+/**
+ * Request recommended courses/resources for the user's missing skills.
+ */
+export function getRecommendations(
+  payload: RecommendationsRequest
+): Promise<RecommendationsResponse> {
+  return remotePost<RecommendationsResponse>("/recommendations", payload);
 }
