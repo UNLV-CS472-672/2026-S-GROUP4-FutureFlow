@@ -1,15 +1,9 @@
 // jobs.handlers.ts
-// Mock handlers for job and internship listings.
-//
-// Provides simulated job search results and job details,
-// allowing frontend components to display listings without a backend.
 import { http, HttpResponse, delay } from "msw";
 import { mockJobs } from "../data/jobs.data";
 import type { JobsSearchResponse } from "../../types/api.types";
 
-// Handlers for job-related API endpoints
 export const jobsHandlers = [
-  // Mock endpoint for searching jobs with optional query 
   http.get("/api/v1/jobs", async ({ request }) => {
     await delay(300);
 
@@ -39,7 +33,6 @@ export const jobsHandlers = [
     return HttpResponse.json(resp);
   }),
 
-  // Mock endpoint for fetching details of a specific job by ID
   http.get("/api/v1/jobs/:jobId", async ({ params }) => {
     await delay(200);
 

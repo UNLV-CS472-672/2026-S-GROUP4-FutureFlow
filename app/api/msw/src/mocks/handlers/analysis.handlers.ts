@@ -1,20 +1,14 @@
 // analysis.handlers.ts
-// Mock handlers for skill gap analysis.
-//
-// Compares a user's resume skills against job requirements
-// and returns missing skills along with an overlap score.
 
 import { http, HttpResponse, delay } from "msw";
 import { mockResume } from "../data/resume.data.ts";
 import { mockJobs } from "../data/jobs.data";
 import type { GapAnalysisResponse } from "../../types/api.types";
 
-// Utility function to get unique values from an array
 function unique(arr: string[]) {
   return Array.from(new Set(arr));
 }
 
-// Handlers for analysis-related API endpoints
 export const analysisHandlers = [
   http.post("/api/v1/analysis/gap", async ({ request }) => {
     await delay(500);
