@@ -1,60 +1,22 @@
-/// jobs.api.ts
-import type { GapAnalysis, Job, ParsedResume, Recommendation, SkillName, UserType } from "../types/domain.types";
+// jobs.api.ts
+// API functions for retrieving job listings and job details.
 
-// Generic pagination wrapper used by job searches (and later anything else)
-export type Paginated<T> = {
-  items: T[];
-  page: number;
-  pageSize: number;
-  total: number;
-};
+import { remoteGet } from "./remote.api";
+import { toQueryString } from "./http";
+import type { JobsSearchQuery, JobsSearchResponse } from "../types/api.types";
+import type { Job } from "../types/domain.types";
 
-// Standard error shape (nice for debugging + consistent backend contract)
-export type ApiErrorBody = {
-  error: {
-    code: string;
-    message: string;
-    details?: unknown;
-  };
-};
+/**
+ * Search jobs with optional filters such as query, type, location, and pagination.
+ */
+export function searchJobs(query: JobsSearchQuery): Promise<JobsSearchResponse> {
+  const qs = toQueryString(query);
+  return remoteGet<JobsSearchResponse>(`/jobs${qs}`);
+}
 
-// ---- Requests / Responses ----
-
-export type ResumeParseResponse = ParsedResume;
-
-export type JobsSearchQuery = {
-  query?: string;
-  type?: string;      // keep as string to avoid hard coupling
-  location?: string;
-  page?: number;
-  pageSize?: number;
-};
-
-export type JobsSearchResponse = Paginated<Job>;
-
-export type GapAnalysisRequest =
-  | {
-      resumeId: string;
-      jobId: string;
-      includeUniversityCourses?: boolean;
-      universityId?: string;
-    }
-  | {
-      resumeId: string;
-      targetRole: string;
-      includeUniversityCourses?: boolean;
-      universityId?: string;
-    };
-
-export type GapAnalysisResponse = GapAnalysis;
-
-export type RecommendationsRequest = {
-  missingSkills: SkillName[];
-  userType: UserType;
-  universityId?: string;
-  prefer?: Array<"university_course" | "online_course" | "certificate" | "tutorial">;
-};
-
-export type RecommendationsResponse = {
-  items: Recommendation[];
-};
+/**
+ * Get full details for a single job by ID.
+ */
+export function getJob(jobId: string): Promise<Job> {
+  return remoteGet<Job>(`/jobs/${encodeURIComponent(jobId)}`);
+}
