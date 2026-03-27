@@ -1,14 +1,21 @@
-// recommendations.handlers.ts
+// analysis.handlers.ts
+// Mock handlers for skill gap analysis.
+//
+// Compares a user's resume skills against job requirements
+// and returns missing skills along with an overlap score.
+
 import { http, HttpResponse, delay } from "msw";
 import type { RecommendationsRequest, RecommendationsResponse } from "../../types/api.types";
 import type { Recommendation } from "../../types/domain.types";
 
+// Handlers for recommendation-related API endpoints
 export const recommendationHandlers = [
   http.post("/api/v1/recommendations", async ({ request }) => {
     await delay(450);
 
     const body = (await request.json()) as RecommendationsRequest;
 
+    // Generate mock recommendations based on missing skills and user type
     const items: Recommendation[] = body.missingSkills.flatMap((skill, idx) => {
       const base: Recommendation = {
         id: `rec_${idx}_${skill}`,
