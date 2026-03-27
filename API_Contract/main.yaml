@@ -30,21 +30,21 @@ paths:
         "409":
           description: Username or email already exists
 
-    /auth/profile:
-      post:
-        tags: [auth]
-        summary: Pull information on a user
-        content:
-          application/json:
-            schema:
-              $ref: "#/Components/Schemas/Profile"
+  /auth/profile:
+    post:
+      tags: [auth]
+      summary: Pull information on a user
+      content:
+        application/json:
+          schema:
+            $ref: "#/Components/Schemas/Profile"
         
-        responses:
-          "201":
-            description: Profile information successfully pulled
+      responses:
+        "201":
+          description: Profile information successfully pulled
         
-          "400":
-            description: Profile info does not exist
+        "400":
+          description: Profile info does not exist
 
 
         
