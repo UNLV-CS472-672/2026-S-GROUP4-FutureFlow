@@ -107,25 +107,30 @@ function App() {
   };
 
   useEffect(() => {
-    const storedTokens = localStorage.getItem('tokens');
-    const storedUser = localStorage.getItem('user');
+    const restoreSession = async () => {
+      const storedTokens = localStorage.getItem('tokens');
+      const storedUser = localStorage.getItem('user');
 
-    if (storedTokens && storedUser) {
-      setTokens(JSON.parse(storedTokens));
-      setUser(JSON.parse(storedUser));
-    }
+      if (storedTokens && storedUser) {
+        setTokens(JSON.parse(storedTokens));
+        setUser(JSON.parse(storedUser));
+      }
 
-    const params = new URLSearchParams(window.location.search);
-    const code = params.get("code");
+      const params = new URLSearchParams(window.location.search);
+      const code = params.get("code");
 
-    if (code) {
-      loginWithCode(code).then(() => {
-        window.location.href = "/dashboard"; // 🔥 THIS IS THE FIX
-      });
-    } else {
-      setIsLoading(false);
-    }
+      if (code) {
+        await loginWithCode(code);
+        window.history.replaceState({}, document.title, '/dashboard'); // remove ?code
+        setIsLoading(false);
+      } else {
+        setIsLoading(false);
+      }
+    };
+
+    restoreSession();
   }, []);
+
 
   const logout = (): void => {
     // Clear state immediately (important)
