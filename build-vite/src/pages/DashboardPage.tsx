@@ -2,15 +2,34 @@
 import { useNavigate } from 'react-router';
 import { useAuth } from '../App';
 import { AuthHeader } from '../components/AuthHeader';
+import { useState, useEffect } from 'react';
+
+type Job = {
+  id: number;
+  title: string;
+  status: string;
+  notes: string;
+  updatedAt: string;
+}
 
 export default function DashboardPage() {
   const navigate = useNavigate();
   const { user } = useAuth();
   const progress = 45; // Mock progress percentage
+  const [jobs, setJobs] = useState<Job[]>([]);
+
+  useEffect(() => {
+    const saved = localStorage.getItem('jobs');
+    if (saved) setJobs(JSON.parse(saved));
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem('jobs', JSON.stringify(jobs));
+  }, [jobs]);
 
   return (
     <div className="min-h-screen bg-gray-50 pt-5">
-      <AuthHeader title="FutureFlow Hub" showYourDocuments={true} />
+      <AuthHeader title="FutureFlow Hub" />
 
       <div className="grid grid-cols-3 gap-8 p-8">
         {/* Left Column - Centers */}
@@ -78,6 +97,137 @@ export default function DashboardPage() {
               >
                 {progress}%
               </div>
+            </div>
+          </div>
+
+          {/* Application Tracker Section */}
+          <div className="mt-12">
+            <h3 className="text-4xl mb-4 text-gray-800">Application Tracker</h3>
+
+            {/* Add Job Button */}
+            <button
+              onClick={() => {
+                const newJob = {
+                  id: Date.now(),
+                  title: "New Job",
+                  status: "Saved",
+                  notes: "",
+                  updatedAt: new Date().toLocaleString()
+                };
+                setJobs([newJob, ...jobs]);
+              }}
+              className="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-full mb-6"
+            >
+              + Add Job
+            </button>
+
+            {/* Status Summary */}
+            <div className="grid grid-cols-4 gap-4 mb-6">
+              <div className="bg-blue-100 p-4 rounded-xl text-center">
+                Saved: {jobs.filter(j => j.status === 'Saved').length}
+              </div>
+              <div className="bg-yellow-100 p-4 rounded-xl text-center">
+                Applied: {jobs.filter(j => j.status === 'Applied').length}
+              </div>
+              <div className="bg-purple-100 p-4 rounded-xl text-center">
+                Interview: {jobs.filter(j => j.status === 'Interview').length}
+              </div>
+              <div className="bg-green-100 p-4 rounded-xl text-center">
+                Offers: {jobs.filter(j => j.status === 'Offer').length}
+              </div>
+            </div>
+
+            {/* Job List */}
+            <div className="bg-gray-50 border rounded-3xl p-6 space-y-4 max-h-96 overflow-y-auto">
+              {jobs.length === 0 ? (
+                <p className="text-gray-500">No saved jobs yet.</p>
+              ) : (
+                jobs.map(job => (
+                  <div key={job.id} className="bg-white p-4 rounded-xl shadow relative">
+
+                    {/* DELETE BUTTON (TOP RIGHT) */}
+                    <button
+                      onClick={() => {
+                        const confirmDelete = window.confirm(`Delete "${job.title}"?`);
+                        if (!confirmDelete) return;
+
+                        const filtered = jobs.filter(j => j.id !== job.id);
+                        setJobs(filtered);
+                      }}
+                      className="absolute top-2 right-2 w-6 h-6 flex items-center justify-center bg-red-500 hover:bg-red-600 text-white rounded-full shadow"
+                      title="Delete job"
+                    >
+                      <span className="text-xl leading-none font-extrabold -translate-y-[10px]">_</span>
+                    </button>
+
+                    {/* EDITABLE TITLE */}
+                    <input
+                      type="text"
+                      value={job.title}
+                      onChange={(e) => {
+                        const updated = jobs.map(j =>
+                          j.id === job.id
+                            ? {
+                                ...j,
+                                title: e.target.value,
+                                updatedAt: new Date().toLocaleString()
+                              }
+                            : j
+                        );
+                        setJobs(updated);
+                      }}
+                      className="text-xl font-semibold w-full border-b focus:outline-none pr-8"
+                    />
+
+                    {/* STATUS DROPDOWN */}
+                    <select
+                      value={job.status}
+                      onChange={(e) => {
+                        const updated = jobs.map(j =>
+                          j.id === job.id
+                            ? {
+                                ...j,
+                                status: e.target.value,
+                                updatedAt: new Date().toLocaleString()
+                              }
+                            : j
+                        );
+                        setJobs(updated);
+                      }}
+                      className="mt-2 border rounded px-2 py-1"
+                    >
+                      <option>Saved</option>
+                      <option>Applied</option>
+                      <option>Interview</option>
+                      <option>Offer</option>
+                      <option>Rejected</option>
+                    </select>
+
+                    {/* NOTES */}
+                    <textarea
+                      value={job.notes}
+                      onChange={(e) => {
+                        const updated = jobs.map(j =>
+                          j.id === job.id
+                            ? {
+                                ...j,
+                                notes: e.target.value,
+                                updatedAt: new Date().toLocaleString()
+                              }
+                            : j
+                        );
+                        setJobs(updated);
+                      }}
+                      placeholder="Add notes..."
+                      className="w-full mt-2 border rounded p-2"
+                    />
+
+                    <p className="text-sm text-gray-500 mt-2">
+                      Last updated: {job.updatedAt}
+                    </p>
+                  </div>
+                ))
+              )}
             </div>
           </div>
         </div>
