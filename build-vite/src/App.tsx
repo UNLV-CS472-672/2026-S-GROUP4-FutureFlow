@@ -11,6 +11,7 @@ import ResumeUploadPage from './pages/ResumeUploadPage';
 import CareerQuiz from './pages/CareerQuiz';
 import CoursePlanPage from './pages/CoursePlanPage';
 import TranscriptUploadPage from './pages/TranscriptUploadPage';
+import JobListingsPage from './pages/JobListing';
 
 interface User {
   email: string;
@@ -196,6 +197,10 @@ function App() {
           <Route
             path="/transcript-upload"
             element={user ? <TranscriptUploadPage /> : <Navigate to="/" />}
+          />
+          <Route
+            path = "/job-listing"
+            element = { user ? <JobListingsPage /> : <Navigate to = "/login" />}
           />
         </Routes>
       </Router>
