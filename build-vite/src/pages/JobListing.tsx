@@ -1,133 +1,202 @@
-{/*
-  Front end TextScript file for "Job Listing" page.
-*/}
+/*
+  Front end TypeScript file for "Job Listing" page.
+*/
 
-import React from 'react';
-import { AuthHeader } from '../components/AuthHeader';
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
+import { AuthHeader } from "../components/AuthHeader";
+import JobSelector from "../components/JobSelector";
+import JobGoal from "../components/JobGoal";
 
-// gathers JobSelector
-import JobSelector from '../components/JobSelector';
-
-// gathers JobData
-import { jobData } from '../components/JobData';
-
-// gathers JobGoal
-import JobGoal from '../components/JobGoal';
-
+type Job = {
+  id?: number;
+  job_title: string;
+  url: string;
+  date_posted: string | null;
+  company: string | null;
+  location: string | null;
+  remote: boolean;
+  hybrid: boolean;
+  employment_statuses: string[];
+  description: string | null;
+  seniority: string | null;
+};
 
 export default function JobListings() {
-    const [job, setJob] = useState<string | null>(null);
-    const selectedJobData = job ? jobData[job] : null;
-    const [goals, setGoals] = useState<string[]>([]);
+  const [jobs, setJobs] = useState<Job[]>([]);
+  const [job, setJob] = useState<string | null>(null);
+  const [goals, setGoals] = useState<string[]>([]);
+  const [savedPlan, setSavedPlan] = useState<any>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
 
-    // MOCK
-    const userSkills = ["Insert Skill1 Here"];
+  // Replace with your real backend URL if needed
+  const API_BASE_URL = "http://localhost:3000";
 
-    const [savedPlan, setSavedPlan] = useState<any>(null);
+  // MOCK user skills for now
+  const userSkills = ["Insert Skill1 Here"];
 
-    const handleSaveGoal = (goal: string) => {
-        setGoals(prev => [...prev, goal]);
-    };
+  useEffect(() => {
+    async function loadJobs() {
+      try {
+        setLoading(true);
+        setError(null);
 
-    const missingSkills = selectedJobData ?
-        selectedJobData.skills.filter(skill => !userSkills.includes(skill)) :
-        [];
+        const response = await fetch(`${API_BASE_URL}/jobs`);
 
-    const recommendations = selectedJobData ? {
-        certs: selectedJobData.certs,
-        courses: selectedJobData.courses,
-        projects: missingSkills.map(skill => `Build a Project With: ${skill}`)
+        if (!response.ok) {
+          throw new Error(`Failed to fetch jobs: ${response.status}`);
+        }
+
+        const data: Job[] = await response.json();
+        setJobs(data);
+      } catch (err) {
+        console.error(err);
+        setError("Could not load jobs from the database.");
+      } finally {
+        setLoading(false);
+      }
     }
+
+    void loadJobs();
+  }, []);
+
+  const selectedJobData = job
+    ? jobs.find((j) => j.job_title === job) ?? null
     : null;
 
-    // MOCK
-    const estimate = missingSkills.length > 0 ? {
-        time: `${missingSkills.length * 2} - ${missingSkills.length * 4} weeks`,
-        cost: `$${missingSkills.length * 50} - $${missingSkills.length * 200}`
-    }
+  const handleSaveGoal = (goal: string) => {
+    setGoals((prev) => [...prev, goal]);
+  };
+
+  // Since your MariaDB jobs table does not currently include skills/certs/courses,
+  // these are placeholders until you add those fields or another related table.
+  const missingSkills: string[] = [];
+
+  const recommendations = selectedJobData
+    ? {
+        certs: [],
+        courses: [],
+        projects: []
+      }
     : null;
 
-    const handleSavePlan = () => {
-        setSavedPlan({
-            job,
-            missingSkills,
-            recommendations,
-            estimate
-        });
-    };
+  const estimate =
+    missingSkills.length > 0
+      ? {
+          time: `${missingSkills.length * 2} - ${missingSkills.length * 4} weeks`,
+          cost: `$${missingSkills.length * 50} - $${missingSkills.length * 200}`
+        }
+      : null;
 
-    return (
-        <div>
+  const handleSavePlan = () => {
+    setSavedPlan({
+      job,
+      missingSkills,
+      recommendations,
+      estimate
+    });
+  };
 
-            <JobSelector onSelect = {setJob} />
-            {job && <h1>{job}</h1>}
+  return (
+    <div>
+      <AuthHeader />
 
-            { selectedJobData && (
-                <div>
-                    <h2> Skills </h2>
-                    <ul>
-                        {selectedJobData.skills.map((skill, i) => {
-                            const isMissing = !userSkills.includes(skill)
-                            return (
-                            <li key = {i}>
-                                {skill}
-                                {isMissing && "(Missing)"}
-                            </li>
-                            );
-                        })}
-                    </ul>
+      <h1>Job Listings</h1>
 
-                    <h2> Certifications </h2>
-                    <h3> Required Certifications </h3>
-                        <ul>
-                            { selectedJobData.certs.map((cert, i) => (
-                                <li key = {i}>{cert}</li>
-                            ))}
-                        </ul>
-                    <h3> Recommended Certifications </h3>
-                        <ul>
-                            {recommendations?.certs.map((cert, i) => (
-                                <li key = {i}>{cert}</li>
-                            ))}
-                        </ul>
+      {loading && <p>Loading jobs...</p>}
+      {error && <p>{error}</p>}
 
-                    <h2> Courses </h2>
-                    <h3> Required Courses </h3>
-                        <ul>
-                            { selectedJobData.courses.map((course, i) => (
-                                <li key = {i}>{course}</li>
-                            ))}
-                        </ul>
-                    <h3> Recommended Courses </h3>
-                        <ul>
-                            {recommendations?.courses.map((course, i) => (
-                                <li key = {i}> {course} </li>
-                            ))}
-                        </ul>
+      {!loading && !error && (
+        <>
+          {/* If your existing JobSelector only works with static data,
+              replace it with a normal select like below. */}
+          <div>
+            <label htmlFor="job-select">Choose a job:</label>
+            <select
+              id="job-select"
+              value={job ?? ""}
+              onChange={(e) => setJob(e.target.value || null)}
+            >
+              <option value="">Select a job</option>
+              {jobs.map((jobItem) => (
+                <option key={jobItem.id ?? jobItem.url} value={jobItem.job_title}>
+                  {jobItem.job_title}
+                </option>
+              ))}
+            </select>
+          </div>
 
-                    <h2> Projects </h2>
-                    <ul>
-                        {recommendations?.projects.map((proj, i) => (
-                            <li key = {i}> {proj} </li>
-                        ))}
-                    </ul>
+          {job && <h2>{job}</h2>}
 
-                    <JobGoal onSave = {handleSaveGoal} />
+          {selectedJobData && (
+            <div>
+              <h3>Company</h3>
+              <p>{selectedJobData.company ?? "N/A"}</p>
 
-                    <div>
-                        <h2> Saved Goals </h2>
-                        <ul>
-                            {goals.map((goal, i) => (
-                                <li key = {i}>{goal}</li>
-                            ))}
-                        </ul>
-                    </div>
+              <h3>Location</h3>
+              <p>{selectedJobData.location ?? "N/A"}</p>
 
-                </div>
-            )}
+              <h3>Date Posted</h3>
+              <p>{selectedJobData.date_posted ?? "N/A"}</p>
 
-        </div>
-    );
+              <h3>Seniority</h3>
+              <p>{selectedJobData.seniority ?? "N/A"}</p>
 
+              <h3>Remote</h3>
+              <p>{selectedJobData.remote ? "Yes" : "No"}</p>
+
+              <h3>Hybrid</h3>
+              <p>{selectedJobData.hybrid ? "Yes" : "No"}</p>
+
+              <h3>Employment Statuses</h3>
+              <ul>
+                {selectedJobData.employment_statuses?.length ? (
+                  selectedJobData.employment_statuses.map((status, i) => (
+                    <li key={i}>{status}</li>
+                  ))
+                ) : (
+                  <li>N/A</li>
+                )}
+              </ul>
+
+              <h3>Description</h3>
+              <p>{selectedJobData.description ?? "No description available."}</p>
+
+              <h3>Job Link</h3>
+              <a
+                href={selectedJobData.url}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                View Job Posting
+              </a>
+
+              <h3>Skills</h3>
+              <p>No skills data is currently coming from the database.</p>
+
+              <h3>Certifications</h3>
+              <p>No certification data is currently coming from the database.</p>
+
+              <h3>Courses</h3>
+              <p>No course data is currently coming from the database.</p>
+
+              <h3>Projects</h3>
+              <p>No project recommendations available yet.</p>
+
+              <JobGoal onSave={handleSaveGoal} />
+
+              <div>
+                <h2>Saved Goals</h2>
+                <ul>
+                  {goals.map((goal, i) => (
+                    <li key={i}>{goal}</li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          )}
+        </>
+      )}
+    </div>
+  );
 }
