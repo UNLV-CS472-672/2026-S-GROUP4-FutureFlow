@@ -5,7 +5,6 @@ import { User } from 'lucide-react';
 
 interface AuthHeaderProps {
   title: string;
-  showYourDocuments?: boolean;
 }
 
 export function AuthHeader({ title }: AuthHeaderProps) {
@@ -52,9 +51,6 @@ export function AuthHeader({ title }: AuthHeaderProps) {
           </button>
         )}
         
-        <button onClick={() => navigate('/settings', { state: { tab: 'documents' } })} className="hover:underline text-blue-800">
-          YOUR DOCUMENTS
-        </button>
         <button onClick={() => navigate('/about')} className="hover:underline text-blue-800">
           ABOUT US
         </button>
