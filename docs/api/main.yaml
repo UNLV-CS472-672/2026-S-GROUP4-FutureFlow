@@ -203,7 +203,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/Academic_plan"
+              $ref: "#/components/schemas/AcademicPlan"
       responses:
         "202":
           description: Academic plan successfully built
@@ -218,7 +218,7 @@ paths:
           content:
             application/json:
               schema:
-                 $ref: "#/components/schemas/Academic_plan"
+                 $ref: "#/components/schemas/AcademicPlan"
         "404":
           description: Academic plan not found
         "401":
@@ -263,7 +263,7 @@ paths:
           content:
             application/json:
               schema:
-                 $ref: "#/components/schemas/Job_Listings"
+                 $ref: "#/components/schemas/JobListings"
         "404":
           description: Job listings not found
         "401":
@@ -329,12 +329,12 @@ components:
           type: integer
           description: The price of the course.
     #Not sure if pulling from transcript parsing requires an array.
-    Course_array:
+    CourseArray:
       type: array
       items:
         $ref: '#/components/schemas/Course'
     #Academic plan / Course plan. Depending on how these are stored this will change
-    Academic_plan:
+    AcademicPlan:
       type: object
       properties:
         courses:
@@ -343,7 +343,7 @@ components:
             $ref: '#/components/schemas/Course'
     #Similarly, depending on how we store the completed courses, this may be used. 
     #Its inherently the same but im not sure if we need to differentiate. Now maybe the course schema needs to contain a completed boolean check
-    Completed_courses:
+    CompletedCourses:
       type: object
       properties:
         courses:
@@ -368,7 +368,7 @@ components:
           items:
             type: string
           description: A list of skills required for the career.
-    Career_Bookmark:
+    CareerBookmark:
       type: array
       items:
         $ref: '#/components/schemas/Career'
@@ -390,7 +390,7 @@ components:
           items:
             type: string
           description: A list of skills required for the job.
-    Job_Listings:
+    JobListings:
       type: array
       items:
         $ref: '#/components/schemas/Jobs'
