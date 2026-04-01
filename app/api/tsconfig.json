@@ -9,5 +9,5 @@ i.e where src code is, where compiled files should go, etc] */
         //"module": "NodeNext",
         //"moduleResolution": "NodeNext"
     },
-    "include": ["src"] // Include all TypeScript files in the src directory for compilation
+    "include": ["src", "src/config"] // Include all TypeScript files in the src directory for compilation
 }
