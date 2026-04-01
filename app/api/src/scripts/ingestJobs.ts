@@ -44,7 +44,8 @@ async function ingestJobs() {
 
                 const normalized = normalizeJob(rawJob);
 
-                const existingJob = await prisma.job.findUnique({
+                // function to add to db goes here, but for now we just log the normalized job
+                /*const existingJob = await prisma.job.findUnique({
                     where: {
                         source_externalJobId: {
                             source: normalized.source,
@@ -65,10 +66,11 @@ async function ingestJobs() {
                     createdAt: new Date(normalized.createdAt),
                     updatedAt: new Date(normalized.updatedAt),
                     postedAt: normalized.postedAt ? new Date(normalized.postedAt) : undefined,}
-                });
+                });*/
+
+                console.log(`Inserted job: ${normalized.title} at ${normalized.company} (externalJobId: ${normalized.externalJobId})`);
 
                 insertedCount++;
-                console.log(`Inserted job: ${normalized.title} at ${normalized.company} (externalJobId: ${normalized.externalJobId})`);
             } catch (error) {
 
                 skippedCount++;
@@ -82,9 +84,9 @@ async function ingestJobs() {
 
         console.error('Error during job ingestion:', error);
 
-    } finally {
+    } /*finally {
         await prisma.$disconnect();
-    }
+    } */
 }
 
 ingestJobs();
