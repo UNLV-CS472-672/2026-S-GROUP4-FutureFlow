@@ -50,10 +50,12 @@ export default function CareerCenterPage() {
             <div className="text-center border-r-2 border-gray-200 px-8">
               <div className="bg-blue-800 rounded-3xl p-8 text-white">
                 <h3 className="text-4xl mb-6">Job Listings</h3>
-                <p className="text-sm">
-                  &lt;list of current job listings. maybe try embeding a widget linkedin job
-                  listings?&gt;
-                </p>
+                <button
+                  onClick = {() => navigate('/job-listing')}
+                  className= "bg-green-600 hover:bg-green-700 text-white px-8 py-3 rounded-full transition-colors"
+                >
+                  Job Listings
+                </button>
               </div>
             </div>
 
