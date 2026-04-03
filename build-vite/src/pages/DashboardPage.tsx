@@ -50,6 +50,22 @@ export default function DashboardPage() {
             </div>
           </div>
 
+          {/* Job Center */}
+          <div className="bg-white border-2 border-teal-600 rounded-3xl p-8 shadow-lg w-full max-w-sm">
+            <h2 className="text-3xl mb-4 text-teal-600 text-center">Job Center</h2>
+            <p className="text-center mb-6 text-gray-700">
+              "Small explanation/purpose of this box/list of bullet points."
+            </p>
+            <div className="flex justify-center">
+              <button
+                onClick={() => navigate('/job-center')}
+                className="bg-teal-600 hover:bg-teal-700 text-white px-6 py-3 rounded-full transition-colors"
+              >
+                Job Center
+              </button>
+            </div>
+          </div>
+
           {/* Career Center */}
           <div className="bg-white border-2 border-green-600 rounded-3xl p-8 shadow-lg w-full max-w-sm">
             <h2 className="text-3xl mb-4 text-green-700 text-center">Career Center</h2>
