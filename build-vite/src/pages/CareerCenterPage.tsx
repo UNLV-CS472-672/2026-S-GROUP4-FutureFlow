@@ -37,12 +37,12 @@ export default function CareerCenterPage() {
           <div className="grid grid-cols-3 gap-8">
             {/* Resume Analysis */}
             <div className="text-center border-r-2 border-gray-200 pr-8">
-              <h3 className="text-4xl mb-8 text-gray-800">Resume Analysis</h3>
+              <h3 className="text-4xl mb-8 text-gray-800"> Upload Resume </h3>
               <button
                 onClick= {() => navigate('/resume-upload')}
                 className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 rounded-full transition-colors"
               >
-                Resume Analyzer
+                Upload Resume
               </button>
             </div>
 
