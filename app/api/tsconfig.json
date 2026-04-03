@@ -6,6 +6,8 @@ i.e where src code is, where compiled files should go, etc] */
     "compilerOptions": { // Specific compiler options for this package
         "outDir": "dist", // Directory where compiled JavaScript files will be output
         "rootDir": "src" // Directory where the source TypeScript files are located
+        //"module": "NodeNext",
+        //"moduleResolution": "NodeNext"
     },
-    "include": ["src"] // Include all TypeScript files in the src directory for compilation
+    "include": ["src", "src/config"] // Include all TypeScript files in the src directory for compilation
 }
