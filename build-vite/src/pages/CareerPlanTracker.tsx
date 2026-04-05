@@ -86,8 +86,6 @@ const inProgressCount = useMemo(() =>
 },
 [careerPlan.missingSkills]);
 
-//count the total number of skills
-const totalSKills = careerPlan.missingSkills.length;
 
 
 
