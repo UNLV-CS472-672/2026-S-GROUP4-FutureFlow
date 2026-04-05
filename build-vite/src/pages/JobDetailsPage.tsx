@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import { AuthHeader } from '../components/AuthHeader';
 
 // In a real app this would be a fetch call: fetch(`/api/jobs/${id}`)
@@ -90,8 +90,10 @@ function timeAgo(dateStr: string) {
 export default function JobDetailPage() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const job = JOBS.find((j) => j.id === Number(id));
+  const from = location.state?.from || '/jobs'; // fallback if no state
 
   if (!job) {
     return (
@@ -120,10 +122,10 @@ export default function JobDetailPage() {
 
         {/* Back link */}
         <button
-          onClick={() => navigate('/jobs')}
+          onClick={() => navigate(from)}
           className="text-sm text-gray-400 hover:text-gray-600 mb-6 flex items-center gap-1 transition-colors"
         >
-          ← Back to results
+          ← Back
         </button>
 
         {/* Header card */}
