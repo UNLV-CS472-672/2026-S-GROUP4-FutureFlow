@@ -1,8 +1,8 @@
 import { useState, useMemo } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams, useLocation } from 'react-router-dom';
 import { AuthHeader } from '../components/AuthHeader';
 
-// For now it shares the same static data as JobListingsPage.
+// For now it shares the same static data as JobDetailsPage.
 // When implemented, this file will take information using fetch/api
 const JOBS = [
   {
@@ -93,6 +93,7 @@ function timeAgo(dateStr: string) {
 export default function JobSearchPage() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
+  const location = useLocation();
 
   const [search, setSearch] = useState(searchParams.get('q') || '');
   const [filterType, setFilterType] = useState('all');
@@ -210,7 +211,7 @@ export default function JobSearchPage() {
           ) : paginated.map((job) => (
             <div
               key={job.id}
-              onClick={() => navigate(`/jobs/${job.id}`)}
+              onClick={() => navigate(`/jobs/${job.id}`, {state: {from: location.pathname}})}
               className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 hover:border-green-400 hover:shadow-md transition-all cursor-pointer"
             >
               <div className="flex items-start gap-4">
