@@ -51,7 +51,7 @@ export default function CareerCenterPage() {
               <div className="bg-blue-800 rounded-3xl p-8 text-white">
                 <h3 className="text-4xl mb-6">Job Listings</h3>
                 <button
-                  onClick = {() => navigate('/job-listing')}
+                  onClick={() => navigate('/jobs')}
                   className= "bg-green-600 hover:bg-green-700 text-white px-8 py-3 rounded-full transition-colors"
                 >
                   Job Listings
