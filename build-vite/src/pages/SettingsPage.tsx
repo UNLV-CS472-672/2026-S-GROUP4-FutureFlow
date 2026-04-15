@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router';
 import { useAuth } from '../App';
+import { AuthHeader } from '../components/AuthHeader';
 import { Logo } from '../components/Logo';
 
 type SettingsTab = 'profile' | 'security' | 'accessibility' | 'documents';
@@ -35,18 +36,7 @@ export default function SettingsPage() {
     <div className="min-h-screen bg-gray-50 text-gray-900 transition-colors duration-300 pt-5">
 
       {/* Header */}
-      <header className="bg-white rounded-full px-6 py-4 flex items-center justify-between mx-5 shadow-lg">
-        <div className="flex items-center gap-4">
-          <Logo size="medium" />
-          <h1 className="text-3xl text-blue-900">User Settings</h1>
-        </div>
-        <nav className="flex items-center gap-8">
-          <button onClick={() => navigate('/dashboard')} className="hover:underline text-blue-800">Home</button>
-          <button onClick={() => navigate('/career-center')} className="hover:underline text-green-700">Career Center</button>
-          <button onClick={() => navigate('/degree-center')} className="hover:underline text-blue-800">Degree Center</button>
-          <button onClick={logout} className="hover:underline text-red-600">Log Out</button>
-        </nav>
-      </header>
+      <AuthHeader title="Job Center" />
 
       <div className="p-8 flex flex-col lg:flex-row gap-8">
 

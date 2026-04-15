@@ -31,16 +31,16 @@ export default function LandingPage() {
   };
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-gray-50">
       {/* Hero Section */}
       <div className="bg-blue-50 rounded-3xl mx-5 mt-5 px-8 py-6">
 
         {/* Header */}
-        <header className="bg-white rounded-full px-6 py-4 flex items-center justify-between mb-12 shadow-lg text-md">
+        <header className="bg-white flex rounded-full mx-5 px-6 py-4 flex items-center justify-between mb-12 shadow-lg text-md">
           <Logo size="medium" />
 
           <p className="text-xl text-blue-800 flex gap-8 self-end mb-2">
-            "Insert SHORT slogan right here!"
+            {/* "Insert SHORT slogan right here!" */}
           </p>
 
           <nav className="flex gap-4">
