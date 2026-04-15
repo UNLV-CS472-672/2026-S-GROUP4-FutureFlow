@@ -1,15 +1,14 @@
-import { useState, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router';
+import { useState } from 'react';
+import { useLocation } from 'react-router';
 import { useAuth } from '../App';
 import { AuthHeader } from '../components/AuthHeader';
-import { Logo } from '../components/Logo';
+import { User } from 'lucide-react';
 
 type SettingsTab = 'profile' | 'security' | 'accessibility' | 'documents';
 
 export default function SettingsPage() {
-  const navigate = useNavigate();
   const location = useLocation();
-  const { user, fontSize, setFontSize } = useAuth();
+  const { user, fontSize, setFontSize, profilePic, setProfilePic } = useAuth();
   const [selectedTheme, setSelectedTheme] = useState<'light' | 'dark' >('light');
   const { logout } = useAuth();
 
@@ -21,7 +20,32 @@ export default function SettingsPage() {
   const [displayName, setDisplayName] = useState(user?.name || '');
   const [firstName, setFirstName] = useState(user?.name || '');
   const [lastName, setLastName] = useState(user?.name || '');
-  const [miscDetails, setMiscDetails] = useState('');
+
+  // Profile picture modal
+  const [showPicMenu, setShowPicMenu] = useState(false);
+
+  const handleProfilePicChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    if (file.size > 5 * 1024 * 1024) {
+      alert('Image must be under 5 MB.');
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = () => {
+      const dataUrl = reader.result as string;
+      setProfilePic(dataUrl);
+      localStorage.setItem('profilePic', dataUrl);
+    };
+    reader.readAsDataURL(file);
+    setShowPicMenu(false);
+  };
+
+  const handleRemoveProfilePic = () => {
+    setProfilePic(null);
+    localStorage.removeItem('profilePic');
+    setShowPicMenu(false);
+  };
 
   // Security state
   const [editingPassword, setEditingPassword] = useState(false);
@@ -36,7 +60,7 @@ export default function SettingsPage() {
     <div className="min-h-screen bg-gray-50 text-gray-900 transition-colors duration-300 pt-5">
 
       {/* Header */}
-      <AuthHeader title="Job Center" />
+      <AuthHeader title="Settings" />
 
       <div className="p-8 flex flex-col lg:flex-row gap-8">
 
@@ -70,61 +94,81 @@ export default function SettingsPage() {
 
           {/* ---------------- PROFILE TAB ---------------- */}
           {activeTab === 'profile' && (
-            <div className="space-y-8 max-w-2xl">
+            <div className="space-y-8">
               <h2 className="text-4xl font-semibold border-b pb-4">Profile</h2>
 
-              <div>
-                <label className="block text-2xl mb-2 text-gray-800">Display Name</label>
-                <input
-                  type="text"
-                  value={displayName}
-                  onChange={(e) => setDisplayName(e.target.value)}
-                  className="w-full bg-white border-2 border-blue-700 rounded-full px-6 py-3 outline-none focus:ring-2 focus:ring-blue-500"
-                />
-              </div>
+              <div className="flex gap-10 items-center">
 
-              <div>
-                <label className="block text-2xl mb-2 text-gray-800">Name</label>
-                <div className="grid grid-cols-2 gap-4">
-                  <input
-                    type="text"
-                    value={firstName}
-                    onChange={(e) => setFirstName(e.target.value)}
-                    placeholder="First Name"
-                    className="bg-white border-2 border-blue-700 rounded-full px-6 py-3 outline-none focus:ring-2 focus:ring-blue-500"
-                  />
-                  <input
-                    type="text"
-                    value={lastName}
-                    onChange={(e) => setLastName(e.target.value)}
-                    placeholder="Last Name"
-                    className="bg-white border-2 border-blue-700 rounded-full px-6 py-3 outline-none focus:ring-2 focus:ring-blue-500"
-                  />
+                {/* Left column — fields */}
+                <div className="flex-1 space-y-8">
+                  <div>
+                    <label className="block text-2xl mb-2 text-gray-800">Display Name</label>
+                    <input
+                      type="text"
+                      value={displayName}
+                      onChange={(e) => setDisplayName(e.target.value)}
+                      className="w-full bg-white border-2 border-blue-700 rounded-full px-6 py-3 outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-2xl mb-2 text-gray-800">Name</label>
+                    <div className="grid grid-cols-2 gap-4">
+                      <input
+                        type="text"
+                        value={firstName}
+                        onChange={(e) => setFirstName(e.target.value)}
+                        placeholder="First Name"
+                        className="bg-white border-2 border-blue-700 rounded-full px-6 py-3 outline-none focus:ring-2 focus:ring-blue-500"
+                      />
+                      <input
+                        type="text"
+                        value={lastName}
+                        onChange={(e) => setLastName(e.target.value)}
+                        placeholder="Last Name"
+                        className="bg-white border-2 border-blue-700 rounded-full px-6 py-3 outline-none focus:ring-2 focus:ring-blue-500"
+                      />
+                    </div>
+                  </div>
                 </div>
-              </div>
 
-              <div>
-                <label className="block text-2xl mb-2 text-gray-800">Miscellaneous Details</label>
-                <textarea
-                  value={miscDetails}
-                  onChange={(e) => setMiscDetails(e.target.value)}
-                  placeholder="Tentative details..."
-                  className="w-full bg-white border-2 border-blue-700 rounded-2xl px-6 py-3 outline-none focus:ring-2 focus:ring-blue-500 resize-none h-24"
-                />
+                {/* Right column — avatar, large, vertically centered */}
+                <div className="flex flex-col items-center gap-2 flex-shrink-0">
+                  <p className="text-3xl text-gray-800 self-start">Profile Picture</p>
+                  <div className="relative mt-1">
+                    <div className="w-44 h-44 rounded-full border-2 border-blue-200 overflow-hidden bg-gray-100 flex items-center justify-center">
+                      {profilePic ? (
+                        <img src={profilePic} alt="Profile" className="w-full h-full object-cover" />
+                      ) : (
+                        <User className="w-24 h-24 text-gray-500" />
+                      )}
+                    </div>
+
+                    {/* Edit button — bottom right of avatar */}
+                    <button
+                      onClick={() => setShowPicMenu(true)}
+                      className="absolute bottom-2 right-2 w-9 h-9 rounded-full bg-blue-700 hover:bg-blue-800 text-white flex items-center justify-center shadow-md transition"
+                    >
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536M9 13l6.586-6.586a2 2 0 012.828 2.828L11.828 15.828a2 2 0 01-1.414.586H8v-2.414a2 2 0 01.586-1.414z" />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
               </div>
 
               <button
                 onClick={() => alert('Profile changes saved!')}
                 className="w-full bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-full transition text-lg"
               >
-                Save Profile
+                Save Changes
               </button>
             </div>
           )}
 
           {/* ---------------- SECURITY TAB ---------------- */}
           {activeTab === 'security' && (
-            <div className="space-y-10 max-w-2xl">
+            <div className="space-y-10">
               <h2 className="text-4xl font-semibold border-b pb-4">Security</h2>
 
               {/* Change Password */}
@@ -231,7 +275,7 @@ export default function SettingsPage() {
 
         {/* ---------------- ACCESSIBILITY TAB ---------------- */}
         {activeTab === 'accessibility' && (
-          <div className="space-y-10 max-w-2xl">
+          <div className="space-y-10">
             <h2 className="text-4xl font-semibold border-b pb-4">Accessibility</h2>
 
             {/* Theme (clickable but non-functional) */}
@@ -292,12 +336,67 @@ export default function SettingsPage() {
 
           {/* ---------------- DOCUMENTS TAB ---------------- */}
           {activeTab === 'documents' && (
-            <div className="space-y-10 max-w-2xl">
+            <div className="space-y-10">
               <h2 className="text-4xl font-semibold border-b pb-4">Documents</h2>
               <div className="text-center py-12">
                 <p className="text-2xl text-gray-500 mb-6">No documents</p>
                 <button className="bg-blue-700 hover:bg-blue-800 text-white rounded-full px-8 py-3 transition">
                   Add Documents
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* ---------------- PROFILE PICTURE MODAL ---------------- */}
+          {showPicMenu && (
+            <div
+              className="fixed inset-0 bg-black/40 flex items-center justify-center z-50"
+              onClick={() => setShowPicMenu(false)}
+            >
+              <div
+                className="bg-white rounded-3xl p-8 shadow-xl w-80 flex flex-col items-center gap-6"
+                onClick={(e) => e.stopPropagation()}
+              >
+                {/* Avatar preview inside modal */}
+                <div className="w-24 h-24 rounded-full border-2 border-blue-200 overflow-hidden bg-gray-100 flex items-center justify-center">
+                  {profilePic ? (
+                    <img src={profilePic} alt="Profile" className="w-full h-full object-cover" />
+                  ) : (
+                    <svg className="w-12 h-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <circle cx="12" cy="8" r="4" strokeWidth="1.5" />
+                      <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" strokeWidth="1.5" strokeLinecap="round" />
+                    </svg>
+                  )}
+                </div>
+
+                <p className="text-xl font-semibold text-gray-800">Profile Photo</p>
+
+                {/* Upload */}
+                <label className="w-full cursor-pointer text-center bg-blue-700 hover:bg-blue-800 text-white px-6 py-3 rounded-full transition">
+                  {profilePic ? 'Change Photo' : 'Upload Photo'}
+                  <input
+                    type="file"
+                    accept="image/*"
+                    className="hidden"
+                    onChange={handleProfilePicChange}
+                  />
+                </label>
+
+                {/* Remove — only if photo exists */}
+                {profilePic && (
+                  <button
+                    onClick={handleRemoveProfilePic}
+                    className="w-full text-red-500 hover:text-red-700 border border-red-300 hover:bg-red-50 px-6 py-3 rounded-full transition"
+                  >
+                    Remove Photo
+                  </button>
+                )}
+
+                <button
+                  onClick={() => setShowPicMenu(false)}
+                  className="text-sm text-gray-400 hover:text-gray-600 transition"
+                >
+                  Cancel
                 </button>
               </div>
             </div>

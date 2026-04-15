@@ -1,6 +1,7 @@
 // import React from 'react';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router';
+import { useAuth } from '../App';
 import { Logo } from './Logo';
 import { User } from 'lucide-react';
 
@@ -13,6 +14,8 @@ export function AuthHeader({ title }: AuthHeaderProps) {
 
   // testing a sticky header that transitions to a full bar when past a certain point
   const [scrolled, setScrolled] = useState(false);
+
+  const { profilePic } = useAuth();
 
   useEffect(() => {
     function handleScroll() {
@@ -78,7 +81,15 @@ export function AuthHeader({ title }: AuthHeaderProps) {
           onClick={() => navigate('/settings')}
           className="w-12 h-12 rounded-full bg-green-600 flex items-center justify-center hover:bg-green-700 transition-colors"
         >
-          <User className="w-5 h-5 text-white" />
+          {profilePic ? (
+            <img
+              src={profilePic}
+              alt="Profile"
+              className="w-12 h-12 rounded-full object-cover border-2 border-white"
+            />
+          ) : (
+            <User className="w-5 h-5 text-white" />
+          )}
         </button>
       </nav>
     </header>
