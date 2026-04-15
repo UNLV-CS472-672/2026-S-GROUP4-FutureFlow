@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import LandingPage from './pages/LandingPage';
 import DashboardPage from './pages/DashboardPage';
 import DegreeCenterPage from './pages/DegreeCenterPage';
-import CareerCenterPage from './pages/CareerCenterPage';
 import SettingsPage from './pages/SettingsPage';
 import AboutPage from './pages/AboutPage';
 import EducationPage from './pages/EducationPage';
@@ -191,10 +190,6 @@ function App() {
           <Route
             path="/degree-center"
             element={user ? <DegreeCenterPage /> : <Navigate to="/" />}
-          />
-          <Route
-            path="/career-center"
-            element={user ? <CareerCenterPage /> : <Navigate to="/" />}
           />
           <Route
             path="/job-center"
