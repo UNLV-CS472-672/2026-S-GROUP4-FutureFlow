@@ -7,10 +7,8 @@ import SettingsPage from './pages/SettingsPage';
 import AboutPage from './pages/AboutPage';
 import EducationPage from './pages/EducationPage';
 import ResumeUploadPage from './pages/ResumeUploadPage';
-import CareerQuiz from './pages/CareerQuiz';
 import CoursePlanPage from './pages/CoursePlanPage';
 import TranscriptUploadPage from './pages/TranscriptUploadPage';
-
 import JobSearchPage from './pages/JobSearchPage';
 import JobCenterPage from './pages/JobCenterPage';
 import JobDetailsPage from './pages/JobDetailsPage';
@@ -206,10 +204,6 @@ function App() {
           <Route
             path="/resume-upload"
             element={user ? <ResumeUploadPage /> : <Navigate to="/" />}
-          />
-          <Route
-            path="/career-quiz"
-            element={user ? <CareerQuiz /> : <Navigate to="/" />}
           />
           <Route
             path="/course-plan"
