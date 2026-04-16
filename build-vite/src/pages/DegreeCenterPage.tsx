@@ -1,66 +1,132 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { useNavigate } from 'react-router';
 import { AuthHeader } from '../components/AuthHeader';
 
+type Course = {
+  id: number;
+  name: string;
+  code: string;
+};
+
+const mockCourses: Course[] = [
+  { id: 1, name: 'Operating Systems', code: 'CS 370' },
+  { id: 2, name: 'Database Management Systems', code: 'CS 457' },
+  { id: 3, name: 'Machine Learning', code: 'CS 422' },
+  { id: 4, name: 'Cloud Computing', code: 'CS 442' },
+  // { id: 5, name: 'Database Management Systems', code: 'CS 457' },
+  // { id: 6, name: 'Compiler Construction', code: 'CS 460' },
+];
+
 export default function DegreeCenterPage() {
   const navigate = useNavigate();
-  const [progress] = useState(65); // Mock progress percentage
+  const [progress] = useState(65);
+  const [courses] = useState<Course[]>(mockCourses);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   return (
-    <div className="min-h-screen bg-gray-50 pt-5 flex flex-col">
+    <div className="min-h-screen bg-gray-[#eeede9] pt-5 flex flex-col">
       <AuthHeader title="Degree Center" />
 
-      <div className="p-8 space-y-8 flex-grow flex flex-col justify-center">
-        {/* Progress Section */}
+      <div className="p-8 space-y-8 flex-grow flex flex-col">
+
+        {/* Progress Section with progress bar */}
         <div className="text-center">
-          <h2 className="text-5xl mb-6 text-blue-800">Your Current Progress</h2>
+          <h2 className="p-8 text-5xl text-blue-800">Current Degree Progress</h2>
+
           <div className="max-w-3xl mx-auto mb-6">
-            <div className="relative h-16 bg-gray-200 rounded-full overflow-hidden">
+            <div className="relative flex items-center bg-gray-200 border-2 border-gray-300 rounded-full px-3 py-2 h-[56px]">
+              
+              {/* Progress fill */}
               <div
-                className="absolute top-0 left-0 h-full bg-gradient-to-r from-blue-700 to-green-600 rounded-full transition-all"
+                className="absolute left-0 top-0 h-full bg-gradient-to-r from-blue-700 to-green-600 rounded-full transition-all flex items-center justify-end pr-5"
                 style={{ width: `${progress}%` }}
-              ></div>
+              >
+                <span className="text-white text-sm font-bold">
+                  {progress}%
+                </span>
+              </div>
+
             </div>
           </div>
-          <button className="bg-blue-700 hover:bg-blue-800 text-white px-8 py-3 rounded-full transition-colors"
+
+          <button
+            className="bg-blue-700 hover:bg-blue-800 text-white px-8 py-3 rounded-full transition-colors font-medium"
             onClick={() => navigate('/course-plan')}
           >
             View Course Plan
           </button>
         </div>
-      </div>
 
-      {/* Main Content Grid */}
-      <div className="mx-8 mb-8">
-        <div className="bg-white rounded-3xl p-12 shadow-lg">
-          <div className="grid grid-cols-3 gap-8">
-            {/* Upload Transcript */}
-            <div className="text-center border-r-2 border-gray-200 pr-8">
-              <h3 className="text-4xl mb-8 text-gray-800">Upload Transcript</h3>
-              <button 
-                className="bg-blue-700 hover:bg-blue-800 text-white px-8 py-3 rounded-full transition-colors"
-                onClick={() => navigate('/transcript-upload')}
+        {/* Secondary Main Information */}
+        <div className="grid grid-cols-3 gap-4">
+          
+          {/* LEFT: takes 2 columns */}
+          <div className="col-span-2 bg-white rounded-3xl p-6 shadow-lg border border-gray-100 flex flex-col">
+            <h3 className="text-2xl font-semibold text-gray-800 mb-4">
+              Current Classes
+            </h3>
+
+            <div className="bg-gray-100 rounded-2xl p-3 border border-gray-200 flex-1 flex flex-col">
+              <div className="grid grid-cols-2 gap-3 overflow-y-auto flex-1"> 
+                {courses.map(course => (
+                  <div
+                    key={course.id}
+                    className="bg-white border border-gray-200 rounded-xl p-5 hover:border-blue-300 hover:shadow-sm transition-all cursor-pointer"
+                  >
+                    <p className="text-base font-semibold text-blue-600">{course.code}</p>
+                    <p className="text-lg font-semibold text-gray-800 leading-tight mt-1">
+                      {course.name}
+                    </p>
+                    <span className="text-xs text-gray-500 mt-2 block">
+                      3 Credits • In Progress
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* RIGHT COLUMN (stacked) */}
+          <div className="col-span-1 flex flex-col gap-4">
+
+            {/* Explore Degree Tracks */}
+            <div className="bg-white rounded-3xl p-6 shadow-lg border border-gray-100 flex flex-col items-center justify-center">
+              <h3 className="text-2xl font-semibold text-gray-800 mb-4 text-center">
+                Explore Degree Tracks
+              </h3>
+
+              <button
+                onClick={() => navigate('/explore-degrees')}
+                className="flex flex-col items-center justify-center bg-blue-50 hover:bg-blue-100 border-2 border-dashed border-blue-200 hover:border-blue-400 rounded-2xl p-8 transition-all group w-full"
               >
-                Upload Transcript
+                <svg
+                className="w-16 h-16 text-gray-400 group-hover:text-blue-600 group-hover:scale-110 transition-all"
+                fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                >
+                  <circle cx="11" cy="11" r="8" strokeWidth={2} />
+                  <path strokeLinecap="round" strokeWidth={2} d="M21 21l-4.35-4.35" />
+                </svg>
               </button>
             </div>
 
-            {/* Explore Degrees */}
-            <div className="text-center border-r-2 border-gray-200 px-8">
-              <h3 className="text-4xl mb-8 text-gray-800">Explore All Degree Tracks</h3>
-              <input
-                type="text"
-                placeholder="&lt;Search Bar for Degrees&gt;"
-                className="w-full bg-white border-2 border-blue-700 rounded-full px-6 py-3 outline-none focus:ring-2 focus:ring-blue-500"
-              />
-            </div>
+            {/* Upload Transcript */}
+            <div className="bg-white rounded-3xl p-6 shadow-lg border border-gray-100 flex flex-col items-center justify-center">
+              <h3 className="text-2xl font-semibold text-gray-800 mb-4 text-center">Upload Transcript</h3>
 
-            {/* Quiz */}
-            <div className="text-center pl-8">
-              <h3 className="text-4xl mb-8 text-gray-800">Quiz</h3>
-              <button className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 rounded-full transition-colors">
-                Quiz
+              <button
+                onClick={() => fileInputRef.current?.click()}
+                className="flex flex-col items-center justify-center bg-blue-50 hover:bg-blue-100 border-2 border-dashed border-blue-200 hover:border-blue-400 rounded-2xl p-8 transition-all group w-full"
+              >
+                <svg
+                  className="w-16 h-16 text-gray-400 group-hover:text-blue-600 group-hover:scale-110 transition-all"
+                  fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+                    d="M4 16v1a2 2 0 002 2h12a2 2 0 002-2v-1M12 12V4m0 0L8 8m4-4l4 4" />
+                </svg>
               </button>
+
+              <input ref={fileInputRef} type="file" className="hidden" />
             </div>
           </div>
         </div>
