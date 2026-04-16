@@ -1,6 +1,7 @@
 DROP TABLE IF EXISTS career_job_junction;
 DROP TABLE IF EXISTS user_course_junction;
 DROP TABLE IF EXISTS user_degree_junction;
+DROP TABLE IF EXISTS skill_matches;
 
 DROP TABLE IF EXISTS course_info;
 DROP TABLE IF EXISTS user_info;
