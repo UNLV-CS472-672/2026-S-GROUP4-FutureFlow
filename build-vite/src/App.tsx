@@ -57,7 +57,7 @@ const DEV_MODE = true;
 
 const DEV_USER: User = {
   email: 'dev@futureflow.local',
-  name: 'Dev User',
+  name: 'Diego',
   sub: 'dev-sub-001',
 };
 // ───────────────────────────────────────────────────────────────────────────────

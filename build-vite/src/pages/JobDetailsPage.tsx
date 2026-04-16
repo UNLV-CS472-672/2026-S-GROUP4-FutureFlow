@@ -97,7 +97,7 @@ export default function JobDetailPage() {
 
   if (!job) {
     return (
-      <div className="min-h-screen bg-gray-50 pt-5">
+      <div className="min-h-screen bg-gray-[#eeede9] pt-5">
         <AuthHeader title="Job Details" />
         <div className="p-8 text-center text-gray-500 text-lg mt-16">
           Job not found.{' '}
@@ -115,7 +115,7 @@ export default function JobDetailPage() {
     'bg-gray-100 text-gray-500';
 
   return (
-    <div className="min-h-screen bg-gray-50 pt-5">
+    <div className="min-h-screen bg-gray-[#eeede9] pt-5">
       <AuthHeader title="Job Details" />
 
       <div className="p-8 max-w-4xl mx-auto">

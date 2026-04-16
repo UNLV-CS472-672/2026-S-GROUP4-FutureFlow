@@ -30,14 +30,14 @@ export function AuthHeader({ title }: AuthHeaderProps) {
       className={`sticky top-0 z-50 bg-white flex items-center justify-between shadow-lg transition-all duration-300 ${
         scrolled
           ? "rounded-none mx-0 px-10 py-4"       // full-width flat bar
-          : "rounded-full mx-5 px-6 py-4 mt-5"   // floating pill
+          : "rounded-full mx-5 px-6 py-4"   // floating pill
       }`}
     >
       <div className="flex items-center gap-4">
         <Logo size="medium" />
-        <h1 className="text-3xl text-blue-900">{title}</h1>
+        <h1 className="text-3xl font-semibold text-blue-900">{title}</h1>
       </div>
-      <nav className="flex items-center gap-4">
+      <nav className="flex font-medium items-center gap-4">
         {/* executive change to have tab appear permanently */}
         {/* Dashboard tab/button on the header */}
         <button
