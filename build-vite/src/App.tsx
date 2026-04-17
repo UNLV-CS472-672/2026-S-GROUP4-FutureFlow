@@ -51,13 +51,11 @@ export const useAuth = () => {
 };
 
 // ─── Dev mode bypass ───────────────────────────────────────────────────────────
-// Set this to true while developing locally so you skip Cognito login entirely.
-// Flip it back to false before committing / deploying.
-const DEV_MODE = true;
+const DEV_MODE = import.meta.env.VITE_DEV_MODE === 'true';
 
 const DEV_USER: User = {
   email: 'dev@futureflow.local',
-  name: 'Diego',
+  name: 'User',
   sub: 'dev-sub-001',
 };
 // ───────────────────────────────────────────────────────────────────────────────

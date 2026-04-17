@@ -1,4 +1,4 @@
-const API_URL = "https://5w5fhmch6j.execute-api.us-east-1.amazonaws.com/default/getJobs";
+const API_URL = import.meta.env.VITE_API_URL;
 
 export interface Job {
   job_id: number;
