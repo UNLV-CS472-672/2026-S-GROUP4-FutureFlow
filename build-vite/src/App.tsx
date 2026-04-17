@@ -14,6 +14,7 @@ import TranscriptUploadPage from './pages/TranscriptUploadPage';
 import JobSearchPage from './pages/JobSearchPage';
 import JobCenterPage from './pages/JobCenterPage';
 import JobDetailsPage from './pages/JobDetailsPage';
+import DegreeSearchPage from './pages/DegreeSearchPage';
 
 interface User {
   email: string;
@@ -236,6 +237,10 @@ function App() {
           <Route
             path = "/jobs/:id"
             element = { user ? <JobDetailsPage /> : <Navigate to = "/" />}
+          />
+          <Route
+            path = "/degree-search"
+            element = { user ? <DegreeSearchPage /> : <Navigate to = "/" />}
           />
         </Routes>
       </Router>
