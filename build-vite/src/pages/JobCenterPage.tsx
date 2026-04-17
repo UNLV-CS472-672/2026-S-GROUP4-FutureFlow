@@ -13,7 +13,7 @@ const FEATURED_JOBS = [
   { id: 5, title: 'Backend Engineer', company: 'Stripe', location: 'San Francisco, CA', type: 'Full-time', salary: '$145k–$175k', logo: 'S' },
   { id: 6, title: 'DevOps Engineer', company: 'Airbnb', location: 'Remote', type: 'Contract', salary: '$110k–$140k', logo: 'Ab' },
   { id: 7, title: 'Frontend Engineer', company: 'Figma', location: 'San Francisco, CA', type: 'Full-time', salary: '$130k–$160k', logo: 'F' },
-  { id: 8, title: 'ML Engineer', company: 'OpenAI', location: 'San Francisco, CA', type: 'Full-time', salary: '$160k–$200k', logo: 'O' },
+  { id: 8, title: 'Machine Learning Engineer', company: 'OpenAI', location: 'San Francisco, CA', type: 'Full-time', salary: '$160k–$200k', logo: 'O' },
   { id: 9, title: 'Marketing Manager', company: 'Spotify', location: 'New York, NY', type: 'Full-time', salary: '$100k–$130k', logo: 'Sp' },
 ];
 
@@ -51,13 +51,13 @@ export default function JobCenterPage() {
   );
 
   return (
-    <div className="min-h-screen bg-gray-50 pt-5 flex flex-col">
+    <div className="min-h-screen bg-gray-[#eeede9] pt-5 flex flex-col">
       <AuthHeader title="Job Center" />
 
       {/* Search Bar Section */}
-      <div className="p-8 space-y-8 flex-grow flex flex-col justify-center">
+      <div className="p-8 space-y-8 flex-grow flex flex-col">
         <div className="text-center">
-          <h2 className="text-5xl mb-6 text-green-700">Explore Jobs</h2>
+          <h2 className="p-8 text-5xl text-green-700">Explore Jobs</h2>
 
           {/* Pill-shaped container wrapping both input and button */}
           <div className="max-w-3xl mx-auto flex items-center bg-white border-2 border-green-600 rounded-full px-3 py-2 focus-within:ring-2 focus-within:ring-green-500 gap-2">

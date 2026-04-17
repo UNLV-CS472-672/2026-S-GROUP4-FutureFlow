@@ -33,7 +33,9 @@ interface AuthContextType {
   loginWithCode: (code: string) => Promise<void>;
   fontSize: FontSize;
   setFontSize: (size: FontSize) => void;
-  logout: () => void; 
+  logout: () => void;
+  profilePic: string | null;
+  setProfilePic: (url: string | null) => void; 
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -53,7 +55,7 @@ const DEV_MODE = true;
 
 const DEV_USER: User = {
   email: 'dev@futureflow.local',
-  name: 'Dev User',
+  name: 'Diego',
   sub: 'dev-sub-001',
 };
 // ───────────────────────────────────────────────────────────────────────────────
@@ -63,6 +65,10 @@ function App() {
   const [tokens, setTokens] = useState<Tokens | null>(null);
   const [user, setUser] = useState<User | null>(DEV_MODE ? DEV_USER : null);
   const [isLoading, setIsLoading] = useState(!DEV_MODE);
+
+  const [profilePic, setProfilePic] = useState<string | null>(
+    () => localStorage.getItem('profilePic')
+  );
 
   const loginWithCode = async (code: string) => {
     if (user) return; // prevent duplicate calls
@@ -173,7 +179,7 @@ function App() {
   if (isLoading) return <div>Loading...</div>;
   return (
     <AuthContext.Provider
-      value={{ user, tokens, loginWithCode, logout, fontSize, setFontSize }}
+      value={{ user, tokens, loginWithCode, logout, fontSize, setFontSize, profilePic, setProfilePic }}
     >
       <Router>
         <Routes>

@@ -4,135 +4,91 @@
 
 // import React from 'react';
 import { AuthHeader } from '../components/AuthHeader';
-import { Upload } from 'lucide-react';
 import { useState } from "react";
 import { useRef } from "react";
-import { useEffect } from "react";
-// import { Logo } from '../components/Logo';
+import { uploadPDF } from "../api/uploads.api"
+import { Upload } from "lucide-react"
 
-export default function ResumeHandler() {
+export default function ResumeUploadPage(): JSX.Element {
 
-  const [file, setFile] = useState<File | null>(null);
-  const [recommendations, setRecommendations] = useState<string[]>([]);
-  const [loading, setLoading] = useState(false);
+  const [selectedFile, setSelectedFile] = useState< File | null >(null);
+  const [message, setMessage] = useState< string >("");
+  const [loading, setLoading] = useState< boolean >(false);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
-  useEffect(() => {
-    if (file && !loading) {
-      handleResumeUpload();
+  async function handleUpload(): Promise<void> {
+
+    if (!selectedFile) {
+      setMessage("Please select a PDF.");
+      return;
     }
-  }, [file])
-
-  const handleClick = () => {
-    fileInputRef.current?.click();
-  }
-
-  const handleResumeUpload = async() => {
-
-    if (!file) return;
 
     setLoading(true);
+    setMessage("Uploading...");
 
     try {
 
-      const formData = new FormData();
-      formData.append("File", file);
+      const result = await uploadPDF(selectedFile);
 
-      const res = await fetch("https://your-api-url.amazonaws.com/EXAMPLE", {
-        method: "POST",
-        body: formData,
-      });
+      setMessage("Upload successful!");
+      console.log("File URL: ", result.fileUrl);
+      
+    } catch (error: unknown) {
+    
+      if (error instanceof Error) {
+        setMessage(error.message);
+      } else {
+        setMessage("Upload failed.");
+      }
 
-      const data = await res.json();
-      console.log("Upload successful.", data);
-
-    } catch (err) {
-      console.error("Upload error.", err);
     }
 
     setLoading(false);
-
-};
-
-  const handleResumeRec = async() => {
-
-      if (!file) {
-        alert("Upload a resume first.");
-        return;
-      }
-
-      setLoading(true);
-
-      try {
-        
-        const formData = new FormData();
-        formData.append("resume", file);
-
-        const res = await fetch("https://your-api-url.amazonaws.com/EXAMPLE", {
-          method: "POST",
-          body: formData,
-        });
-        
-        const data = await res.json();
-
-        setRecommendations(data.recommendations);
-
-      } catch (err) {
-        console.error("Unexpected error occurred.");
-      }
-
-      setLoading(false);
 
   }
 
   return (
     <div className="min-h-screen bg-gray-50 pt-5">
       <AuthHeader title="Career Center" />
+
+      <h3 className="text-5xl text-center mb-3 text-blue-800 pt-10">
+        <strong> Resume Page </strong>
+      </h3>
       
       <div className="p-8">
+        <div id = "resume-upload-section" className = "bg-white rounded-3xl p-12 shadow-lg">
+          <h3 className="text-4xl text-center mb-12 text-blue-800"> Upload Your Resume </h3>
 
-        <div className = "bg-white rounded-3xl p-12 shadow-lg">
-          <h3 className="text-4xl text-center mb-12 text-blue-800">
-            FutureTools for Resume
-          </h3>
+          <input
+            type = "file"
+            accept = "application/pdf"
+            ref = {fileInputRef}
+            style = {{ display: "none" }}
+            onChange = {(e) => {
+              const file = e.target.files?.[0] ?? null;
+              setSelectedFile(file);
+            }}
+          />
 
-          <div className = "grid grid-cols-2 gap-16 max-w-5xl mx-auto">
+          <button
+            onClick = {() => {
+              if (!selectedFile) {
+                fileInputRef.current?.click();
+              } else {
+                handleUpload();
+              }
+            }}
+            className = "w-full bg-blue-50 border-2 border-blue-600 rounded-2xl p-10 hover:bg-blue-100 transition flex flex-row items-center justify-center gap-6"
+          >
+            <Upload size = {100} strokeWidth = {2} className = "text-blue-600 flex-shrink-0"/>
+            <span className = "text-2xl text-blue-800 font-semibold whitespace-nowrap">
+              { selectedFile ? selectedFile.name : "Click to Upload" }
+            </span>
+          </button>
 
-            {/* LEFT: Resume Upload */}
-            <div id="resume-upload-section" className="bg-white rounded-3xl p-12 shadow-lg">
-              <h3 className="text-4xl text-center mb-12 text-blue-800"> Upload Your Resume </h3>
-              <button onClick={handleClick}
-                      style = {{
-                        margin: "0 auto",
-                        backgroundColor: "#eff6ff", // bg-blue-50
-                        borderWidth: "2px",         // border-2
-                        borderStyle: "solid",
-                        borderColor: "#2563eb",     // border-blue-600
-                        borderRadius: "1rem",       // rounded-2xl
-                        padding: "3rem",            // p-12
-                        display: "flex",            // flex
-                        alignItems: "center",       // items-center
-                        justifyContent: "center",   // justify-center
-                        minHeight: "200px",         // min-h-[200px]
-                        cursor: "pointer",          // cursor-pointer
-                        transition: "background-color 0.2s ease-in-out", // transition-colors
-                        outline: "none",
-                      }}>
-                {file ? file.name : "Upload Resume" }
-              </button>
-              <input
-                type = "file"
-                ref = {fileInputRef}
-                style = {{ display: "none" }}
-                onChange = {(e) => {
-                  if (e.target.files) {
-                    setFile(e.target.files[0]);
-                  }
-                }}
-              />
-            </div>
+        </div>
 
-            {/* RIGHT: Resume Recommender */}
+            {/* RIGHT: Resume Recommender }
             <div id="resume-recommender-section" className="bg-white rounded-3xl p-12 shadow-lg">
               <h3 className="text-4xl text-center mb-12 text-blue-800"> Resume Recommender </h3>
               <button onClick = {handleResumeRec}
@@ -152,11 +108,9 @@ export default function ResumeHandler() {
                         transition: "background-color 0.2s ease-in-out",
                       }}> Resume Recommender </button>
             </div>
+            */}
 
           </div>
         </div>
-
-      </div>
-    </div>
   );
 }
