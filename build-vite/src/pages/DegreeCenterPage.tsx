@@ -96,7 +96,7 @@ export default function DegreeCenterPage() {
               </h3>
 
               <button
-                onClick={() => navigate('/explore-degrees')}
+                onClick={() => navigate('/degree-search')}
                 className="flex flex-col items-center justify-center bg-blue-50 hover:bg-blue-100 border-2 border-dashed border-blue-200 hover:border-blue-400 rounded-2xl p-8 transition-all group w-full"
               >
                 <svg
