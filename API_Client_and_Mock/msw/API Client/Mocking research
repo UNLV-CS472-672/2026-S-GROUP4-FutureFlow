@@ -1,0 +1,39 @@
+Document 1: API Client & Mocking Layer
+Summary
+
+This document describes the API client and mocking layer used in FutureFlow to support frontend development and testing. This layer simulates backend interactions and allows features to function without a fully implemented backend.
+
+Rationale
+
+To avoid blocking frontend development, an API abstraction layer is used alongside mocked data. This enables the application to behave as if it is communicating with a real backend while still under development.
+
+Design Overview
+API Client
+
+The API client serves as the interface between the frontend and backend. It is responsible for:
+
+Sending and handling API requests
+Standardizing data access across the application
+Providing a consistent structure for future backend integration
+Mocking Layer
+
+The mocking layer simulates API responses using predefined data. It:
+
+Returns mock career roles and skill data
+Simulates missing skill identification
+Provides fake progress tracking data for UI testing
+Benefits
+Enables parallel frontend and backend development
+Provides consistent and predictable test data
+Improves debugging and testing efficiency
+Reduces integration risks later in development
+Scope Control
+
+This layer:
+
+Does not implement real backend logic
+Does not persist user data
+Exists solely to simulate API interactions during development
+Conclusion
+
+The API client and mocking layer allow FutureFlow to build and test features independently of backend completion, ensuring efficient and scalable development.
