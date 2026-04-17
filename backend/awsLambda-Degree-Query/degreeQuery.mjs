@@ -8,19 +8,6 @@ let pool;
 pool = mariadbLib.createPool
 ({
 
-    /* 
-      Commented out for testing purposes (will be used for actual database)
-    */
-  //   host: process.env.DB_HOST,
-  //   port: Number(process.env.DB_PORT || 3306),
-  //   user: "pastflow",
-  //   password: "slowstart401$",
-  //   database: "futureflow",
-  //   connectionLimit: 5,
-  // //   ssl: 
-  // // {
-  // //   rejectUnauthorized: false
-  // // }
 
     host: process.env.DB_HOST,
     port: Number(process.env.DB_PORT || 3306),
