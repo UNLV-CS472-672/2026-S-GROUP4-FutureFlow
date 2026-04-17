@@ -3,12 +3,10 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import LandingPage from './pages/LandingPage';
 import DashboardPage from './pages/DashboardPage';
 import DegreeCenterPage from './pages/DegreeCenterPage';
-import CareerCenterPage from './pages/CareerCenterPage';
 import SettingsPage from './pages/SettingsPage';
 import AboutPage from './pages/AboutPage';
 import EducationPage from './pages/EducationPage';
 import ResumeUploadPage from './pages/ResumeUploadPage';
-import CareerQuiz from './pages/CareerQuiz';
 import CoursePlanPage from './pages/CoursePlanPage';
 import TranscriptUploadPage from './pages/TranscriptUploadPage';
 import JobSearchPage from './pages/JobSearchPage';
@@ -198,10 +196,6 @@ function App() {
             element={user ? <DegreeCenterPage /> : <Navigate to="/" />}
           />
           <Route
-            path="/career-center"
-            element={user ? <CareerCenterPage /> : <Navigate to="/" />}
-          />
-          <Route
             path="/job-center"
             element={user ? <JobCenterPage /> : <Navigate to="/" />}
           />
@@ -216,10 +210,6 @@ function App() {
           <Route
             path="/resume-upload"
             element={user ? <ResumeUploadPage /> : <Navigate to="/" />}
-          />
-          <Route
-            path="/career-quiz"
-            element={user ? <CareerQuiz /> : <Navigate to="/" />}
           />
           <Route
             path="/course-plan"
