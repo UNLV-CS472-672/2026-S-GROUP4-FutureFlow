@@ -73,9 +73,10 @@ CREATE TABLE user_info (
     level_education VARCHAR(50) DEFAULT NULL,
     graduation_year INT(16) DEFAULT NULL,
     experience VARCHAR(500) DEFAULT NULL,
+    skills VARCHAR(500) DEFAULT NULL,
     college VARCHAR(255) NULL,
     career_name VARCHAR(50) NULL,
-    skills JSON DEFAULT NULL,
+    skills_file JSON DEFAULT NULL,
     dark_mode BOOLEAN DEFAULT FALSE,
     text_size INT(16) DEFAULT 10,
     CONSTRAINT fk_ci FOREIGN KEY(college) REFERENCES college_info(college_name),
@@ -100,6 +101,7 @@ CREATE TABLE skill_matches (
 CREATE TABLE user_course_junction (
     user_id int(32) NOT NULL,
     course_id int(32) NOT NULL,
+    semester VARCHAR(32) NOT NULL,
     PRIMARY KEY(user_id, course_id),
     CONSTRAINT fk_ui FOREIGN KEY(user_id) REFERENCES user_info(user_id),
     CONSTRAINT fk_cij FOREIGN KEY(course_id) REFERENCES course_info(course_id)

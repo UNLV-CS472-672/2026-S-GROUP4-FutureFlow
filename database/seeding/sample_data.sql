@@ -48,17 +48,17 @@ INSERT INTO course_info VALUES
     (4, "EGG101", "Introduction to Engineering Ethics", "Engineering", "University of Nevada Las Vegas");
 
 INSERT INTO user_info VALUES
-    (1, "password123", "example@gmail.com", NULL,  NULL,  NULL,  NULL, NULL, "Computer Science",  NULL, "High School", 2026,  NULL, "University of Nevada Las Vegas", "Computer Science", NULL, TRUE, 10),
-    (2, "example321", "email@yahoo.com", 89149, "7021234567",  NULL,  NULL, NULL, "Graphic Design",  NULL, "Bachlor's of Art", 2022,  NULL, "College of Southern Nevada", "Graphic Design", NULL, TRUE, 12),
-    (3, "anotherpass", "something@myspace.com", 12345, "0987654321",  NULL,  NULL, NULL, "Nuclear Engineering",  NULL, "Master's Degree", 2011,  NULL, "University of Nevada Las Vegas", "Nuclear Engineering", NULL, FALSE, 11),
-    (4, "placeholder", "johndoe@gmail.com", NULL,  NULL,  NULL,  NULL, "Plumbing",  NULL, NULL, "Trade School", 2020,  NULL, NULL, "Plumbing", NULL, FALSE, 27);
+    (1, "password123", "example@gmail.com", NULL,  NULL,  NULL,  NULL, NULL, "Computer Science",  NULL, "High School", 2026,  NULL, NULL, "University of Nevada Las Vegas", "Computer Science", NULL, TRUE, 10),
+    (2, "example321", "email@yahoo.com", 89149, "7021234567",  NULL,  NULL, NULL, "Graphic Design",  NULL, "Bachlor's of Art", 2022,  NULL, NULL, "College of Southern Nevada", "Graphic Design", NULL, TRUE, 12),
+    (3, "anotherpass", "something@myspace.com", 12345, "0987654321",  NULL,  NULL, NULL, "Nuclear Engineering",  NULL, "Master's Degree", 2011,  NULL, NULL, "University of Nevada Las Vegas", "Nuclear Engineering", NULL, FALSE, 11),
+    (4, "placeholder", "johndoe@gmail.com", NULL,  NULL,  NULL,  NULL, "Plumbing",  NULL, NULL, "Trade School", 2020,  NULL, NULL, NULL, "Plumbing", NULL, FALSE, 27);
 
 INSERT INTO user_course_junction VALUES
-    (1, 1),
-    (1, 2),
-    (1, 3),
-    (3, 3),
-    (3, 4);
+    (1, 1, "FALL24"),
+    (1, 2, "FALL25"),
+    (1, 3, "SPRING25"),
+    (3, 3, "SUMMER25"),
+    (3, 4, "SPRING26");
 
 INSERT INTO user_degree_junction VALUES
     (1, "Computer Science"),
