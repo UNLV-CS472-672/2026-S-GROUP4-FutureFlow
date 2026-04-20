@@ -47,14 +47,6 @@ export function AuthHeader({ title }: AuthHeaderProps) {
           DASHBOARD
         </button>
 
-        {/* Career Center tab on the header */}
-        <button
-          onClick={() => navigate('/career-center')}
-          className="hover:underline text-blue-800"
-        >
-          CAREER CENTER
-        </button>
-
         {/* Degree Center tab on the header */}
         <button
           onClick={() => navigate('/degree-center')}
