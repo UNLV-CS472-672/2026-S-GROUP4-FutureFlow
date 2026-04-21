@@ -84,7 +84,7 @@ export default function JobSearchPage() {
         {/* Filters row */}
         <div className="flex flex-wrap items-center gap-2 mb-5">
           <span className="text-sm text-gray-400 mr-1">Type:</span>
-          {[['all', 'All'], ['internship', 'Internship'], ['full-time', 'Full-time'], ['part-time', 'Part-time']].map(([val, label]) => (
+          {[['all', 'All'], ['internship', 'Internship'], ['Full time', 'Full time'], ['Part time', 'Part time']].map(([val, label]) => (
             <button
               key={val}
               onClick={() => setFilter(setFilterType)(val)}
