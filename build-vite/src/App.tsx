@@ -6,9 +6,7 @@ import DegreeCenterPage from './pages/DegreeCenterPage';
 import SettingsPage from './pages/SettingsPage';
 import AboutPage from './pages/AboutPage';
 import EducationPage from './pages/EducationPage';
-import ResumeUploadPage from './pages/ResumeUploadPage';
 import CoursePlanPage from './pages/CoursePlanPage';
-import TranscriptUploadPage from './pages/TranscriptUploadPage';
 import JobSearchPage from './pages/JobSearchPage';
 import JobCenterPage from './pages/JobCenterPage';
 import JobDetailsPage from './pages/JobDetailsPage';
@@ -73,23 +71,24 @@ function App() {
     if (user) return; // prevent duplicate calls
 
     try {
+      const clientId = import.meta.env.VITE_COGNITO_CLIENT_ID;
+      const cognitoDomain = import.meta.env.VITE_COGNITO_DOMAIN;
+      const redirectUri = import.meta.env.VITE_APP_URL;
+
       const params = new URLSearchParams({
         grant_type: 'authorization_code',
-        client_id: '58koplp30bju3c58suq5505b8q',
+        client_id: clientId,
         code,
-        redirect_uri: import.meta.env.VITE_APP_URL,
+        redirect_uri: redirectUri,
       });
 
-      const res = await fetch(
-        'https://us-east-1j1ioyaxog.auth.us-east-1.amazoncognito.com/oauth2/token',
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-          },
-          body: params.toString(),
-        }
-      );
+      const res = await fetch(`${cognitoDomain}/oauth2/token`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: params.toString(),
+      });
 
       if (!res.ok) {
         throw new Error('Token exchange failed');
@@ -167,9 +166,9 @@ function App() {
     }
 
     // Redirect to Cognito logout
-    const clientId = "58koplp30bju3c58suq5505b8q";
+    const clientId = import.meta.env.VITE_COGNITO_CLIENT_ID;
+    const cognitoDomain = import.meta.env.VITE_COGNITO_DOMAIN;
     const logoutUri = import.meta.env.VITE_APP_URL;
-    const cognitoDomain = "https://us-east-1j1ioyaxog.auth.us-east-1.amazoncognito.com";
 
     window.location.href = `${cognitoDomain}/logout?client_id=${clientId}&logout_uri=${encodeURIComponent(logoutUri)}`;
   };
@@ -207,16 +206,8 @@ function App() {
             element={user ? <EducationPage /> : <Navigate to="/" />}
           />
           <Route
-            path="/resume-upload"
-            element={user ? <ResumeUploadPage /> : <Navigate to="/" />}
-          />
-          <Route
             path="/course-plan"
             element={user ? <CoursePlanPage /> : <Navigate to="/" />}
-          />
-          <Route
-            path="/transcript-upload"
-            element={user ? <TranscriptUploadPage /> : <Navigate to="/" />}
           />
           <Route
             path = "/jobs"
@@ -237,3 +228,4 @@ function App() {
 }
 
 export default App;
+ 
