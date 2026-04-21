@@ -1,7 +1,7 @@
 import { useState, useMemo } from 'react';
 import { useNavigate, useSearchParams, useLocation } from 'react-router-dom';
 import { AuthHeader } from '../components/AuthHeader';
-import { useJobs } from '../hooks/useJobs';
+//import { useJobs } from '../hooks/useJobs';
 
 const PAGE_SIZE = 5;
 
