@@ -1,10 +1,10 @@
 // import React from 'react';
-import { NonAuthHeader } from '../components/NonAuthHeader';
+import { AboutUsHeader } from "../components/AboutUsHeader";
 
 export default function AboutPage() {
   return (
     <div className="min-h-screen bg-gray-50 pt-5">
-      <NonAuthHeader title="Future Flow"/>
+      <AboutUsHeader title="Future Flow"/>
 
 
   {/*
