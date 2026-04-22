@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from "react";
+import { Logo } from '../components/Logo';
 import { useAuth } from "../App";
-import { NonAuthHeader } from '../components/NonAuthHeader';
 import '../index.css';
 
 export default function LandingPage() {
@@ -33,7 +33,34 @@ export default function LandingPage() {
 
     <div className="min-h-screen pt-5">
 
-      <NonAuthHeader title = "Homepage"/>
+    {/* Header */}
+      <header className="bg-white rounded-3xl md:rounded-full px-4 py-4 sm:px-6 shadow-lg mb-8 md:mb-12">
+        <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+          <div className="flex justify-center md:justify-start">
+            <Logo size="medium" />
+          </div>
+
+          <p className="text-base sm:text-lg md:text-xl text-blue-800 text-center md:text-left">
+            {/* Insert SHORT slogan right here! */}
+          </p>
+
+          <nav className="flex flex-col gap-3 sm:flex-row sm:justify-center md:justify-end md:gap-4">
+            <button
+              onClick={() => navigate('/about')}
+              className="hover:underline text-blue-800 text-sm sm:text-base"
+            >
+              ABOUT US
+            </button>
+
+            <button
+              onClick={login}
+              className="hover:underline text-blue-800 text-sm sm:text-base"
+            >
+              LOGIN / SIGN-UP
+            </button>
+          </nav>
+        </div>
+      </header>
 
       <div style = {{ position: "relative", minHeight: "100vh", overflow: "hidden" }}>
 
