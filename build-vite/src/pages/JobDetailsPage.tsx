@@ -93,14 +93,14 @@ export default function JobDetailPage() {
   const location = useLocation();
 
   const job = JOBS.find((j) => j.id === Number(id));
-  const from = location.state?.from || '/jobs'; // fallback if no state
+  const from = location.state?.from || '/jobs';
 
   if (!job) {
     return (
-      <div className="min-h-screen bg-gray-[#eeede9] pt-5">
+      <div className="min-h-screen bg-[#eeede9] pt-3 sm:pt-5">
         <AuthHeader title="Job Details" />
-        <div className="p-8 text-center text-gray-500 text-lg mt-16">
-          Job not found.{' '}
+        <div className="px-4 py-8 text-center text-gray-500 text-base sm:text-lg mt-10 sm:mt-16">
+          Job not found.{` `}
           <button onClick={() => navigate('/jobs')} className="text-green-600 underline">
             Back to listings
           </button>
@@ -115,32 +115,33 @@ export default function JobDetailPage() {
     'bg-gray-100 text-gray-500';
 
   return (
-    <div className="min-h-screen bg-gray-[#eeede9] pt-5">
+    <div className="min-h-screen bg-[#eeede9] pt-3 sm:pt-5">
       <AuthHeader title="Job Details" />
 
-      <div className="p-8 max-w-4xl mx-auto">
-
-        {/* Back link */}
+      <div className="px-3 py-4 sm:px-5 sm:py-6 lg:p-8 max-w-4xl mx-auto">
         <button
           onClick={() => navigate(from)}
-          className="text-sm text-gray-400 hover:text-gray-600 mb-6 flex items-center gap-1 transition-colors"
+          className="text-sm text-gray-400 hover:text-gray-600 mb-4 sm:mb-6 flex items-center gap-1 transition-colors"
         >
           ← Back
         </button>
 
-        {/* Header card */}
-        <div className="bg-white rounded-3xl p-8 shadow-lg mb-4">
-          <div className="flex items-start gap-5">
+        <div className="bg-white rounded-3xl p-5 sm:p-6 lg:p-8 shadow-lg mb-4">
+          <div className="flex flex-col sm:flex-row sm:items-start gap-4 sm:gap-5">
             <div
-              className="w-14 h-14 rounded-2xl flex items-center justify-center font-medium text-xl flex-shrink-0"
+              className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl flex items-center justify-center font-medium text-lg sm:text-xl flex-shrink-0"
               style={{ background: job.logoColor + '18', color: job.logoColor, border: `1px solid ${job.logoColor}35` }}
             >
               {job.logo}
             </div>
 
-            <div className="flex-1">
-              <h2 className="text-3xl text-gray-900 mb-1">{job.title}</h2>
-              <p className="text-gray-500 mb-3">{job.company} · {job.location}</p>
+            <div className="flex-1 min-w-0">
+              <h2 className="text-2xl sm:text-3xl text-gray-900 mb-1 leading-tight">
+                {job.title}
+              </h2>
+              <p className="text-sm sm:text-base text-gray-500 mb-3">
+                {job.company} · {job.location}
+              </p>
               <div className="flex flex-wrap gap-2">
                 <span className={`text-xs px-3 py-1 rounded-full font-medium ${scoreColor}`}>
                   {job.matchScore}% match
@@ -149,39 +150,44 @@ export default function JobDetailPage() {
                   {job.type === 'internship' ? 'Internship' : 'Full-time'}
                 </span>
                 {job.remote && (
-                  <span className="text-xs px-3 py-1 rounded-full bg-gray-100 text-gray-500">Remote</span>
+                  <span className="text-xs px-3 py-1 rounded-full bg-gray-100 text-gray-500">
+                    Remote
+                  </span>
                 )}
                 {job.tags.map((t) => (
-                  <span key={t} className="text-xs px-3 py-1 rounded-full bg-gray-100 text-gray-500">{t}</span>
+                  <span key={t} className="text-xs px-3 py-1 rounded-full bg-gray-100 text-gray-500">
+                    {t}
+                  </span>
                 ))}
               </div>
             </div>
 
-            <div className="text-right flex-shrink-0">
-              <p className="text-xl font-medium text-gray-800">{job.salary}</p>
-              <p className="text-sm text-gray-400 mt-1">Posted {timeAgo(job.posted)}</p>
+            <div className="sm:text-right flex-shrink-0">
+              <p className="text-lg sm:text-xl font-medium text-gray-800">
+                {job.salary}
+              </p>
+              <p className="text-sm text-gray-400 mt-1">
+                Posted {timeAgo(job.posted)}
+              </p>
             </div>
           </div>
 
-          {/* Apply buttons */}
-          <div className="flex gap-3 mt-6 pt-6 border-t border-gray-100">
-            <button className="flex-1 bg-green-600 hover:bg-green-700 text-white py-3 rounded-full font-medium transition-colors">
+          <div className="flex gap-3 mt-5 sm:mt-6 pt-5 sm:pt-6 border-t border-gray-100">
+            <button className="flex-1 bg-green-600 hover:bg-green-700 text-white py-3 rounded-full font-medium transition-colors text-sm sm:text-base">
               Apply now
             </button>
           </div>
         </div>
 
-        {/* Content grid */}
-        <div className="grid grid-cols-2 gap-4">
-          {/* Summary + Responsibilities */}
-          <div className="bg-white rounded-3xl p-8 shadow-lg">
-            <h3 className="text-2xl text-blue-800 mb-4">Posting Summary</h3>
-            <p className="text-gray-600 leading-relaxed mb-6">{job.summary}</p>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          <div className="bg-white rounded-3xl p-5 sm:p-6 lg:p-8 shadow-lg">
+            <h3 className="text-xl sm:text-2xl text-blue-800 mb-4">Posting Summary</h3>
+            <p className="text-sm sm:text-base text-gray-600 leading-relaxed mb-6">{job.summary}</p>
 
-            <h4 className="text-lg text-gray-800 mb-3">Responsibilities</h4>
+            <h4 className="text-base sm:text-lg text-gray-800 mb-3">Responsibilities</h4>
             <ul className="space-y-2">
               {job.responsibilities.map((r, i) => (
-                <li key={i} className="flex items-start gap-2 text-gray-600 text-sm">
+                <li key={i} className="flex items-start gap-2 text-gray-600 text-sm sm:text-base">
                   <span className="text-green-500 mt-0.5 flex-shrink-0">✓</span>
                   {r}
                 </li>
@@ -189,12 +195,11 @@ export default function JobDetailPage() {
             </ul>
           </div>
 
-          {/* Requirements */}
-          <div className="bg-white rounded-3xl p-8 shadow-lg">
-            <h3 className="text-2xl text-blue-800 mb-4">Requirements</h3>
+          <div className="bg-white rounded-3xl p-5 sm:p-6 lg:p-8 shadow-lg">
+            <h3 className="text-xl sm:text-2xl text-blue-800 mb-4">Requirements</h3>
             <ul className="space-y-3">
               {job.requirements.map((r, i) => (
-                <li key={i} className="flex items-start gap-2 text-gray-600 text-sm">
+                <li key={i} className="flex items-start gap-2 text-gray-600 text-sm sm:text-base">
                   <span className="text-blue-500 mt-0.5 flex-shrink-0">→</span>
                   {r}
                 </li>
@@ -202,7 +207,6 @@ export default function JobDetailPage() {
             </ul>
           </div>
         </div>
-
       </div>
     </div>
   );

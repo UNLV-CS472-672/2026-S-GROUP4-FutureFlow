@@ -8,7 +8,6 @@ export default function LandingPage() {
   const navigate = useNavigate();
   const { loginWithCode } = useAuth();
 
-  // Handle Cognito redirect (?code=...)
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const code = params.get("code");
@@ -20,12 +19,11 @@ export default function LandingPage() {
     }
   }, [loginWithCode, navigate]);
 
-  // Redirect user to Cognito Hosted UI
   const login = () => {
-    const clientId = "58koplp30bju3c58suq5505b8q";
-    const domain = "https://us-east-1j1ioyaxog.auth.us-east-1.amazoncognito.com";
+    const clientId = import.meta.env.VITE_COGNITO_CLIENT_ID;
+    const domain = import.meta.env.VITE_COGNITO_DOMAIN;
     const redirectUri = import.meta.env.VITE_APP_URL;
-    const scope = "email+openid+profile";
+    const scope = "email openid profile";
 
     window.location.href =
       `${domain}/login?client_id=${clientId}&response_type=code&scope=${scope}&redirect_uri=${redirectUri}`;

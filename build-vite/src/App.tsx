@@ -3,17 +3,14 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import LandingPage from './pages/LandingPage';
 import DashboardPage from './pages/DashboardPage';
 import DegreeCenterPage from './pages/DegreeCenterPage';
-import CareerCenterPage from './pages/CareerCenterPage';
 import SettingsPage from './pages/SettingsPage';
 import AboutPage from './pages/AboutPage';
 import EducationPage from './pages/EducationPage';
-import ResumeUploadPage from './pages/ResumeUploadPage';
-import CareerQuiz from './pages/CareerQuiz';
 import CoursePlanPage from './pages/CoursePlanPage';
-import TranscriptUploadPage from './pages/TranscriptUploadPage';
 import JobSearchPage from './pages/JobSearchPage';
 import JobCenterPage from './pages/JobCenterPage';
 import JobDetailsPage from './pages/JobDetailsPage';
+import DegreeSearchPage from './pages/DegreeSearchPage';
 
 interface User {
   email: string;
@@ -51,13 +48,11 @@ export const useAuth = () => {
 };
 
 // ─── Dev mode bypass ───────────────────────────────────────────────────────────
-// Set this to true while developing locally so you skip Cognito login entirely.
-// Flip it back to false before committing / deploying.
-const DEV_MODE = true;
+const DEV_MODE = import.meta.env.VITE_DEV_MODE === 'true';
 
 const DEV_USER: User = {
   email: 'dev@futureflow.local',
-  name: 'Diego',
+  name: 'User',
   sub: 'dev-sub-001',
 };
 // ───────────────────────────────────────────────────────────────────────────────
@@ -76,23 +71,24 @@ function App() {
     if (user) return; // prevent duplicate calls
 
     try {
+      const clientId = import.meta.env.VITE_COGNITO_CLIENT_ID;
+      const cognitoDomain = import.meta.env.VITE_COGNITO_DOMAIN;
+      const redirectUri = import.meta.env.VITE_APP_URL;
+
       const params = new URLSearchParams({
         grant_type: 'authorization_code',
-        client_id: '58koplp30bju3c58suq5505b8q',
+        client_id: clientId,
         code,
-        redirect_uri: import.meta.env.VITE_APP_URL,
+        redirect_uri: redirectUri,
       });
 
-      const res = await fetch(
-        'https://us-east-1j1ioyaxog.auth.us-east-1.amazoncognito.com/oauth2/token',
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-          },
-          body: params.toString(),
-        }
-      );
+      const res = await fetch(`${cognitoDomain}/oauth2/token`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: params.toString(),
+      });
 
       if (!res.ok) {
         throw new Error('Token exchange failed');
@@ -170,9 +166,9 @@ function App() {
     }
 
     // Redirect to Cognito logout
-    const clientId = "58koplp30bju3c58suq5505b8q";
+    const clientId = import.meta.env.VITE_COGNITO_CLIENT_ID;
+    const cognitoDomain = import.meta.env.VITE_COGNITO_DOMAIN;
     const logoutUri = import.meta.env.VITE_APP_URL;
-    const cognitoDomain = "https://us-east-1j1ioyaxog.auth.us-east-1.amazoncognito.com";
 
     window.location.href = `${cognitoDomain}/logout?client_id=${clientId}&logout_uri=${encodeURIComponent(logoutUri)}`;
   };
@@ -198,10 +194,6 @@ function App() {
             element={user ? <DegreeCenterPage /> : <Navigate to="/" />}
           />
           <Route
-            path="/career-center"
-            element={user ? <CareerCenterPage /> : <Navigate to="/" />}
-          />
-          <Route
             path="/job-center"
             element={user ? <JobCenterPage /> : <Navigate to="/" />}
           />
@@ -214,20 +206,8 @@ function App() {
             element={user ? <EducationPage /> : <Navigate to="/" />}
           />
           <Route
-            path="/resume-upload"
-            element={user ? <ResumeUploadPage /> : <Navigate to="/" />}
-          />
-          <Route
-            path="/career-quiz"
-            element={user ? <CareerQuiz /> : <Navigate to="/" />}
-          />
-          <Route
             path="/course-plan"
             element={user ? <CoursePlanPage /> : <Navigate to="/" />}
-          />
-          <Route
-            path="/transcript-upload"
-            element={user ? <TranscriptUploadPage /> : <Navigate to="/" />}
           />
           <Route
             path = "/jobs"
@@ -237,6 +217,10 @@ function App() {
             path = "/jobs/:id"
             element = { user ? <JobDetailsPage /> : <Navigate to = "/" />}
           />
+          <Route
+            path = "/degree-search"
+            element = { user ? <DegreeSearchPage /> : <Navigate to = "/" />}
+          />
         </Routes>
       </Router>
     </AuthContext.Provider>
@@ -244,3 +228,4 @@ function App() {
 }
 
 export default App;
+ 
