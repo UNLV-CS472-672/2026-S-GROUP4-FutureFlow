@@ -205,6 +205,13 @@ export default function JobSearchPage() {
                     </p>
                   </div>
                 </div>
+
+                <div className="text-right flex-shrink-0">
+                  <p className="font-medium text-gray-800 text-sm">
+                    ${Number(job.pay).toLocaleString()}
+                  </p>
+                </div>
+
               </div>
             ))
           )}
