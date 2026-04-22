@@ -23,6 +23,7 @@ CREATE TABLE job_info (
     job_type VARCHAR(50) NOT NULL,
     duration VARCHAR(50),
     job_description TEXT,
+    link VARCHAR(100),
     extracted_skills JSON
 );
 
@@ -77,6 +78,8 @@ CREATE TABLE user_info (
     college VARCHAR(255) NULL,
     career_name VARCHAR(50) NULL,
     skills_file JSON DEFAULT NULL,
+    saved_jobs JSON DEFAULT NULL,
+    applied_jobs JSON DEFAULT NULL,
     dark_mode BOOLEAN DEFAULT FALSE,
     text_size INT(16) DEFAULT 10,
     CONSTRAINT fk_ci FOREIGN KEY(college) REFERENCES college_info(college_name),

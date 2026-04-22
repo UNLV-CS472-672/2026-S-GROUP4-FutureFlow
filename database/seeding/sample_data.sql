@@ -16,13 +16,13 @@ INSERT INTO degree_info VALUES
 
 
 INSERT INTO job_info VALUES
-    (1, "Las Vegas", "ACME", 60000, "Data Scientist", "Full time",  NULL, NULL, NULL),
-    (2, "Las Vegas", "ACME", 50000, "Graphic Designer", "Full time",  NULL,NULL, NULL),
-    (3, "Las Vegas", "MSTS", 80000, "Security Officer", "Full time",  NULL, NULL, NULL),
-    (4, "Las Vegas", "MSTS", 45000, "Associate in Information Technology", "Part time",  NULL, NULL, NULL),
-    (5, "Livermore", "LLNL", 110000, "DevOps Engineer", "Full time",  NULL, NULL, NULL),
-    (6, "Livermore", "LLNL", 100000, "Nuclear Engineer", "Full time",  NULL, NULL, NULL),
-    (7, "North Las Vegas", "MSTS", 50000, "Pipefitter", "Full time", "5 years", NULL, NULL);
+    (1, "Las Vegas", "ACME", 60000, "Data Scientist", "Full time",  NULL, NULL, NULL, NULL),
+    (2, "Las Vegas", "ACME", 50000, "Graphic Designer", "Full time",  NULL,NULL, NULL, NULL),
+    (3, "Las Vegas", "MSTS", 80000, "Security Officer", "Full time",  NULL, NULL, NULL, NULL),
+    (4, "Las Vegas", "MSTS", 45000, "Associate in Information Technology", "Part time",  NULL, NULL, NULL, NULL),
+    (5, "Livermore", "LLNL", 110000, "DevOps Engineer", "Full time",  NULL, NULL, NULL, NULL),
+    (6, "Livermore", "LLNL", 100000, "Nuclear Engineer", "Full time",  NULL, NULL, NULL, NULL),
+    (7, "North Las Vegas", "MSTS", 50000, "Pipefitter", "Full time", "5 years", NULL, NULL, NULL);
 
 INSERT INTO career_info VALUES
     ("Plumbing",  NULL,"Trade school"),
@@ -48,10 +48,10 @@ INSERT INTO course_info VALUES
     (4, "EGG101", "Introduction to Engineering Ethics", "Engineering", "University of Nevada Las Vegas");
 
 INSERT INTO user_info VALUES
-    (1, "password123", "example@gmail.com", NULL,  NULL,  NULL,  NULL, NULL, "Computer Science",  NULL, "High School", 2026,  NULL, NULL, "University of Nevada Las Vegas", "Computer Science", NULL, TRUE, 10),
-    (2, "example321", "email@yahoo.com", 89149, "7021234567",  NULL,  NULL, NULL, "Graphic Design",  NULL, "Bachlor's of Art", 2022,  NULL, NULL, "College of Southern Nevada", "Graphic Design", NULL, TRUE, 12),
-    (3, "anotherpass", "something@myspace.com", 12345, "0987654321",  NULL,  NULL, NULL, "Nuclear Engineering",  NULL, "Master's Degree", 2011,  NULL, NULL, "University of Nevada Las Vegas", "Nuclear Engineering", NULL, FALSE, 11),
-    (4, "placeholder", "johndoe@gmail.com", NULL,  NULL,  NULL,  NULL, "Plumbing",  NULL, NULL, "Trade School", 2020,  NULL, NULL, NULL, "Plumbing", NULL, FALSE, 27);
+    (1, "password123", "example@gmail.com", NULL,  NULL,  NULL,  NULL, NULL, "Computer Science",  NULL, "High School", 2026,  NULL, NULL, "University of Nevada Las Vegas", "Computer Science", NULL, NULL, NULL, TRUE, 10),
+    (2, "example321", "email@yahoo.com", 89149, "7021234567",  NULL,  NULL, NULL, "Graphic Design",  NULL, "Bachlor's of Art", 2022,  NULL, NULL, "College of Southern Nevada", "Graphic Design", NULL, NULL, NULL, TRUE, 12),
+    (3, "anotherpass", "something@myspace.com", 12345, "0987654321",  NULL,  NULL, NULL, "Nuclear Engineering",  NULL, "Master's Degree", 2011,  NULL, NULL, "University of Nevada Las Vegas", "Nuclear Engineering", NULL, NULL, NULL, FALSE, 11),
+    (4, "placeholder", "johndoe@gmail.com", NULL,  NULL,  NULL,  NULL, "Plumbing",  NULL, NULL, "Trade School", 2020,  NULL, NULL, NULL, "Plumbing", NULL, NULL, NULL, FALSE, 27);
 
 INSERT INTO user_course_junction VALUES
     (1, 1, "FALL24"),
