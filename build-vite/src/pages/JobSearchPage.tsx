@@ -108,9 +108,9 @@ export default function JobSearchPage() {
 
             {[
               ['all', 'All'],
-              ['internship', 'Internship'],
-              ['full-time', 'Full-time'],
-              ['part-time', 'Part-time'],
+              ['Internship', 'Internship'],
+              ['Full time', 'Full-time'],
+              ['Part time', 'Part-time'],
             ].map(([val, label]) => (
               <button
                 key={val}
