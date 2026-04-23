@@ -1,25 +1,13 @@
-/// recommendations.test.js
-
-// Import the Lambda handler function we want to test
 import { handler } from "./recommendations.mjs";
 
-// Describe block groups all tests related to getRecommendations Lambda
-describe("getRecommendations Lambda", () => {
-
-  // Test case: when no body is provided in the request
+describe("resume recommendations Lambda", () => {
   test("returns 400 when body is missing", async () => {
-    const event = {}; // Simulates an empty request event
+    const event = {};
 
-    // Call the Lambda handler
     const response = await handler(event);
-
-    // Parse the JSON response body
     const parsedBody = JSON.parse(response.body);
 
-    // Expect HTTP status code 400 (Bad Request)
     expect(response.statusCode).toBe(400);
-
-    // Expect a specific error response structure
     expect(parsedBody).toEqual({
       error: {
         code: "MISSING_BODY",
@@ -28,129 +16,84 @@ describe("getRecommendations Lambda", () => {
     });
   });
 
-  // Test case: missingSkills should be an array, not a string
-  test("returns 400 when missingSkills is not an array", async () => {
+  test("returns 400 when parsedResume is missing", async () => {
     const event = {
       body: JSON.stringify({
-        missingSkills: "TypeScript", // Invalid: should be an array
-        userType: "student",
+        jobQuery: "frontend developer internship",
       }),
     };
 
     const response = await handler(event);
     const parsedBody = JSON.parse(response.body);
 
-    // Expect HTTP 400 due to invalid input
     expect(response.statusCode).toBe(400);
-
-    // Validate error message for wrong type
     expect(parsedBody).toEqual({
       error: {
         code: "INVALID_INPUT",
-        message: "missingSkills must be an array",
+        message: "parsedResume is required",
       },
     });
   });
 
-  // Test case: userType must be either 'student' or 'professional'
-  test("returns 400 when userType is invalid", async () => {
+  test("returns recommendations based on parsed resume and job query", async () => {
     const event = {
       body: JSON.stringify({
-        missingSkills: ["TypeScript"],
-        userType: "admin", // Invalid user type
+        parsedResume: {
+          basicInfo: {
+            fullName: "Jane Doe",
+            email: "jane@example.com",
+            phone: null,
+            location: "Las Vegas, NV",
+          },
+          education: [],
+          experience: [],
+          projects: [],
+          certifications: [],
+          skills: {
+            technical: ["HTML", "CSS", "JavaScript"],
+            soft: ["Communication"],
+            languages: ["English"],
+            tools: ["Git"],
+          },
+          metadata: {
+            parsingDate: "2026-04-16",
+            confidenceScore: null,
+            warnings: [],
+            inferredRole: "Frontend Developer",
+            inferredSeniority: "Junior",
+          },
+        },
+        jobQuery: "frontend developer internship",
+        prefer: ["online_course", "tutorial"],
       }),
     };
 
     const response = await handler(event);
     const parsedBody = JSON.parse(response.body);
 
-    // Expect HTTP 400 due to invalid userType
-    expect(response.statusCode).toBe(400);
-
-    // Validate correct error message
-    expect(parsedBody).toEqual({
-      error: {
-        code: "INVALID_INPUT",
-        message: "userType must be 'student' or 'professional'",
-      },
-    });
-  });
-
-  // Test case: valid request for a student user
-  test("returns recommendations for a student", async () => {
-    const event = {
-      body: JSON.stringify({
-        missingSkills: ["TypeScript"], // Skills the user wants to learn
-        userType: "student",
-        universityId: "unlv", // Used to generate university-specific recommendations
-        prefer: ["university_course", "online_course"], // Preferred resource types
-      }),
-    };
-
-    const response = await handler(event);
-    const parsedBody = JSON.parse(response.body);
-
-    // Expect success response
     expect(response.statusCode).toBe(200);
-
-    // Expect a list of recommendations tailored for a student
+    expect(parsedBody.jobQuery).toBe("frontend developer internship");
+    expect(parsedBody.inferredRole).toBe("Frontend Developer");
+    expect(parsedBody.matchedSkills).toEqual(["HTML", "CSS", "JavaScript", "Git"]);
+    expect(parsedBody.missingSkills).toEqual(["React"]);
     expect(parsedBody.items).toEqual([
       {
-        id: "uni-TypeScript", // Unique ID for university course
-        missingSkill: "TypeScript",
-        type: "university_course",
-        title: "TypeScript Course at UNLV",
-        provider: "UNLV",
-        url: "https://example.com/university-course",
-        confidence: 0.9, // Higher confidence for university course
-      },
-      {
-        id: "online-TypeScript",
-        missingSkill: "TypeScript",
+        id: "online-react",
+        missingSkill: "React",
         type: "online_course",
-        title: "Learn TypeScript",
+        title: "Learn React",
         provider: "Codecademy",
-        url: "https://example.com/online-course",
-        confidence: 0.8,
-      },
-    ]);
-  });
-
-  // Test case: valid request for a professional user
-  test("returns recommendations for a professional", async () => {
-    const event = {
-      body: JSON.stringify({
-        missingSkills: ["CSS"], // Skill to improve
-        userType: "professional",
-        prefer: ["online_course", "tutorial"], // Preferred learning formats
-      }),
-    };
-
-    const response = await handler(event);
-    const parsedBody = JSON.parse(response.body);
-
-    // Expect success response
-    expect(response.statusCode).toBe(200);
-
-    // Expect recommendations tailored for professionals
-    expect(parsedBody.items).toEqual([
-      {
-        id: "online-CSS",
-        missingSkill: "CSS",
-        type: "online_course",
-        title: "Learn CSS",
-        provider: "Codecademy",
-        url: "https://example.com/online-course",
-        confidence: 0.8,
+        url: "https://example.com/learn/react",
+        confidence: 0.85,
       },
       {
-        id: "tutorial-CSS",
-        missingSkill: "CSS",
+        id: "tutorial-react",
+        missingSkill: "React",
         type: "tutorial",
-        title: "CSS Crash Course",
+        title: "React Crash Course",
         provider: "YouTube / Docs",
-        url: "https://example.com/tutorial",
-        confidence: 0.65,
+        url: "https://example.com/tutorial/react",
+        confidence: 0.7,
       },
     ]);
   });

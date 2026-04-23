@@ -43,7 +43,8 @@ export type RecommendationType =
   | "university_course"
   | "online_course"
   | "certificate"
-  | "tutorial";
+  | "tutorial"
+  | "project";
 
 // Represents a recommended resource to help the user
 // learn missing skills.

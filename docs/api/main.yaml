@@ -6,8 +6,19 @@ info:
   version: 1.0.0
 
 servers:
-url: #Add later
+  - url: https://ev0tl7uy74.execute-api.us-east-1.amazonaws.com/
 
+tags:
+  - name: auth
+    description: Endpoints related to user authentication and profile management.
+  - name: documents
+    description: Endpoints for uploading and processing user documents like transcripts and resumes.
+  - name: institutions
+    description: Endpoints for importing course data from educational institutions.
+  - name: academic
+    description: Endpoints for creating and retrieving academic plans based on user data.
+  - name: career
+    description: Endpoints for building career plans and retrieving job listings based on user profiles.
 paths:
   /auth/register:
     post:
@@ -18,75 +29,51 @@ paths:
         content:
           application/json:
             schema:
-              $ref: #Add later
+              $ref: "#/components/schemas/User"
       
       responses:
         "201":
           description: User created
-          content:
-            application/json:
-              schema:
-                $ref: #Add later
       
         "400":
           description: Validation error
-          content:
-            application/json:
-              schema:
-                $ref: #Add later
         
         "409":
           description: Username or email already exists
+
+  /auth/profile:
+    get:
+      tags: [auth]
+      summary: Pull information on a user
+      responses:
+        "200":
+          description: Profile information successfully pulled
           content:
             application/json:
               schema:
-                $ref: #Add later
-
-    /auth/profile:
-      post:
-        tags: [auth]
-        summary: Pull information on a user
-        content:
-          application/json:
-            schema:
-              $ref: #Add later
-        
-        responses:
-          "201":
-            description: Profile information successfully pulled
-        
-          "400":
-            description: Profile info does not exist
-
-
-        
-
+                $ref: "#/components/schemas/Profile"
+        "401":
+          description: user not authenticated
+        "404":
+          description: user not found   
   /auth/login:
-  post:
-    tags:
-      - auth
-    summary: Log in with username and password
-    requestBody:
-      required: true
-      content:
-        application/json:
-          schema:
-            $ref: #Add later
-    responses:
-      "200":
-        description: Login successful
+    post:
+      tags: [auth]
+      summary: Log in with username and password
+      requestBody:
+        required: true
         content:
           application/json:
             schema:
-              $ref: #Add later
-
-      "401":
-        description: Invalid username or password
-
+              $ref: "#/components/schemas/User"
+      responses:
+        "200":
+          description: Login successful
+        "401":
+          description: Invalid username or password
   /auth/logout:
     post:
-      tags:
-       - auth
+      tags: [auth]
       summary: Log out
       #security:
         #Add here later if we choose to
@@ -98,48 +85,46 @@ paths:
   
   /document/upload-transcript:
     post:
-      tags: documents
+      tags: [documents]
       summary: Upload a transcript file
       requestBody:
         required: true
         content:
           multipart/form-data:
             schema:
-              $ref: #add here
-
-    responses:
-      "200":
-        description: File upload successful
-      "400":
-        description: Invalid file
-      "401":
-        description: Not authenticated
+              $ref: "#/components/schemas/Upload"
+      responses:
+        "200":
+          description: File upload successful
+        "400":
+          description: Invalid file
+        "401":
+          description: Not authenticated
 
   /document/upload-resume:
     post:
-      tags: documents
+      tags: [documents]
       summary: Upload a resume file
       requestBody:
         required: true
         content:
           multipart/form-data:
             schema:
-              $ref: #add here
-
-    responses:
-      "200":
-        description: File upload successful
-      "400":
-        description: Invalid file
-      "401":
-        description: Not authenticated
+              $ref: "#/components/schemas/Upload"
+      responses:
+        "200":
+          description: File upload successful
+        "400":
+          description: Invalid file
+        "401":
+          description: Not authenticated
 
   /document/upload-manual-transcript:
     post:
-      tags: documents
+      tags: [documents]
       summary: Takes in information as entered manually by a user
       requestBody:
-        required:: true
+        required: true
         content:
           application/json:
             schema:
@@ -149,29 +134,25 @@ paths:
                 text:
                   type: string
                   description: the classes typed in by the user
-              institution:
-                type: string
-                description: Label for where the class is offered
-                example: UNLV
-    responses:
-      "200":
-        description: Classes successfully processed
-        content:
-          application/json: 
-            schema:
-              type: object
-              properties:
-                message:
+                institution:
                   type: string
-                  example: Classes recieved
-                parsedCoursesCount:
-                  type: integer
-      "400":
-        description: Invalid or empty text
-        content:
-          application/json:
-            schema:
-              $ref: #add later
+                  description: Label for where the class is offered
+                  example: UNLV
+      responses:
+        "200":
+          description: Classes successfully processed
+          content:
+            application/json: 
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Classes received
+                  parsedCoursesCount:
+                    type: integer
+        "400":
+          description: Invalid or empty text
 
   /institutions/unlv/courses:
     post:
@@ -192,7 +173,7 @@ paths:
                   example: "CS"
                 price:
                   type: integer
-                  example: "$1200"
+                  example: 1200
                 dryRun:
                   type: boolean
                   default: false
@@ -215,66 +196,80 @@ paths:
 
   /academic-plan:
     post:
-      tags: academic
+      tags: [academic]
       summary: Creates an academic plan
       requestBody:
         required: false
         content:
           application/json:
             schema:
-              $ref: #Add later
-
+              $ref: "#/components/schemas/AcademicPlan"
       responses:
         "202":
           description: Academic plan successfully built
         "400":
           description: No information provided
-
     get:
-      tags: academic
+      tags: [academic]
       summary: Gets academic plan from the servers
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: #Add later
-
       responses:
+        "200":
+          description: Academic plan successfully pulled
+          content:
+            application/json:
+              schema:
+                 $ref: "#/components/schemas/AcademicPlan"
+        "404":
+          description: Academic plan not found
+        "401":
+          description: user not authenticated
 
-
-  /Career{careerName}:
+  /career/{careername}:
     get:
-      tags: career
-      summary: Builds an career plan
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: #Add later
-
+      tags: [career]
+      summary: Builds a career plan
+      parameters:
+        - name: careername
+          in: path
+          required: true
+          schema:
+            type: string
       responses:
-  
-  /Career{jobName}:
+        "200":
+          description: Career plan successfully built
+          content:
+            application/json:
+              schema:
+                 $ref: "#/components/schemas/Career"
+        "404":
+          description: Career plan not found
+        "401":
+          description: user not authenticated
+        "422":
+          description: Career name not recognized
+  /jobs/{jobname}:
     get:
-      tags: career
+      tags: [career]
       summary: Returns a list of jobs
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: #Add later
-
-# Litterally a tag to identify each paths to be identified. Does not impact logic.
-tags:
-
-# Identify what server the API is running on. 
-servers:
-
-# Left for jason to do
-paths:
+      parameters:
+        - name: jobname
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Job listings successfully pulled
+          content:
+            application/json:
+              schema:
+                 $ref: "#/components/schemas/JobListings"
+        "404":
+          description: Job listings not found
+        "401":
+          description: user not authenticated
+        "422":
+          description: Job name not recognized
 
 # Components section: Reusable pieces for the paths to use.
 components:
@@ -304,10 +299,10 @@ components:
           type: string
           description: The user's major field of study.
         phone_number:
-          type: integer
+          type: string
           description: The user's phone number.
     #Dashboard schema for displaying the dashboard content. Depending on the difference with profile, it will be merged or further broken down
-    Dashboard:
+    #Dashboard:
       #Content to be determined
     #Upload schema for uploading files. This needs to be modified due to a specific formatting of the file upload in paths.
     Upload:
@@ -334,12 +329,12 @@ components:
           type: integer
           description: The price of the course.
     #Not sure if pulling from transcript parsing requires an array.
-    Course_array:
+    CourseArray:
       type: array
       items:
         $ref: '#/components/schemas/Course'
     #Academic plan / Course plan. Depending on how these are stored this will change
-    Academic_plan:
+    AcademicPlan:
       type: object
       properties:
         courses:
@@ -348,7 +343,7 @@ components:
             $ref: '#/components/schemas/Course'
     #Similarly, depending on how we store the completed courses, this may be used. 
     #Its inherently the same but im not sure if we need to differentiate. Now maybe the course schema needs to contain a completed boolean check
-    Completed_courses:
+    CompletedCourses:
       type: object
       properties:
         courses:
@@ -373,7 +368,7 @@ components:
           items:
             type: string
           description: A list of skills required for the career.
-    Career_Bookmark:
+    CareerBookmark:
       type: array
       items:
         $ref: '#/components/schemas/Career'
@@ -395,7 +390,7 @@ components:
           items:
             type: string
           description: A list of skills required for the job.
-    Job_Listings:
+    JobListings:
       type: array
       items:
         $ref: '#/components/schemas/Jobs'
@@ -418,6 +413,3 @@ components:
         experience_description:
           type: string
           description: A brief description of the experience.
-    
-    
-      

@@ -3,15 +3,16 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import LandingPage from './pages/LandingPage';
 import DashboardPage from './pages/DashboardPage';
 import DegreeCenterPage from './pages/DegreeCenterPage';
-import CareerCenterPage from './pages/CareerCenterPage';
 import SettingsPage from './pages/SettingsPage';
 import AboutPage from './pages/AboutPage';
 import EducationPage from './pages/EducationPage';
 import ResumeUploadPage from './pages/ResumeUploadPage';
-import CareerQuiz from './pages/CareerQuiz';
 import CoursePlanPage from './pages/CoursePlanPage';
 import TranscriptUploadPage from './pages/TranscriptUploadPage';
-import JobListingsPage from './pages/JobListing';
+import JobSearchPage from './pages/JobSearchPage';
+import JobCenterPage from './pages/JobCenterPage';
+import JobDetailsPage from './pages/JobDetailsPage';
+import DegreeSearchPage from './pages/DegreeSearchPage';
 
 interface User {
   email: string;
@@ -33,7 +34,9 @@ interface AuthContextType {
   loginWithCode: (code: string) => Promise<void>;
   fontSize: FontSize;
   setFontSize: (size: FontSize) => void;
-  logout: () => void; 
+  logout: () => void;
+  profilePic: string | null;
+  setProfilePic: (url: string | null) => void; 
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -46,11 +49,25 @@ export const useAuth = () => {
   return context;
 };
 
+// ─── Dev mode bypass ───────────────────────────────────────────────────────────
+const DEV_MODE = import.meta.env.VITE_DEV_MODE === 'true';
+
+const DEV_USER: User = {
+  email: 'dev@futureflow.local',
+  name: 'User',
+  sub: 'dev-sub-001',
+};
+// ───────────────────────────────────────────────────────────────────────────────
+
 function App() {
   const [fontSize, setFontSize] = useState<FontSize>('normal');
   const [tokens, setTokens] = useState<Tokens | null>(null);
-  const [user, setUser] = useState<User | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [user, setUser] = useState<User | null>(DEV_MODE ? DEV_USER : null);
+  const [isLoading, setIsLoading] = useState(!DEV_MODE);
+
+  const [profilePic, setProfilePic] = useState<string | null>(
+    () => localStorage.getItem('profilePic')
+  );
 
   const loginWithCode = async (code: string) => {
     if (user) return; // prevent duplicate calls
@@ -108,6 +125,8 @@ function App() {
   };
 
   useEffect(() => {
+    if (DEV_MODE) return; // skip session restore in dev mode
+
     const restoreSession = async () => {
       const storedTokens = localStorage.getItem('tokens');
       const storedUser = localStorage.getItem('user');
@@ -142,6 +161,11 @@ function App() {
     localStorage.removeItem('tokens');
     localStorage.removeItem('user');
 
+    if (DEV_MODE) {
+      window.location.href = '/';
+      return;
+    }
+
     // Redirect to Cognito logout
     const clientId = "58koplp30bju3c58suq5505b8q";
     const logoutUri = import.meta.env.VITE_APP_URL;
@@ -154,7 +178,7 @@ function App() {
   if (isLoading) return <div>Loading...</div>;
   return (
     <AuthContext.Provider
-      value={{ user, tokens, loginWithCode, logout, fontSize, setFontSize }}
+      value={{ user, tokens, loginWithCode, logout, fontSize, setFontSize, profilePic, setProfilePic }}
     >
       <Router>
         <Routes>
@@ -171,8 +195,8 @@ function App() {
             element={user ? <DegreeCenterPage /> : <Navigate to="/" />}
           />
           <Route
-            path="/career-center"
-            element={user ? <CareerCenterPage /> : <Navigate to="/" />}
+            path="/job-center"
+            element={user ? <JobCenterPage /> : <Navigate to="/" />}
           />
           <Route
             path="/settings"
@@ -187,10 +211,6 @@ function App() {
             element={user ? <ResumeUploadPage /> : <Navigate to="/" />}
           />
           <Route
-            path="/career-quiz"
-            element={user ? <CareerQuiz /> : <Navigate to="/" />}
-          />
-          <Route
             path="/course-plan"
             element={user ? <CoursePlanPage /> : <Navigate to="/" />}
           />
@@ -199,8 +219,16 @@ function App() {
             element={user ? <TranscriptUploadPage /> : <Navigate to="/" />}
           />
           <Route
-            path = "/job-listing"
-            element = { user ? <JobListingsPage /> : <Navigate to = "/login" />}
+            path = "/jobs"
+            element = { user ? <JobSearchPage /> : <Navigate to = "/" />}
+          />
+          <Route
+            path = "/jobs/:id"
+            element = { user ? <JobDetailsPage /> : <Navigate to = "/" />}
+          />
+          <Route
+            path = "/degree-search"
+            element = { user ? <DegreeSearchPage /> : <Navigate to = "/" />}
           />
         </Routes>
       </Router>
