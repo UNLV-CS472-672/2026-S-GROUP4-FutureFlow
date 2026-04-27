@@ -147,7 +147,7 @@ export default function DashboardPage() {
         {/* LEFT COLUMN */}
         <div className="flex flex-col gap-5 h-full">
           {/* WELCOME CARD */}
-          <div className="bg-white shadow-md rounded-3xl border border-gray-200 p-4 sm:p-6 flex flex-col justify-between items-center text-center">
+          <div className="bg-white shadow-md rounded-3xl border border-gray-200 p-4 sm:p-6 flex flex-col flex-grow justify-between items-center text-center">
             <div className="space-y-1">
               <h2 className="text-2xl sm:text-[32px] font-semibold text-gray-900 leading-tight">
                 Welcome back,<br />{user?.name}!

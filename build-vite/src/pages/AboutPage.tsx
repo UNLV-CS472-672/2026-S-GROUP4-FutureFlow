@@ -3,8 +3,8 @@ import { NonAuthHeader } from '../components/NonAuthHeader';
 
 export default function AboutPage() {
   return (
-    <div className="min-h-screen bg-gray-50 pt-3 sm:pt-5">
-      <NonAuthHeader title="Future Flow" />
+    <div className="min-h-screen bg-gray-[#eeede9] pt-5">
+      <NonAuthHeader title="Future Flow"/>
 
       <div className="max-w-5xl mx-auto px-4 py-4 mt-3 sm:px-6 sm:py-5 sm:mt-5 lg:px-8">
         <h2 className="text-3xl sm:text-4xl mb-4 text-blue-800 text-center">
@@ -27,7 +27,7 @@ export default function AboutPage() {
             Top Row(left to right): Jason Thompson, Isaiah Burke, Reon Ozaki, Kwasi Clouden, Jonathan Davis
           </p>
           <p className="text-sm sm:text-base text-gray-700">
-            Bottom Row(left to right): Deigo Ocegueda, Selei Cho, Jada Lok, Sean Tran
+            Bottom Row(left to right): Diego Ocegueda, Selei Cho, Jada Lok, Sean Tran
           </p>
           <p className="text-sm sm:text-base text-gray-700">
             Not Pictured: Damian Beller
