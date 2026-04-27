@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Logo } from '../components/Logo';
 import { useAuth } from "../App";
 import '../index.css';
@@ -7,6 +7,8 @@ import '../index.css';
 export default function LandingPage() {
   const navigate = useNavigate();
   const { loginWithCode } = useAuth();
+
+  const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -19,6 +21,15 @@ export default function LandingPage() {
     }
   }, [loginWithCode, navigate]);
 
+  useEffect(() => {
+    function handleScroll() {
+      setScrolled(window.scrollY > 60);
+    }
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   const login = () => {
     const clientId = import.meta.env.VITE_COGNITO_CLIENT_ID;
     const domain = import.meta.env.VITE_COGNITO_DOMAIN;
@@ -30,11 +41,16 @@ export default function LandingPage() {
   };
 
   return (
-
     <div className="min-h-screen pt-5">
 
     {/* Header */}
-      <header className="bg-white rounded-3xl md:rounded-full px-4 py-4 sm:px-6 shadow-lg mb-8 md:mb-12">
+      <header
+        className={`sticky top-0 z-50 bg-white shadow-lg transition-all duration-300 ${
+          scrolled
+            ? 'rounded-none mx-0 px-4 py-3 sm:px-5 sm:py-4 lg:px-10'
+            : 'rounded-3xl lg:rounded-full mx-3 mt-3 px-4 py-3 sm:mx-5 sm:px-5 sm:py-4 lg:px-6'
+        }`}
+      >
         <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
           <div className="flex justify-center md:justify-start">
             <Logo size="medium" />
