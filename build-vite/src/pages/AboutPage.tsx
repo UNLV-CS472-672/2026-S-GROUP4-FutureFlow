@@ -3,8 +3,8 @@ import { NonAuthHeader } from '../components/NonAuthHeader';
 
 export default function AboutPage() {
   return (
-    <div className="min-h-screen bg-gray-50 pt-3 sm:pt-5">
-      <NonAuthHeader title="Future Flow" />
+    <div className="min-h-screen bg-gray-[#eeede9] pt-5">
+      <NonAuthHeader title="Future Flow"/>
 
       <div className="max-w-5xl mx-auto px-4 py-4 mt-3 sm:px-6 sm:py-5 sm:mt-5 lg:px-8">
         <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-5 text-blue-800 text-center">

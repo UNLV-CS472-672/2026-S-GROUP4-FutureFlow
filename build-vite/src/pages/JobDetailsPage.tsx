@@ -1,99 +1,109 @@
+import { useState, useEffect } from 'react';
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import { AuthHeader } from '../components/AuthHeader';
+import { useJobs } from '../hooks/useJobs';
+import { Bookmark, BookmarkCheck } from 'lucide-react';
+import { useAuth } from '../App';
 
-// In a real app this would be a fetch call: fetch(`/api/jobs/${id}`)
-// For now it shares the same static data as JobSearchPage.
-const JOBS = [
-  {
-    id: 1, title: 'Software Engineering Intern', company: 'Google', logo: 'G',
-    logoColor: '#4285F4', location: 'Mountain View, CA', remote: false,
-    type: 'internship', posted: '2026-03-24', matchScore: 95,
-    salary: '$45/hr', tags: ['React', 'Python', 'APIs'],
-    summary: 'Join the Google Search team to build next-generation features used by billions of users. You\'ll work alongside senior engineers on real production systems that serve billions of requests daily.',
-    requirements: ['Currently enrolled in a CS or related degree', 'Experience with at least one OOP language', 'Strong problem-solving skills', 'Familiarity with data structures & algorithms'],
-    responsibilities: ['Build and ship production features', 'Write clean, testable code', 'Participate in code reviews', 'Collaborate with cross-functional teams'],
-  },
-  {
-    id: 2, title: 'Frontend Developer', company: 'Figma', logo: 'F',
-    logoColor: '#1ABCFE', location: 'Remote', remote: true,
-    type: 'full-time', posted: '2026-03-22', matchScore: 88,
-    salary: '$120k–$150k', tags: ['React', 'TypeScript', 'CSS'],
-    summary: 'Help design and build the future of collaborative design tools. You\'ll be embedded in a product team working on Figma\'s core editor experience used by millions of designers.',
-    requirements: ['3+ years of frontend experience', 'Expert-level React & TypeScript', 'Eye for design and pixel-perfect implementation', 'Experience with performance optimization'],
-    responsibilities: ['Own frontend features end-to-end', 'Improve rendering performance', 'Collaborate with design team', 'Mentor junior developers'],
-  },
-  {
-    id: 3, title: 'Data Science Intern', company: 'Spotify', logo: 'S',
-    logoColor: '#1DB954', location: 'New York, NY', remote: false,
-    type: 'internship', posted: '2026-03-20', matchScore: 82,
-    salary: '$38/hr', tags: ['Python', 'SQL', 'ML'],
-    summary: 'Work with Spotify\'s personalization team to improve music recommendations for 400M+ users. You\'ll analyze large datasets and build ML models in production.',
-    requirements: ['Pursuing a degree in Statistics, CS, or Math', 'Proficiency in Python and SQL', 'Coursework in machine learning or statistics', 'Strong analytical thinking'],
-    responsibilities: ['Analyze user behavior data', 'Build and evaluate ML models', 'Present findings to stakeholders', 'A/B test new recommendation algorithms'],
-  },
-  {
-    id: 4, title: 'Product Manager', company: 'Notion', logo: 'N',
-    logoColor: '#000000', location: 'Remote', remote: true,
-    type: 'full-time', posted: '2026-03-18', matchScore: 74,
-    salary: '$130k–$160k', tags: ['Strategy', 'Roadmapping', 'Analytics'],
-    summary: 'Lead product strategy for Notion\'s collaboration features. You\'ll work closely with engineering, design, and research to define and ship impactful products.',
-    requirements: ['4+ years in product management', 'Experience with B2B SaaS products', 'Strong written communication skills', 'Data-driven decision making'],
-    responsibilities: ['Define product vision and roadmap', 'Write clear product specs', 'Run user research sessions', 'Collaborate with engineering on delivery'],
-  },
-  {
-    id: 5, title: 'Backend Engineer', company: 'Stripe', logo: 'S',
-    logoColor: '#6772E5', location: 'San Francisco, CA', remote: false,
-    type: 'full-time', posted: '2026-03-15', matchScore: 91,
-    salary: '$160k–$200k', tags: ['Ruby', 'Go', 'PostgreSQL'],
-    summary: 'Build the financial infrastructure that powers millions of businesses worldwide. You\'ll work on Stripe\'s core payments APIs that process billions of dollars annually.',
-    requirements: ['5+ years of backend engineering experience', 'Strong systems design skills', 'Experience with high-throughput distributed systems', 'Proficiency in Ruby or Go'],
-    responsibilities: ['Design and build scalable APIs', 'Improve system reliability and performance', 'Lead technical design reviews', 'Mentor engineers across the team'],
-  },
-  {
-    id: 6, title: 'UX Design Intern', company: 'Airbnb', logo: 'A',
-    logoColor: '#FF5A5F', location: 'Remote', remote: true,
-    type: 'internship', posted: '2026-03-13', matchScore: 78,
-    salary: '$35/hr', tags: ['Figma', 'User Research', 'Prototyping'],
-    summary: 'Join Airbnb\'s design team to help shape experiences for hosts and guests across the globe. You\'ll own end-to-end design on real product surfaces.',
-    requirements: ['Portfolio showcasing UX process', 'Proficiency in Figma', 'Strong visual design fundamentals', 'Pursuing a degree in Design or HCI'],
-    responsibilities: ['Conduct user research', 'Create wireframes and prototypes', 'Present design decisions', 'Iterate based on feedback'],
-  },
-  {
-    id: 7, title: 'Machine Learning Engineer', company: 'OpenAI', logo: 'O',
-    logoColor: '#10A37F', location: 'San Francisco, CA', remote: false,
-    type: 'full-time', posted: '2026-03-10', matchScore: 87,
-    salary: '$180k–$250k', tags: ['PyTorch', 'Python', 'CUDA'],
-    summary: 'Work on cutting-edge AI research and deployment at OpenAI. You\'ll train and fine-tune large language models and build the infrastructure to run them at scale.',
-    requirements: ['PhD or equivalent experience in ML', 'Deep expertise in PyTorch or JAX', 'Experience with large-scale distributed training', 'Strong math and statistics background'],
-    responsibilities: ['Train and evaluate large models', 'Build ML infrastructure', 'Publish research', 'Collaborate with safety and policy teams'],
-  },
-  {
-    id: 8, title: 'DevOps Intern', company: 'Cloudflare', logo: 'C',
-    logoColor: '#F48120', location: 'Austin, TX', remote: false,
-    type: 'internship', posted: '2026-03-08', matchScore: 69,
-    salary: '$40/hr', tags: ['Kubernetes', 'Docker', 'CI/CD'],
-    summary: 'Help Cloudflare scale its global network that serves trillions of requests per day. You\'ll work on infrastructure, automation, and deployment pipelines.',
-    requirements: ['Familiarity with Linux and shell scripting', 'Basic knowledge of containers (Docker/K8s)', 'Interest in distributed systems', 'Pursuing a CS or related degree'],
-    responsibilities: ['Automate deployment pipelines', 'Monitor infrastructure health', 'Contribute to internal tooling', 'Debug production incidents'],
-  },
-];
-
-function timeAgo(dateStr: string) {
-  const days = Math.floor((Date.now() - new Date(dateStr).getTime()) / 86400000);
-  if (days === 0) return 'Today';
-  if (days === 1) return '1 day ago';
-  if (days < 7) return `${days} days ago`;
-  const weeks = Math.floor(days / 7);
-  return weeks === 1 ? '1 week ago' : `${weeks} weeks ago`;
-}
+const API_URL = import.meta.env.VITE_SAVE_JOBS_API_URL;
 
 export default function JobDetailPage() {
   const { id } = useParams();
+  const { tokens } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
+  const { jobs, loading, error } = useJobs();
 
-  const job = JOBS.find((j) => j.id === Number(id));
+  const [isSaved, setIsSaved] = useState(false);
+  const [isApplied, setIsApplied] = useState(false);
+  const [actionLoading, setActionLoading] = useState(false);
+
   const from = location.state?.from || '/jobs';
+  const job = jobs.find((j) => j.job_id === Number(id));
+
+  // ── Token sent in Authorization header — Lambda extracts sub from it using the API Gateway──
+  const updateJobStatus = async (jobId: number, action: 'save' | 'unsave' | 'apply') => {
+    const token = tokens?.idToken;
+
+    if (!token) throw new Error('Not authenticated');
+
+    const res = await fetch(API_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,  // Lambda verifies this and extracts sub using the API Gateway
+      },
+      body: JSON.stringify({ job_id: jobId, action }),
+    });
+
+    if (!res.ok) throw new Error('Failed to update job status');
+    return res.json();
+  };
+
+  // Initialize saved/applied state from localStorage
+  useEffect(() => {
+    const savedJobs: number[] = JSON.parse(localStorage.getItem('saved_jobs') || '[]');
+    const appliedJobs: number[] = JSON.parse(localStorage.getItem('applied_jobs') || '[]');
+    if (job) {
+      setIsSaved(savedJobs.includes(job.job_id));
+      setIsApplied(appliedJobs.includes(job.job_id));
+    }
+  }, [job]);
+
+  const handleSave = async () => {
+    if (!job) return;
+    setActionLoading(true);
+    try {
+      const action = isSaved ? 'unsave' : 'save';
+      const result = await updateJobStatus(job.job_id, action);
+      setIsSaved(!isSaved);
+      localStorage.setItem('saved_jobs', JSON.stringify(result.saved_jobs));
+      localStorage.setItem('applied_jobs', JSON.stringify(result.applied_jobs));
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setActionLoading(false);
+    }
+  };
+
+  const handleApply = async () => {
+    if (!job || isApplied) return;
+    setActionLoading(true);
+    try {
+      const result = await updateJobStatus(job.job_id, 'apply');
+      setIsApplied(true);
+      setIsSaved(false);
+      localStorage.setItem('saved_jobs', JSON.stringify(result.saved_jobs));
+      localStorage.setItem('applied_jobs', JSON.stringify(result.applied_jobs));
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setActionLoading(false);
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gray-[#eeede9] pt-5">
+        <AuthHeader title="Job Details" />
+        <div className="p-8 text-center text-gray-400 text-lg mt-16">Loading...</div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen bg-gray-[#eeede9] pt-5">
+        <AuthHeader title="Job Details" />
+        <div className="p-8 text-center text-red-500 text-lg mt-16">
+          {error}{' '}
+          <button onClick={() => navigate('/jobs')} className="text-green-600 underline">
+            Back to listings
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   if (!job) {
     return (
@@ -109,10 +119,13 @@ export default function JobDetailPage() {
     );
   }
 
-  const scoreColor =
-    job.matchScore >= 90 ? 'bg-green-100 text-green-700' :
-    job.matchScore >= 75 ? 'bg-yellow-100 text-yellow-700' :
-    'bg-gray-100 text-gray-500';
+  const logoLetter = job.company.charAt(0).toUpperCase();
+  const payLabel = job.pay ? `$${job.pay.toLocaleString()}` : 'Pay not listed';
+  const typeLabel = job.job_type === 'internship' ? 'Internship' : 'Full-time';
+  const typeStyle = job.job_type === 'internship'
+    ? 'bg-blue-100 text-blue-700'
+    : 'bg-green-100 text-green-700';
+  const isRemote = job.job_location?.toLowerCase() === 'remote';
 
   return (
     <div className="min-h-screen bg-[#eeede9] pt-3 sm:pt-5">
@@ -126,85 +139,58 @@ export default function JobDetailPage() {
           ← Back
         </button>
 
+        {/* Header card */}
         <div className="bg-white rounded-3xl p-5 sm:p-6 lg:p-8 shadow-lg mb-4">
           <div className="flex flex-col sm:flex-row sm:items-start gap-4 sm:gap-5">
-            <div
-              className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl flex items-center justify-center font-medium text-lg sm:text-xl flex-shrink-0"
-              style={{ background: job.logoColor + '18', color: job.logoColor, border: `1px solid ${job.logoColor}35` }}
-            >
-              {job.logo}
+            <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-green-100 text-green-700 flex items-center justify-center font-medium text-lg sm:text-xl flex-shrink-0">
+              {logoLetter}
             </div>
 
             <div className="flex-1 min-w-0">
-              <h2 className="text-2xl sm:text-3xl text-gray-900 mb-1 leading-tight">
-                {job.title}
-              </h2>
+              <h2 className="text-2xl sm:text-3xl text-gray-900 mb-1 leading-tight">{job.job_title}</h2>
               <p className="text-sm sm:text-base text-gray-500 mb-3">
-                {job.company} · {job.location}
+                {job.company}{job.job_location ? ` · ${job.job_location}` : ''}
               </p>
               <div className="flex flex-wrap gap-2">
-                <span className={`text-xs px-3 py-1 rounded-full font-medium ${scoreColor}`}>
-                  {job.matchScore}% match
+                <span className={`text-xs px-3 py-1 rounded-full font-medium ${typeStyle}`}>
+                  {typeLabel}
                 </span>
-                <span className={`text-xs px-3 py-1 rounded-full ${job.type === 'internship' ? 'bg-blue-100 text-blue-700' : 'bg-green-100 text-green-700'}`}>
-                  {job.type === 'internship' ? 'Internship' : 'Full-time'}
-                </span>
-                {job.remote && (
+                {isRemote && (
+                  <span className="text-xs px-3 py-1 rounded-full bg-gray-100 text-gray-500">Remote</span>
+                )}
+                {job.duration && (
                   <span className="text-xs px-3 py-1 rounded-full bg-gray-100 text-gray-500">
-                    Remote
+                    {job.duration}
                   </span>
                 )}
-                {job.tags.map((t) => (
-                  <span key={t} className="text-xs px-3 py-1 rounded-full bg-gray-100 text-gray-500">
-                    {t}
-                  </span>
-                ))}
               </div>
             </div>
 
-            <div className="sm:text-right flex-shrink-0">
-              <p className="text-lg sm:text-xl font-medium text-gray-800">
-                {job.salary}
-              </p>
-              <p className="text-sm text-gray-400 mt-1">
-                Posted {timeAgo(job.posted)}
-              </p>
+            <div className="text-right flex-shrink-0">
+              <p className="text-lg sm:text-xl font-medium text-gray-800">{payLabel}</p>
             </div>
           </div>
 
           <div className="flex gap-3 mt-5 sm:mt-6 pt-5 sm:pt-6 border-t border-gray-100">
-            <button className="flex-1 bg-green-600 hover:bg-green-700 text-white py-3 rounded-full font-medium transition-colors text-sm sm:text-base">
-              Apply now
+            <button
+              onClick={handleApply}
+              disabled={isApplied || actionLoading}
+              className="flex-1 bg-green-600 hover:bg-green-700 disabled:bg-green-400 text-white py-3 rounded-full font-medium transition-colors text-sm sm:text-base"
+            >
+              {isApplied ? 'Applied ✓' : 'Apply now'}
             </button>
-          </div>
-        </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-          <div className="bg-white rounded-3xl p-5 sm:p-6 lg:p-8 shadow-lg">
-            <h3 className="text-xl sm:text-2xl text-blue-800 mb-4">Posting Summary</h3>
-            <p className="text-sm sm:text-base text-gray-600 leading-relaxed mb-6">{job.summary}</p>
-
-            <h4 className="text-base sm:text-lg text-gray-800 mb-3">Responsibilities</h4>
-            <ul className="space-y-2">
-              {job.responsibilities.map((r, i) => (
-                <li key={i} className="flex items-start gap-2 text-gray-600 text-sm sm:text-base">
-                  <span className="text-green-500 mt-0.5 flex-shrink-0">✓</span>
-                  {r}
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div className="bg-white rounded-3xl p-5 sm:p-6 lg:p-8 shadow-lg">
-            <h3 className="text-xl sm:text-2xl text-blue-800 mb-4">Requirements</h3>
-            <ul className="space-y-3">
-              {job.requirements.map((r, i) => (
-                <li key={i} className="flex items-start gap-2 text-gray-600 text-sm sm:text-base">
-                  <span className="text-blue-500 mt-0.5 flex-shrink-0">→</span>
-                  {r}
-                </li>
-              ))}
-            </ul>
+            <button
+              onClick={handleSave}
+              disabled={actionLoading || isApplied}
+              title={isSaved ? 'Unsave job' : 'Save job'}
+              className="w-12 h-12 flex items-center justify-center rounded-full border-2 border-gray-200 hover:border-green-400 transition-colors disabled:opacity-40"
+            >
+              {isSaved
+                ? <BookmarkCheck size={20} className="text-green-600" />
+                : <Bookmark size={20} className="text-gray-400" />
+              }
+            </button>
           </div>
         </div>
       </div>
