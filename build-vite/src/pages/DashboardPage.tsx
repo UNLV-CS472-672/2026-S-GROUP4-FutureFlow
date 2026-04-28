@@ -4,94 +4,141 @@ import { AuthHeader } from '../components/AuthHeader';
 import { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight, MapPin, Briefcase, DollarSign } from 'lucide-react';
 
-type Job = {
-  id: number;
-  title: string;
+// ── Types ─────────────────────────────────────────────────────────────────────
+
+type JobInfo = {
+  job_id: number;
+  job_title: string;
   company: string;
-  location: string;
-  type: string;
-  salary: string;
-  logo: string;
-  status: string;
-  notes: string;
-  updatedAt: string;
+  job_location: string | null;
+  job_type: string;
+  duration: string | null;
+  pay: number;
 };
 
-const FEATURED_JOBS: Job[] = [
-  { id: 1, title: 'Software Engineer', company: 'Google', location: 'Mountain View, CA', type: 'Full-time', salary: '$140k–$180k', logo: 'G', status: 'Saved', notes: '', updatedAt: '' },
-  { id: 2, title: 'Product Manager', company: 'Apple', location: 'Cupertino, CA', type: 'Full-time', salary: '$130k–$160k', logo: 'A', status: 'Saved', notes: '', updatedAt: '' },
-  { id: 3, title: 'UX Designer', company: 'Meta', location: 'Remote', type: 'Full-time', salary: '$120k–$150k', logo: 'M', status: 'Saved', notes: '', updatedAt: '' },
-  { id: 4, title: 'Data Scientist', company: 'Netflix', location: 'Los Gatos, CA', type: 'Full-time', salary: '$150k–$190k', logo: 'N', status: 'Applied', notes: '', updatedAt: '' },
-  { id: 5, title: 'Backend Engineer', company: 'Stripe', location: 'San Francisco, CA', type: 'Full-time', salary: '$145k–$175k', logo: 'S', status: 'Applied', notes: '', updatedAt: '' },
-  { id: 6, title: 'DevOps Engineer', company: 'Airbnb', location: 'Remote', type: 'Contract', salary: '$110k–$140k', logo: 'Ab', status: 'Applied', notes: '', updatedAt: '' },
-  { id: 7, title: 'Frontend Engineer', company: 'Figma', location: 'San Francisco, CA', type: 'Full-time', salary: '$130k–$160k', logo: 'F', status: 'Saved', notes: '', updatedAt: '' },
-  { id: 8, title: 'Machine Learning Engineer', company: 'OpenAI', location: 'San Francisco, CA', type: 'Full-time', salary: '$160k–$200k', logo: 'O', status: 'Applied', notes: '', updatedAt: '' },
-  { id: 9, title: 'Marketing Manager', company: 'Spotify', location: 'New York, NY', type: 'Full-time', salary: '$100k–$130k', logo: 'Sp', status: 'Saved', notes: '', updatedAt: '' },
-];
+// ── Constants ─────────────────────────────────────────────────────────────────
 
 const JOBS_PER_PAGE = 3;
+
+const USER_JOBS_API_URL = import.meta.env.VITE_GET_SAVED_API_URL;
+const ALL_JOBS_API_URL  = import.meta.env.VITE_API_URL;
+
+// ── Component ─────────────────────────────────────────────────────────────────
 
 export default function DashboardPage() {
   const navigate = useNavigate();
   const location = useLocation();
-  const { user } = useAuth();
+  const { user, tokens } = useAuth();
   const progress = 65;
 
-  const [jobs, setJobs] = useState<Job[]>([]);
-  const [savedPage, setSavedPage] = useState(0);
+  const [savedJobs, setSavedJobs] = useState<JobInfo[]>([]);
+  const [appliedJobs, setAppliedJobs] = useState<JobInfo[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  const [savedPage,   setSavedPage]   = useState(0);
   const [appliedPage, setAppliedPage] = useState(0);
 
+  // ── Fetch saved + applied job IDs from DB, then fill with job details ──
+
   useEffect(() => {
-    const saved = localStorage.getItem('jobs');
-    if (saved) {
-      const parsed: Job[] = JSON.parse(saved);
-      setJobs(parsed.length > 0 ? parsed : FEATURED_JOBS);
-    } else {
-      setJobs(FEATURED_JOBS);
+    async function loadJobs(retries = 2) {
+      try {
+        setLoading(true);
+        setError(null);
+
+        const cognitoSub = user?.sub;
+        const token = tokens?.idToken;
+
+        if (!cognitoSub) throw new Error('User not logged in');
+
+        // 1. Get the user's saved_jobs and applied_jobs ID arrays from the DB
+        const userRes = await fetch(`${USER_JOBS_API_URL}?cognito_sub=${cognitoSub}`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+
+        if (!userRes.ok) throw new Error('Failed to fetch user job lists');
+
+        const userData: { saved_jobs: number[]; applied_jobs: number[] } = await userRes.json();
+
+        const savedIds   = Array.isArray(userData.saved_jobs)   ? userData.saved_jobs   : [];
+        const appliedIds = Array.isArray(userData.applied_jobs) ? userData.applied_jobs : [];
+
+        if (savedIds.length === 0 && appliedIds.length === 0) {
+          setSavedJobs([]);
+          setAppliedJobs([]);
+          return;
+        }
+
+        // 2. Fetch all job details from your existing jobs lambda
+        const jobsRes = await fetch(ALL_JOBS_API_URL, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+
+        if (!jobsRes.ok) throw new Error('Failed to fetch job details');
+
+        const allJobs: JobInfo[] = await jobsRes.json();
+
+        // 3. Filter down to saved and applied sets
+        const byId = new Map(allJobs.map(j => [j.job_id, j]));
+
+        setSavedJobs(savedIds    .map(id => byId.get(id)).filter(Boolean) as JobInfo[]);
+        setAppliedJobs(appliedIds.map(id => byId.get(id)).filter(Boolean) as JobInfo[]);
+
+      } catch (err: unknown) {
+        if (retries > 0) {
+          console.log(`Retrying... attempts left: ${retries}`);
+          setTimeout(() => loadJobs(retries - 1), 1000);
+          return;
+        }
+        console.error('Dashboard load error:', err);
+        setError(err instanceof Error ? err.message : 'Failed to load jobs');
+      } finally {
+        setLoading(false);
+      }
     }
-  }, []);
 
-  useEffect(() => {
-    localStorage.setItem('jobs', JSON.stringify(jobs));
-  }, [jobs]);
+    loadJobs();
+  }, [user, tokens]);
 
-  const savedJobs = jobs.filter(j => j.status === 'Saved');
-  const appliedJobs = jobs.filter(j => j.status !== 'Saved');
+  // ── Pagination ────────────────────────────────────────────────────────────
 
-  const savedTotal = Math.max(1, Math.ceil(savedJobs.length / JOBS_PER_PAGE));
+  const savedTotal   = Math.max(1, Math.ceil(savedJobs.length   / JOBS_PER_PAGE));
   const appliedTotal = Math.max(1, Math.ceil(appliedJobs.length / JOBS_PER_PAGE));
 
-  const savedVisible = savedJobs.slice(savedPage * JOBS_PER_PAGE, (savedPage + 1) * JOBS_PER_PAGE);
+  const savedVisible   = savedJobs  .slice(savedPage   * JOBS_PER_PAGE, (savedPage   + 1) * JOBS_PER_PAGE);
   const appliedVisible = appliedJobs.slice(appliedPage * JOBS_PER_PAGE, (appliedPage + 1) * JOBS_PER_PAGE);
 
-  const JobCard = ({ job }: { job: Job }) => (
+  // ── Sub-components ────────────────────────────────────────────────────────
+
+  const JobCard = ({ job }: { job: JobInfo }) => (
     <div
-      onClick={() => navigate(`/jobs/${job.id}`, { state: { from: location.pathname } })}
+      onClick={() => navigate(`/jobs/${job.job_id}`, { state: { from: location.pathname } })}
       className="group bg-white border border-gray-200 rounded-2xl p-4 sm:p-5 hover:shadow-md hover:border-green-300 hover:-translate-y-1 transition-all duration-200 cursor-pointer"
     >
       <div className="flex items-center gap-3 mb-3">
         <div className="w-10 h-10 rounded-xl bg-green-100 text-green-700 flex items-center justify-center font-bold text-sm shrink-0">
-          {job.logo}
+          {job.company.charAt(0).toUpperCase()}
         </div>
         <span className="text-gray-500 text-sm truncate">{job.company}</span>
       </div>
 
       <h4 className="text-sm sm:text-base font-semibold mb-3 group-hover:text-green-700 leading-tight line-clamp-2">
-        {job.title}
+        {job.job_title}
       </h4>
 
       <div className="space-y-1.5 text-xs text-gray-500">
         <div className="flex items-center gap-1.5">
           <MapPin size={12} className="shrink-0" />
-          <span className="truncate">{job.location}</span>
+          <span className="truncate">{job.job_location ?? 'Location not specified'}</span>
         </div>
         <div className="flex items-center gap-1.5">
           <Briefcase size={12} className="shrink-0" />
-          <span>{job.type}</span>
+          <span>{job.job_type}</span>
         </div>
         <div className="flex items-center gap-1.5">
           <DollarSign size={12} className="shrink-0" />
-          <span>{job.salary}</span>
+          <span>${Number(job.pay).toLocaleString()}</span>
         </div>
       </div>
 
@@ -139,22 +186,30 @@ export default function DashboardPage() {
     </div>
   );
 
+  const EmptyState = ({ message }: { message: string }) => (
+    <div className="md:col-span-2 xl:col-span-3 text-center text-gray-400 py-8 border-2 border-dashed border-gray-200 rounded-2xl text-sm">
+      {message}
+    </div>
+  );
+
+  // ── Render ────────────────────────────────────────────────────────────────
+
   return (
     <div className="min-h-screen bg-[#eeede9] pt-3 sm:pt-5">
       <AuthHeader title="Dashboard" />
 
       <div className="px-3 py-4 sm:px-5 sm:py-6 lg:px-8 lg:py-6 grid grid-cols-1 xl:grid-cols-[minmax(320px,380px)_1fr] gap-5 items-start">
-        {/* LEFT COLUMN */}
+
+        {/* ── LEFT COLUMN ── */}
         <div className="flex flex-col gap-5 h-full">
+
           {/* WELCOME CARD */}
           <div className="bg-white shadow-md rounded-3xl border border-gray-200 p-4 sm:p-6 flex flex-col flex-grow justify-between items-center text-center">
             <div className="space-y-1">
               <h2 className="text-2xl sm:text-[32px] font-semibold text-gray-900 leading-tight">
                 Welcome back,<br />{user?.name}!
               </h2>
-              <p className="text-sm text-gray-500">
-                Here's your progress overview
-              </p>
+              <p className="text-sm text-gray-500">Here's your progress overview</p>
             </div>
 
             {/* PROGRESS RING */}
@@ -162,18 +217,13 @@ export default function DashboardPage() {
               <svg className="w-40 h-40 sm:w-48 sm:h-48 lg:w-56 lg:h-56 -rotate-90" viewBox="0 0 224 224">
                 <circle cx="112" cy="112" r="85" stroke="#f0f0f0" strokeWidth="16" fill="none" />
                 <circle
-                  cx="112"
-                  cy="112"
-                  r="85"
-                  stroke="#1D9E75"
-                  strokeWidth="16"
-                  fill="none"
+                  cx="112" cy="112" r="85"
+                  stroke="#1D9E75" strokeWidth="16" fill="none"
                   strokeLinecap="round"
                   strokeDasharray={2 * Math.PI * 85}
                   strokeDashoffset={2 * Math.PI * 85 * (1 - progress / 100)}
                 />
               </svg>
-
               <div className="absolute inset-0 flex flex-col items-center justify-center">
                 <span className="text-3xl sm:text-4xl font-semibold">{progress}%</span>
                 <span className="text-[10px] sm:text-xs text-gray-500 uppercase tracking-wide">Complete</span>
@@ -187,9 +237,9 @@ export default function DashboardPage() {
 
             <div className="grid grid-cols-3 gap-2 w-full mt-3">
               {[
-                { label: 'Credits', value: '72' },
-                { label: 'Semesters', value: '5' },
-                { label: 'GPA', value: '3.6' },
+                { label: 'Credits',   value: '72'  },
+                { label: 'Semesters', value: '5'   },
+                { label: 'GPA',       value: '3.6' },
               ].map(stat => (
                 <div key={stat.label} className="bg-gray-100 rounded-md p-3">
                   <p className="text-base sm:text-lg font-medium">{stat.value}</p>
@@ -202,10 +252,9 @@ export default function DashboardPage() {
           {/* DOCUMENTS */}
           <div className="bg-white shadow-md rounded-3xl border border-gray-200 p-4 sm:p-6 flex flex-col gap-3">
             <h3 className="text-sm font-semibold uppercase tracking-wide text-gray-400">Documents</h3>
-
             {[
-              { label: 'Upload Transcript', border: 'border-gray-200 hover:border-blue-400' },
-              { label: 'Upload Resume', border: 'border-gray-200 hover:border-green-400' },
+              { label: 'Upload Transcript', border: 'border-gray-200 hover:border-blue-400'  },
+              { label: 'Upload Resume',     border: 'border-gray-200 hover:border-green-400' },
             ].map(item => (
               <label
                 key={item.label}
@@ -218,63 +267,76 @@ export default function DashboardPage() {
           </div>
         </div>
 
-        {/* RIGHT COLUMN */}
+        {/* ── RIGHT COLUMN ── */}
         <div className="flex flex-col gap-5 bg-white rounded-3xl p-4 sm:p-6 shadow-md border border-gray-100">
           <h2 className="text-xl sm:text-2xl font-bold text-gray-800 mb-1 sm:mb-3">Job Overview</h2>
 
-          {/* SAVED */}
-          <div className="bg-gray-50 border border-gray-200 rounded-2xl p-4 sm:p-5">
-            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between mb-4">
-              <h3 className="text-base sm:text-lg font-semibold text-gray-800">
-                Saved <span className="text-sm text-gray-400 font-normal ml-1">({savedJobs.length})</span>
-              </h3>
+          {/* Loading state */}
+          {loading && (
+            <div className="text-center text-gray-400 py-16 text-sm">Loading your jobs…</div>
+          )}
 
-              <CarouselNav
-                page={savedPage}
-                total={savedTotal}
-                onPrev={() => setSavedPage(p => Math.max(0, p - 1))}
-                onNext={() => setSavedPage(p => Math.min(savedTotal - 1, p + 1))}
-                onDot={setSavedPage}
-              />
+          {/* Error state */}
+          {!loading && error && (
+            <div className="text-center text-red-400 py-16 text-sm">
+              {error} —{' '}
+              <button
+                onClick={() => window.location.reload()}
+                className="underline hover:text-red-600 transition-colors"
+              >
+                retry
+              </button>
             </div>
+          )}
 
-            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
-              {savedVisible.length > 0 ? (
-                savedVisible.map(job => <JobCard key={job.id} job={job} />)
-              ) : (
-                <div className="md:col-span-2 xl:col-span-3 text-center text-gray-400 py-8 border-2 border-dashed border-gray-200 rounded-2xl text-sm">
-                  No saved jobs yet
+          {/* Job sections */}
+          {!loading && !error && (
+            <>
+              {/* SAVED */}
+              <div className="bg-gray-50 border border-gray-200 rounded-2xl p-4 sm:p-5">
+                <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between mb-4">
+                  <h3 className="text-base sm:text-lg font-semibold text-gray-800">
+                    Saved <span className="text-sm text-gray-400 font-normal ml-1">({savedJobs.length})</span>
+                  </h3>
+                  <CarouselNav
+                    page={savedPage}
+                    total={savedTotal}
+                    onPrev={() => setSavedPage(p => Math.max(0, p - 1))}
+                    onNext={() => setSavedPage(p => Math.min(savedTotal - 1, p + 1))}
+                    onDot={setSavedPage}
+                  />
                 </div>
-              )}
-            </div>
-          </div>
-
-          {/* APPLIED */}
-          <div className="bg-gray-50 border border-gray-200 rounded-2xl p-4 sm:p-5">
-            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between mb-4">
-              <h3 className="text-base sm:text-lg font-semibold text-gray-800">
-                Applied <span className="text-sm text-gray-400 font-normal ml-1">({appliedJobs.length})</span>
-              </h3>
-
-              <CarouselNav
-                page={appliedPage}
-                total={appliedTotal}
-                onPrev={() => setAppliedPage(p => Math.max(0, p - 1))}
-                onNext={() => setAppliedPage(p => Math.min(appliedTotal - 1, p + 1))}
-                onDot={setAppliedPage}
-              />
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
-              {appliedVisible.length > 0 ? (
-                appliedVisible.map(job => <JobCard key={job.id} job={job} />)
-              ) : (
-                <div className="md:col-span-2 xl:col-span-3 text-center text-gray-400 py-8 border-2 border-dashed border-gray-200 rounded-2xl text-sm">
-                  No applied jobs yet
+                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+                  {savedVisible.length > 0
+                    ? savedVisible.map(job => <JobCard key={job.job_id} job={job} />)
+                    : <EmptyState message="No saved jobs yet" />
+                  }
                 </div>
-              )}
-            </div>
-          </div>
+              </div>
+
+              {/* APPLIED */}
+              <div className="bg-gray-50 border border-gray-200 rounded-2xl p-4 sm:p-5">
+                <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between mb-4">
+                  <h3 className="text-base sm:text-lg font-semibold text-gray-800">
+                    Applied <span className="text-sm text-gray-400 font-normal ml-1">({appliedJobs.length})</span>
+                  </h3>
+                  <CarouselNav
+                    page={appliedPage}
+                    total={appliedTotal}
+                    onPrev={() => setAppliedPage(p => Math.max(0, p - 1))}
+                    onNext={() => setAppliedPage(p => Math.min(appliedTotal - 1, p + 1))}
+                    onDot={setAppliedPage}
+                  />
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+                  {appliedVisible.length > 0
+                    ? appliedVisible.map(job => <JobCard key={job.job_id} job={job} />)
+                    : <EmptyState message="No applied jobs yet" />
+                  }
+                </div>
+              </div>
+            </>
+          )}
         </div>
       </div>
     </div>

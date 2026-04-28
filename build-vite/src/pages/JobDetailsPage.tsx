@@ -1,15 +1,86 @@
+import { useState, useEffect } from 'react';
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import { AuthHeader } from '../components/AuthHeader';
 import { useJobs } from '../hooks/useJobs';
+import { Bookmark, BookmarkCheck } from 'lucide-react';
+import { useAuth } from '../App';
+
+const API_URL = import.meta.env.VITE_SAVE_JOBS_API_URL;
 
 export default function JobDetailPage() {
   const { id } = useParams();
+  const { tokens } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   const { jobs, loading, error } = useJobs();
 
+  const [isSaved, setIsSaved] = useState(false);
+  const [isApplied, setIsApplied] = useState(false);
+  const [actionLoading, setActionLoading] = useState(false);
+
   const from = location.state?.from || '/jobs';
   const job = jobs.find((j) => j.job_id === Number(id));
+
+  // ── Token sent in Authorization header — Lambda extracts sub from it using the API Gateway──
+  const updateJobStatus = async (jobId: number, action: 'save' | 'unsave' | 'apply') => {
+    const token = tokens?.idToken;
+
+    if (!token) throw new Error('Not authenticated');
+
+    const res = await fetch(API_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,  // Lambda verifies this and extracts sub using the API Gateway
+      },
+      body: JSON.stringify({ job_id: jobId, action }),
+    });
+
+    if (!res.ok) throw new Error('Failed to update job status');
+    return res.json();
+  };
+
+  // Initialize saved/applied state from localStorage
+  useEffect(() => {
+    const savedJobs: number[] = JSON.parse(localStorage.getItem('saved_jobs') || '[]');
+    const appliedJobs: number[] = JSON.parse(localStorage.getItem('applied_jobs') || '[]');
+    if (job) {
+      setIsSaved(savedJobs.includes(job.job_id));
+      setIsApplied(appliedJobs.includes(job.job_id));
+    }
+  }, [job]);
+
+  const handleSave = async () => {
+    if (!job) return;
+    setActionLoading(true);
+    try {
+      const action = isSaved ? 'unsave' : 'save';
+      const result = await updateJobStatus(job.job_id, action);
+      setIsSaved(!isSaved);
+      localStorage.setItem('saved_jobs', JSON.stringify(result.saved_jobs));
+      localStorage.setItem('applied_jobs', JSON.stringify(result.applied_jobs));
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setActionLoading(false);
+    }
+  };
+
+  const handleApply = async () => {
+    if (!job || isApplied) return;
+    setActionLoading(true);
+    try {
+      const result = await updateJobStatus(job.job_id, 'apply');
+      setIsApplied(true);
+      setIsSaved(false);
+      localStorage.setItem('saved_jobs', JSON.stringify(result.saved_jobs));
+      localStorage.setItem('applied_jobs', JSON.stringify(result.applied_jobs));
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setActionLoading(false);
+    }
+  };
 
   if (loading) {
     return (
@@ -71,7 +142,7 @@ export default function JobDetailPage() {
         {/* Header card */}
         <div className="bg-white rounded-3xl p-5 sm:p-6 lg:p-8 shadow-lg mb-4">
           <div className="flex flex-col sm:flex-row sm:items-start gap-4 sm:gap-5">
-            <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl flex items-center justify-center font-medium text-lg sm:text-xl flex-shrink-0">
+            <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-green-100 text-green-700 flex items-center justify-center font-medium text-lg sm:text-xl flex-shrink-0">
               {logoLetter}
             </div>
 
@@ -100,10 +171,25 @@ export default function JobDetailPage() {
             </div>
           </div>
 
-          {/* Apply button */}
           <div className="flex gap-3 mt-5 sm:mt-6 pt-5 sm:pt-6 border-t border-gray-100">
-            <button className="flex-1 bg-green-600 hover:bg-green-700 text-white py-3 rounded-full font-medium transition-colors text-sm sm:text-base">
-              Apply now
+            <button
+              onClick={handleApply}
+              disabled={isApplied || actionLoading}
+              className="flex-1 bg-green-600 hover:bg-green-700 disabled:bg-green-400 text-white py-3 rounded-full font-medium transition-colors text-sm sm:text-base"
+            >
+              {isApplied ? 'Applied ✓' : 'Apply now'}
+            </button>
+
+            <button
+              onClick={handleSave}
+              disabled={actionLoading || isApplied}
+              title={isSaved ? 'Unsave job' : 'Save job'}
+              className="w-12 h-12 flex items-center justify-center rounded-full border-2 border-gray-200 hover:border-green-400 transition-colors disabled:opacity-40"
+            >
+              {isSaved
+                ? <BookmarkCheck size={20} className="text-green-600" />
+                : <Bookmark size={20} className="text-gray-400" />
+              }
             </button>
           </div>
         </div>

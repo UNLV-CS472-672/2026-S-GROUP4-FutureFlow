@@ -102,15 +102,15 @@ export default function JobSearchPage() {
         </div>
 
         {/* Filters + sort */}
-        <div className="flex flex-col gap-4 mb-5">
+        <div className="flex flex-wrap items-center justify-between gap-3 mb-5">
           <div className="flex flex-wrap items-center gap-2">
             <span className="text-sm text-gray-400 mr-1">Type:</span>
 
             {[
               ['all', 'All'],
               ['Internship', 'Internship'],
-              ['Full time', 'Full-time'],
-              ['Part time', 'Part-time'],
+              ['Full time', 'Full time'],
+              ['Part time', 'Part time'],
             ].map(([val, label]) => (
               <button
                 key={val}
@@ -126,7 +126,7 @@ export default function JobSearchPage() {
             ))}
           </div>
 
-          <div className="flex items-center gap-2 self-start sm:self-end">
+          <div className="flex items-center gap-2">
             <span className="text-sm text-gray-400">Sort:</span>
 
             <select
@@ -201,17 +201,10 @@ export default function JobSearchPage() {
 
                   <div className="sm:text-right flex-shrink-0">
                     <p className="font-medium text-gray-800 text-sm">
-                      ${Number(job.pay).toLocaleString()}/hr
+                      ${Number(job.pay).toLocaleString()}
                     </p>
                   </div>
                 </div>
-
-                <div className="text-right flex-shrink-0">
-                  <p className="font-medium text-gray-800 text-sm">
-                    ${Number(job.pay).toLocaleString()}
-                  </p>
-                </div>
-
               </div>
             ))
           )}
