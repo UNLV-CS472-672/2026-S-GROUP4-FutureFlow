@@ -132,10 +132,12 @@ export default function DashboardPage() {
           <MapPin size={12} className="shrink-0" />
           <span className="truncate">{job.job_location ?? 'Location not specified'}</span>
         </div>
+
         <div className="flex items-center gap-1.5">
           <Briefcase size={12} className="shrink-0" />
           <span>{job.job_type}</span>
         </div>
+
         <div className="flex items-center gap-1.5">
           <DollarSign size={12} className="shrink-0" />
           <span>${Number(job.pay).toLocaleString()}</span>
@@ -149,7 +151,11 @@ export default function DashboardPage() {
   );
 
   const CarouselNav = ({
-    page, total, onPrev, onNext, onDot,
+    page,
+    total,
+    onPrev,
+    onNext,
+    onDot,
   }: {
     page: number;
     total: number;
@@ -169,6 +175,7 @@ export default function DashboardPage() {
           />
         ))}
       </div>
+
       <button
         onClick={onPrev}
         disabled={page === 0}
@@ -176,6 +183,7 @@ export default function DashboardPage() {
       >
         <ChevronLeft size={16} />
       </button>
+
       <button
         onClick={onNext}
         disabled={page === total - 1}
@@ -214,8 +222,19 @@ export default function DashboardPage() {
 
             {/* PROGRESS RING */}
             <div className="relative w-40 h-40 sm:w-48 sm:h-48 lg:w-56 lg:h-56 my-3">
-              <svg className="w-40 h-40 sm:w-48 sm:h-48 lg:w-56 lg:h-56 -rotate-90" viewBox="0 0 224 224">
-                <circle cx="112" cy="112" r="85" stroke="#f0f0f0" strokeWidth="16" fill="none" />
+              <svg
+                className="w-40 h-40 sm:w-48 sm:h-48 lg:w-56 lg:h-56 -rotate-90"
+                viewBox="0 0 224 224"
+              >
+                <circle
+                  cx="112"
+                  cy="112"
+                  r="85"
+                  stroke="#f0f0f0"
+                  strokeWidth="16"
+                  fill="none"
+                />
+
                 <circle
                   cx="112" cy="112" r="85"
                   stroke="#1D9E75" strokeWidth="16" fill="none"
@@ -225,14 +244,20 @@ export default function DashboardPage() {
                 />
               </svg>
               <div className="absolute inset-0 flex flex-col items-center justify-center">
-                <span className="text-3xl sm:text-4xl font-semibold">{progress}%</span>
-                <span className="text-[10px] sm:text-xs text-gray-500 uppercase tracking-wide">Complete</span>
+                <span className="text-3xl sm:text-4xl font-semibold">
+                  {progress}%
+                </span>
+                <span className="text-[10px] sm:text-xs text-gray-500 uppercase tracking-wide">
+                  Complete
+                </span>
               </div>
             </div>
 
             <div className="space-y-0.5">
               <p className="text-xs text-gray-500">Current Degree</p>
-              <p className="text-sm font-medium text-gray-800">B.S. Computer Science</p>
+              <p className="text-sm font-medium text-gray-800">
+                B.S. Computer Science
+              </p>
             </div>
 
             <div className="grid grid-cols-3 gap-2 w-full mt-3">
@@ -242,8 +267,12 @@ export default function DashboardPage() {
                 { label: 'GPA',       value: '3.6' },
               ].map(stat => (
                 <div key={stat.label} className="bg-gray-100 rounded-md p-3">
-                  <p className="text-base sm:text-lg font-medium">{stat.value}</p>
-                  <p className="text-[10px] uppercase text-gray-500">{stat.label}</p>
+                  <p className="text-base sm:text-lg font-medium">
+                    {stat.value}
+                  </p>
+                  <p className="text-[10px] uppercase text-gray-500">
+                    {stat.label}
+                  </p>
                 </div>
               ))}
             </div>
@@ -260,7 +289,9 @@ export default function DashboardPage() {
                 key={item.label}
                 className={`flex items-center justify-center gap-2 border-2 border-dashed ${item.border} rounded-xl p-4 cursor-pointer hover:bg-gray-50 transition-colors`}
               >
-                <span className="text-sm font-medium text-gray-600 text-center">{item.label}</span>
+                <span className="text-sm font-medium text-gray-600 text-center">
+                  {item.label}
+                </span>
                 <input type="file" className="hidden" />
               </label>
             ))}
@@ -269,7 +300,9 @@ export default function DashboardPage() {
 
         {/* ── RIGHT COLUMN ── */}
         <div className="flex flex-col gap-5 bg-white rounded-3xl p-4 sm:p-6 shadow-md border border-gray-100">
-          <h2 className="text-xl sm:text-2xl font-bold text-gray-800 mb-1 sm:mb-3">Job Overview</h2>
+          <h2 className="text-xl sm:text-2xl font-bold text-gray-800 mb-1 sm:mb-3">
+            Job Overview
+          </h2>
 
           {/* Loading state */}
           {loading && (

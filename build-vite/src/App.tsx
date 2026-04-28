@@ -13,7 +13,7 @@ import JobDetailsPage from './pages/JobDetailsPage';
 import DegreeSearchPage from './pages/DegreeSearchPage';
 
 interface User {
-  email: string;
+  //email: string;
   name?: string;
   sub?: string;
 }
@@ -51,9 +51,9 @@ export const useAuth = () => {
 const DEV_MODE = import.meta.env.VITE_DEV_MODE === 'true';
 
 const DEV_USER: User = {
-  email: 'dev@futureflow.local',
+  //email: 'dev@futureflow.local',
   name: 'User',
-  sub: 'dev-sub-001',
+  //sub: 'dev-sub-001',
 };
 // ───────────────────────────────────────────────────────────────────────────────
 
@@ -108,8 +108,8 @@ function App() {
       const payload = JSON.parse(atob(data.id_token.split('.')[1]));
 
       const userData: User = {
-        email: payload.email,
-        name: payload.name,
+        //email: payload.email,
+        name: payload.given_name+' '+payload.family_name,
         sub: payload.sub,
       };
 
