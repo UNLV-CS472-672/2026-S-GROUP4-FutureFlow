@@ -39,6 +39,7 @@ async function getDbCredentials() {
   return cachedDbConfig;
 }
 
+
 export const handler = async (event) => {
   let connection;
 
@@ -48,11 +49,19 @@ export const handler = async (event) => {
         ? JSON.parse(event.body)
         : event.body || {};
 
-    const { userId, fileKey } = body;
+    const { fileKey } = body;
 
-    if (!userId || !fileKey) {
+    if (!fileKey) {
       return makeResponse(400, {
-        message: "userId and fileKey are required",
+        message: "fileKey is required",
+      });
+    }
+
+    const cognitoSub = event.requestContext?.authorizer?.jwt?.claims?.sub;
+
+    if (!cognitoSub) {
+      return makeResponse(401, {
+        message: "Unauthorized",
       });
     }
 
@@ -74,9 +83,9 @@ export const handler = async (event) => {
      `
       UPDATE user_info
       SET user_resume = ?
-      WHERE user_id = ?
+      WHERE cognito_sub = ?
       `,
-      [fileKey, userId]
+      [fileKey, cognitoSub]
     );
 
     if (result.affectedRows === 0) {
@@ -85,7 +94,7 @@ export const handler = async (event) => {
 
     return makeResponse(200, {
       message: "Key stored successfully",
-      userId,
+      cognitoSub,
       fileKey,
     });
   } catch (error) {
