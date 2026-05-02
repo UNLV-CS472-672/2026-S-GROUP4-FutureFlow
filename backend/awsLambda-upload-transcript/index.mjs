@@ -10,7 +10,10 @@ const BUCKET_NAME = process.env.UPLOAD_BUCKET_NAME;
 export const handler = async (event) => {
   try {
     //Look at the request body
-    const body = event.body ? JSON.parse(event.body) : {};
+    const body =
+    typeof event.body === "string"
+      ? JSON.parse(event.body)
+      : event.body || {};
     const { fileName, contentType } = body;
 
     //Input validation
@@ -56,9 +59,9 @@ function response(statusCode, body) {
   return {
     statusCode,
     headers: {
-      "Access-Control-Allow-Origin": "futureflow.me",
+      "Access-Control-Allow-Origin": "https://futureflow.me",
       "Content-Type": "application/json",
     },
     body: JSON.stringify(body),
   };
-}
+} 
