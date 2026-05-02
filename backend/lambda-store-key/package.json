@@ -1,0 +1,20 @@
+{
+  "name": "lambda-store-key",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "main": "index.mjs",
+  "scripts": {
+    "build": "esbuild index.mjs --bundle --platform=node --target=node20 --format=cjs --outfile=dist/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@aws-sdk/client-secrets-manager": "^3.1036.0",
+    "mysql2": "^3.22.2"
+  },
+  "devDependencies": {
+    "esbuild": "^0.28.0"
+  }
+}
