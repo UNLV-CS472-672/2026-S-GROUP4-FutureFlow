@@ -4,12 +4,11 @@ import { useAuth } from '../App';
 import { AuthHeader } from '../components/AuthHeader';
 import { User } from 'lucide-react';
 
-type SettingsTab = 'profile' | 'security' | 'accessibility' | 'documents';
+type SettingsTab = 'profile' | 'security' | 'documents';
 
 export default function SettingsPage() {
   const location = useLocation();
-  const { user, fontSize, setFontSize, profilePic, setProfilePic } = useAuth();
-  const [selectedTheme, setSelectedTheme] = useState<'light' | 'dark' >('light');
+  const { user, profilePic, setProfilePic } = useAuth();
   const { logout } = useAuth();
 
   // Active tab from navigation state or default
@@ -67,7 +66,7 @@ export default function SettingsPage() {
         {/* Left Sidebar */}
         <div className="w-full lg:w-64">
           <div className="bg-white rounded-3xl p-6 space-y-4 shadow-lg">
-            {['profile', 'security', 'accessibility', 'documents'].map((tab) => (
+            {['profile', 'security', 'documents'].map((tab) => (
               <button
                 key={tab}
                 onClick={() => setActiveTab(tab as SettingsTab)}
@@ -299,67 +298,6 @@ export default function SettingsPage() {
               </div>
             </div>
           )}
-
-        {/* ---------------- ACCESSIBILITY TAB ---------------- */}
-        {activeTab === 'accessibility' && (
-          <div className="space-y-10">
-            <h2 className="text-4xl font-semibold border-b pb-4">Accessibility</h2>
-
-            {/* Theme (clickable but non-functional) */}
-            <div>
-              <h3 className="text-2xl mb-4">Theme</h3>
-                <div className="flex gap-4">
-                  <button
-                    onClick={() => setSelectedTheme('light')} // only updates visual selection
-                    className={`px-8 py-3 rounded-full transition ${
-                      selectedTheme === 'light'
-                        ? 'bg-blue-700 text-white' // highlighted when selected
-                        : 'bg-gray-200 text-gray-800 border-2 border-gray-400' // unselected look
-                    }`}
-                  >
-                    Light Mode
-                  </button>
-                  <button
-                    onClick={() => setSelectedTheme('dark')} // only updates visual selection
-                    className={`px-8 py-3 rounded-full transition ${
-                      selectedTheme === 'dark'
-                        ? 'bg-blue-700 text-white' // highlighted when selected
-                        : 'bg-gray-200 text-gray-800 border-2 border-gray-400' // unselected look
-                    }`}
-                  >
-                    Dark Mode
-                  </button>
-                </div>
-            </div>
-
-            {/* Text Size */}
-            <div>
-              <h3 className="text-2xl mb-4">Text Size</h3>
-              <div className="flex gap-4">
-                <button
-                  onClick={() => setFontSize('small')}
-                  className={`px-8 py-3 rounded-full transition ${
-                    fontSize === 'small'
-                      ? 'bg-green-600 text-white'
-                      : 'bg-white border-2 border-green-600 text-green-600 hover:bg-green-50'
-                  }`}
-                >
-                  Smaller Font
-                </button>
-                <button
-                  onClick={() => setFontSize('large')}
-                  className={`px-8 py-3 rounded-full transition ${
-                    fontSize === 'large'
-                      ? 'bg-green-600 text-white'
-                      : 'bg-white border-2 border-green-600 text-green-600 hover:bg-green-50'
-                  }`}
-                >
-                  Bigger Font
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
 
           {/* ---------------- DOCUMENTS TAB ---------------- */}
           {activeTab === 'documents' && (
