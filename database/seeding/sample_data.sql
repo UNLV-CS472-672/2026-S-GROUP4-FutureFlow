@@ -16,13 +16,13 @@ INSERT INTO degree_info VALUES
 
 
 INSERT INTO job_info VALUES
-    (1, "Las Vegas", "ACME", 60000, "Data Scientist", "Full time",  NULL, NULL, NULL, NULL),
-    (2, "Las Vegas", "ACME", 50000, "Graphic Designer", "Full time",  NULL,NULL, NULL, NULL),
-    (3, "Las Vegas", "MSTS", 80000, "Security Officer", "Full time",  NULL, NULL, NULL, NULL),
-    (4, "Las Vegas", "MSTS", 45000, "Associate in Information Technology", "Part time",  NULL, NULL, NULL, NULL),
-    (5, "Livermore", "LLNL", 110000, "DevOps Engineer", "Full time",  NULL, NULL, NULL, NULL),
-    (6, "Livermore", "LLNL", 100000, "Nuclear Engineer", "Full time",  NULL, NULL, NULL, NULL),
-    (7, "North Las Vegas", "MSTS", 50000, "Pipefitter", "Full time", "5 years", NULL, NULL, NULL);
+    (101, "Las Vegas", "ACME", 60000, "Data Scientist", "Full time",  NULL, NULL, NULL, NULL),
+    (102, "Las Vegas", "ACME", 50000, "Graphic Designer", "Full time",  NULL,NULL, NULL, NULL),
+    (103, "Las Vegas", "MSTS", 80000, "Security Officer", "Full time",  NULL, NULL, NULL, NULL),
+    (104, "Las Vegas", "MSTS", 45000, "Associate in Information Technology", "Part time",  NULL, NULL, NULL, NULL),
+    (105, "Livermore", "LLNL", 110000, "DevOps Engineer", "Full time",  NULL, NULL, NULL, NULL),
+    (106, "Livermore", "LLNL", 100000, "Nuclear Engineer", "Full time",  NULL, NULL, NULL, NULL),
+    (107, "North Las Vegas", "MSTS", 50000, "Pipefitter", "Full time", "5 years", NULL, NULL, NULL);
 
 INSERT INTO career_info VALUES
     ("Plumbing",  NULL,"Trade school"),
