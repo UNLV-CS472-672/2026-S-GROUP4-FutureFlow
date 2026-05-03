@@ -69,6 +69,12 @@ export default function JobDetailPage() {
   const handleApply = async () => {
     if (!job || isApplied) return;
     setActionLoading(true);
+
+    // Open the external link if available
+    if (job.link) {
+      window.open(job.link, '_blank', 'noopener,noreferrer');
+    }
+
     try {
       const result = await updateJobStatus(job.job_id, 'apply');
       setIsApplied(true);
@@ -177,7 +183,7 @@ export default function JobDetailPage() {
               disabled={isApplied || actionLoading}
               className="flex-1 bg-green-600 hover:bg-green-700 disabled:bg-green-400 text-white py-3 rounded-full font-medium transition-colors text-sm sm:text-base"
             >
-              {isApplied ? 'Applied ✓' : 'Apply now'}
+              {isApplied ? 'Applied ✓' : job.link ? 'Apply now ↗' : 'Apply now'}
             </button>
 
             <button

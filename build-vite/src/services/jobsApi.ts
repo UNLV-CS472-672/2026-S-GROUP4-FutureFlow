@@ -8,6 +8,9 @@ export interface Job {
   job_type: string;
   pay: number;
   duration: string | null;
+  job_description: string | null;
+  link: string | null;
+  extracted_skills: string[] | null;
 }
 
 export async function fetchJobs(): Promise<Job[]> {
