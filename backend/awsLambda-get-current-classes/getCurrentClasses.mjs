@@ -18,6 +18,8 @@ pool = mariadbLib.createPool
   // {
   //   rejectUnauthorized: false
   // }
+
+    //credentials for testing on sample data
 });
 
 export const handler = async (event) => 
