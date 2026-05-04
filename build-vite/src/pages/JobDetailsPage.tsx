@@ -22,7 +22,7 @@ export default function JobDetailPage() {
   const job = jobs.find((j) => j.job_id === Number(id));
 
   // ── Token sent in Authorization header — Lambda extracts sub from it using the API Gateway──
-  const updateJobStatus = async (jobId: number, action: 'save' | 'unsave' | 'apply') => {
+  const updateJobStatus = async (jobId: number, action: 'save' | 'unsave' | 'apply' | 'unapply') => {
     const token = tokens?.idToken;
 
     if (!token) throw new Error('Not authenticated');
@@ -87,6 +87,21 @@ export default function JobDetailPage() {
       setActionLoading(false);
     }
   };
+
+  const handleUnapply = async () => {
+  if (!job || !isApplied) return;
+  setActionLoading(true);
+  try {
+    const result = await updateJobStatus(job.job_id, 'unapply');
+    setIsApplied(false);
+    localStorage.setItem('saved_jobs', JSON.stringify(result.saved_jobs));
+    localStorage.setItem('applied_jobs', JSON.stringify(result.applied_jobs));
+  } catch (e) {
+    console.error(e);
+  } finally {
+    setActionLoading(false);
+  }
+};
 
   if (loading) {
     return (
@@ -179,11 +194,15 @@ export default function JobDetailPage() {
 
           <div className="flex gap-3 mt-5 sm:mt-6 pt-5 sm:pt-6 border-t border-gray-100">
             <button
-              onClick={handleApply}
-              disabled={isApplied || actionLoading}
-              className="flex-1 bg-green-600 hover:bg-green-700 disabled:bg-green-400 text-white py-3 rounded-full font-medium transition-colors text-sm sm:text-base"
+              onClick={isApplied ? handleUnapply : handleApply}
+              disabled={actionLoading}
+              className={`flex-1 ${
+                isApplied
+                  ? 'bg-red-500 hover:bg-red-600'
+                  : 'bg-green-600 hover:bg-green-700'
+              } disabled:opacity-50 text-white py-3 rounded-full font-medium transition-colors text-sm sm:text-base`}
             >
-              {isApplied ? 'Applied ✓' : job.link ? 'Apply now ↗' : 'Apply now'}
+              {isApplied ? 'Withdraw Application' : 'Apply now'}
             </button>
 
             <button
@@ -199,6 +218,15 @@ export default function JobDetailPage() {
             </button>
           </div>
         </div>
+
+        {job.job_description && (
+          <div className="bg-white rounded-3xl p-5 sm:p-6 lg:p-8 shadow-lg mb-4">
+            <h3 className="text-2xl font-semibold text-gray-800 mb-3">Job Description</h3>
+            <p className="text-base sm:text-lg text-gray-600 leading-relaxed whitespace-pre-line">
+              {job.job_description}
+            </p>
+          </div>
+        )}
       </div>
     </div>
   );
