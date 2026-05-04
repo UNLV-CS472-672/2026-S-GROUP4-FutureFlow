@@ -4,71 +4,65 @@ import re
 INPUT_FILE = "jobs.ndjson"
 OUTPUT_FILE = "job_inserts.sql"
 
+SKILL_KEYWORDS = [
+    "ai", "machine learning", "data analysis", "data analytics", "sql",
+    "python", "java", "c++", "aws", "cloud", "saas",
+    "sales", "marketing", "digital marketing", "advertising",
+    "customer success", "account management", "client relations",
+    "business development", "strategy", "analytics",
+    "project management", "program management",
+    "leadership", "management", "negotiation",
+    "communication", "presentation",
+    "healthcare", "medical", "patient care",
+    "operations", "supply chain",
+    "finance", "accounting",
+    "cybersecurity", "networking",
+    "product management", "product strategy",
+    "engineering", "software development",
+    "agile", "scrum"
+]
+
 
 def escape_sql(value: str) -> str:
-    """Escape single quotes for SQL."""
     return value.replace("'", "''")
 
 
 def normalize_job_type(employment_type, title, description):
-    """Infer a normalized job type."""
     text = " ".join([
         employment_type or "",
         title or "",
         description or ""
     ]).lower()
 
-    if any(k in text for k in ["intern", "internship"]):
+    if "intern" in text:
         return "internship"
-
-    if any(k in text for k in ["contract", "contractor", "freelance"]):
+    if any(k in text for k in ["contract", "freelance"]):
         return "contract"
-
-    if any(k in text for k in ["part-time", "part time"]):
+    if "part time" in text or "part-time" in text:
         return "part-time"
-
-    if any(k in text for k in ["temporary", "temp"]):
+    if "temp" in text:
         return "temporary"
-
-    if any(k in text for k in ["full-time", "full time"]):
-        return "full-time"
-
-    # default assumption
     return "full-time"
 
 
 def extract_skills(description):
-    """
-    Basic keyword extraction.
-    (You can replace this later with a better system.)
-    """
+    """Match against predefined skill list."""
     if not description:
         return []
 
-    words = re.findall(r"\b[A-Za-z]{4,}\b", description.lower())
+    text = description.lower()
+    found = []
 
-    # remove very common filler words
-    stopwords = {
-        "this", "that", "with", "have", "from", "your",
-        "will", "their", "about", "which", "when",
-        "where", "been", "they", "them", "were"
-    }
+    # Match longer phrases first
+    for skill in sorted(SKILL_KEYWORDS, key=len, reverse=True):
+        pattern = r"\b" + re.escape(skill) + r"\b"
+        if re.search(pattern, text):
+            found.append(skill)
 
-    filtered = [w for w in words if w not in stopwords]
-
-    # dedupe while preserving order
-    seen = set()
-    result = []
-    for w in filtered:
-        if w not in seen:
-            seen.add(w)
-            result.append(w)
-
-    return result[:20]  # cap size
+    return found
 
 
 def format_value(val):
-    """Convert Python value into SQL-safe string."""
     if val is None or val == "":
         return "NULL"
     return f"'{escape_sql(str(val))}'"

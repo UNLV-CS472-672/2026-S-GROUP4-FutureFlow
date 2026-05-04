@@ -67,7 +67,7 @@ This position is not eligible for relocation assistance. Visit our PinFlex page 
 **Our Commitment To Inclusion**
 Pinterest is an equal opportunity employer and makes employment decisions on the basis of merit. We want to have the best qualified people in every job. All qualified applicants will receive consideration for employment without regard to race, color, ancestry, national origin, religion or religious creed, sex (including pregnancy, childbirth, or related medical conditions), sexual orientation, gender, gender identity, gender expression, age, marital status, status as a protected veteran, physical or mental disability, medical condition, genetic information or characteristics (or those of a family member) or any other consideration made unlawful by applicable federal, state or local laws. We also consider qualified applicants regardless of criminal histories, consistent with legal requirements. If you require a medical or religious accommodation during the job application process, please complete this form for support.',
 'https://www.linkedin.com/jobs/view/lead-client-partner-tech-at-pinterest-4405893654',
-'["about", "pinterest", "millions", "people", "around", "world", "come", "platform", "find", "creative", "ideas", "dream", "possibilities", "plan", "memories"]'
+'["leadership", "marketing", "medical", "sales", "saas", "ai"]'
 ),
 (
 2,
@@ -141,7 +141,7 @@ We provide a comprehensive benefits package, including competitive salary, medic
   
 Associated benefit information can be viewed here.',
 'https://www.linkedin.com/jobs/view/technical-supervisor-laboratory-at-mary-bridge-children-s-hospital-4403258714',
-'["join", "team", "that", "shares", "your", "calling", "multicare", "more", "than", "just", "title", "part", "built", "trust", "cares"]'
+'["leadership", "management", "operations", "medical"]'
 ),
 (
 3,
@@ -202,7 +202,7 @@ Application Question(s):
 
 Work Location: In person',
 'http://www.indeed.com/job/cannabis-product-consultant-cashier-d749e857441d4b1f',
-'["overview", "seeking", "knowledgeable", "passionate", "marijuana", "budtender", "join", "team", "cashier", "will", "play", "crucial", "role", "providing", "exceptional"]'
+'["communication", "operations", "sales"]'
 ),
 (
 4,
@@ -281,7 +281,7 @@ employees support hundreds of thousands of independent agents who serve the need
   
 *Integrity, LLC is an Equal Opportunity employer. All qualified applicants will receive consideration for employment without regard to race, color, religion, sex, gender identity, national origin, disability, veteran status, or any other characteristic protected by federal, state, or local law. In addition, Integrity, LLC will provide reasonable accommodations for qualified individuals with disabilities.*',
 'https://www.linkedin.com/jobs/view/indirect-procurement-sourcing-specialist-at-integrity-4405899852',
-'["summary", "seeking", "procurement", "specialist", "support", "strategic", "sourcing", "goods", "services", "integrity", "this", "role", "will", "help", "optimize"]'
+'["cybersecurity", "supply chain", "advertising", "negotiation", "management", "marketing", "analytics", "finance"]'
 ),
 (
 5,
@@ -337,7 +337,7 @@ Education / Experience Requirements
 
 ***Amphenol RF is an equal opportunity organization. We recruit, employ, train, compensate, and promote without regard to race, religion, color, national origin, age, gender, sexual orientation, gender identity, marital status, disability, protected veteran status, or any other basis protected by applicable federal, state or local law.***',
 'https://www.linkedin.com/jobs/view/product-manager-at-amphenol-rf-4399757922',
-'["join", "team", "amphenol", "world", "largest", "manufacturer", "coaxial", "interconnect", "products", "radio", "frequency", "microwave", "data", "transmission", "applications"]'
+'["project management", "program management", "communication", "engineering", "management", "marketing", "medical", "sales"]'
 ),
 (
 6,
@@ -409,7 +409,7 @@ Call to Action
   
 If you''re a talented data engineer passionate about financial data and ready to make an impact, we encourage you to apply today.',
 'https://www.linkedin.com/jobs/view/senior-data-engineer-confidential-at-the-phoenix-group-4405015679',
-'["description", "senior", "data", "engineer", "company", "overview", "client", "leading", "financial", "services", "firm", "specializes", "providing", "innovative", "investment"]'
+'["leadership", "management", "operations", "python", "sql"]'
 ),
 (
 7,
@@ -476,7 +476,7 @@ Benefits
 - 401k retirement plan
 - Referral bonus',
 'https://www.linkedin.com/jobs/view/travel-general-radiology-ultrasound-technologist-$2-785-per-week-at-cross-country-allied-4405898860',
-'["cross", "country", "allied", "seeking", "travel", "ultrasound", "technologist", "aberdeen", "washington", "description", "requirements", "specialty", "discipline", "health", "professional"]'
+'["healthcare", "medical"]'
 ),
 (
 8,
@@ -545,7 +545,7 @@ Knowledge of current federal and state laws and regulations that apply to Freest
 **Additional Information**
 Intuitive Health is an equal opportunity employer. We do not discriminate on the basis of race, color, religion, sex, national origin, age, disability, veteran status, or any other protected characteristic under applicable law. All employment decisions are based on qualifications, merit, and business needs.',
 'https://www.linkedin.com/jobs/view/registered-nurse-prn-at-intuitive-health-4405053625',
-'["company", "description", "about", "intuitive", "health", "founded", "pioneered", "combined", "emergency", "room", "urgent", "care", "model", "setting", "standard"]'
+'["communication", "patient care", "management", "healthcare", "operations"]'
 ),
 (
 9,
@@ -714,7 +714,7 @@ Hand Tasks
 - Frequently activities require use of one or both hands
 - Shaping pizza dough requires frequent and forceful use of forearms and wrists',
 'https://www.linkedin.com/jobs/view/assistant-manager-04862-200-s-spring-garden-st-at-domino-s-4403261830',
-'["description", "born", "lead", "being", "domino", "assistant", "manager", "more", "than", "just", "career", "about", "take", "your", "ambitions"]'
+'["communication", "management", "marketing"]'
 ),
 (
 10,
@@ -768,7 +768,7 @@ This role is primarily sedentary and involves prolonged periods of sitting and e
   
 **Salary Range- $54,732- $71,163**',
 'https://www.linkedin.com/jobs/view/senior-administrative-assistant-at-american-society-for-microbiology-4405048593',
-'["overview", "senior", "administrative", "assistant", "provides", "high", "level", "budgeting", "financial", "support", "chief", "strategy", "officer", "four", "departments"]'
+'["project management", "communication", "presentation", "leadership", "management", "operations", "marketing", "strategy"]'
 ),
 (
 11,
@@ -811,7 +811,7 @@ Ability to Relocate:
 
 Work Location: In person',
 'http://www.indeed.com/job/medical-front-office-full-time-aafa5e00eb30230f',
-'["medical", "front", "office", "full", "time", "position", "busy", "surgical", "practice", "duties", "include", "check", "rooming", "patients", "phones"]'
+'["communication", "medical"]'
 ),
 (
 12,
@@ -916,7 +916,7 @@ Minimum to Midpoint Range (Hourly): $83.95 to $104.94
   
 Stanford Medicine Children''s Health (SMCH) strongly values diversity and is committed to equal opportunity and non-discrimination in all of its policies and practices, including the area of employment. Accordingly, SMCH does not discriminate against any person on the basis of race, color, sex, sexual orientation or gender identity, religion, age, national or ethnic origin, political beliefs, marital status, medical condition, genetic information, veteran status, or disability, or the perception of any of the above. People of all genders, members of all racial and ethnic groups, people with disabilities, and veterans are encouraged to apply. Qualified applicants with criminal convictions will be considered after an individualized assessment of the conviction and the job requirements, and where applicable, in compliance with the San Francisco Fair Chance Ordinance.',
 'https://www.linkedin.com/jobs/view/assistant-patient-care-manager-neonatal-icu-at-stanford-medicine-children-s-health-4405882995',
-'["company", "description", "lucile", "packard", "children", "hospital", "stanford", "know", "world", "renowned", "care", "begins", "with", "class", "caring"]'
+'["communication", "patient care", "leadership", "management", "healthcare", "operations", "medical"]'
 ),
 (
 13,
@@ -968,7 +968,7 @@ Benefits
 - Holiday Pay
 - Weekly pay',
 'https://www.linkedin.com/jobs/view/travel-nuclear-medicine-technologist-$2-560-per-week-at-healthcare-support-4405897947',
-'["healthcare", "support", "seeking", "travel", "nuclear", "medicine", "technologist", "fort", "worth", "texas", "description", "requirements", "specialty", "discipline", "allied"]'
+'["healthcare", "operations", "medical"]'
 ),
 (
 14,
@@ -1018,7 +1018,7 @@ Option to work one weekend day and have one weekday off.
 
 Salary $120,000+ based on experience. Potential for team bonus.',
 'https://apply.workable.com/j/348C089F64',
-'["looking", "make", "positive", "impact", "your", "community", "believe", "nursing", "more", "than", "tasks", "that", "about", "connection", "compassion"]'
+'["communication", "management"]'
 ),
 (
 15,
@@ -1103,7 +1103,7 @@ Monday-Friday
 - Health/Dental/Vision Insurance
 - Public Service Loan Forgiveness (PSLF) and more!',
 'https://www.linkedin.com/jobs/view/crime-analyst-ii-at-california-department-of-justice-4406119289',
-'["description", "duties", "under", "supervision", "supervisor", "business", "compliance", "unit", "certificate", "eligibility", "team", "crime", "analyst", "responsible", "analyzing"]'
+'["management"]'
 ),
 (
 16,
@@ -1179,7 +1179,7 @@ Posted by the FREE value-added recruitment advertising agency
   
 jeid-ff6d758cdc56a545b7c5af2961f64fdf',
 'https://www.linkedin.com/jobs/view/assistant-teacher-float-at-inside-higher-ed-4405895723',
-'["poughkeepsie", "department", "wimpfheimer", "nursery", "school", "family", "auxiliary", "vassar", "college", "deeply", "committed", "providing", "equal", "employment", "opportunities"]'
+'["communication", "advertising", "negotiation", "management"]'
 ),
 (
 17,
@@ -1283,7 +1283,7 @@ USA, VA, Herndon - 153,600.00 - 207,800.00 USD annually
   
 Job ID: A10401277',
 'https://www.linkedin.com/jobs/view/sr-advanced-compute-specialist-sa-national-security-national-security-specialists-solutions-architecture-team-at-amazon-web-services-aws-4405886948',
-'["description", "amazon", "services", "seeking", "advanced", "computing", "solutions", "architect", "support", "intelligence", "community", "department", "energy", "broader", "federal"]'
+'["communication", "engineering", "networking", "analytics", "medical", "cloud", "agile", "aws", "ai"]'
 ),
 (
 18,
@@ -1332,7 +1332,7 @@ The N.D.E Inspector in the pipe shop area is responsible for identifying surface
 
 Applicant must the open to any shift. 1st shift 6am-2pm, 2nd shift2pm-10pm, 3rd shift 10pm-6am',
 'https://www.linkedin.com/jobs/view/nde-inspector-turbine-at-precision-castparts-4406103253',
-'["position", "summary", "inspector", "pipe", "shop", "area", "responsible", "identifying", "surface", "subsurface", "defects", "conducting", "destructive", "testing", "ensure"]'
+'["operations"]'
 ),
 (
 19,
@@ -1393,7 +1393,7 @@ The estimated salary range is meant to reflect an anticipated salary range for t
 ***Tsubaki is an Equal Opportunity Employer - Minorities/Females/Veterans/Disability***
 **PM21**',
 'https://www.linkedin.com/jobs/view/machine-operator-sdky-3rd-shift-at-u-s-tsubaki-automotive-4405066277',
-'["description", "tsubaki", "name", "synonymous", "with", "excellence", "quality", "dependability", "customer", "service", "leading", "manufacturer", "supplier", "power", "transmission"]'
+'["communication", "operations"]'
 ),
 (
 20,
@@ -1468,7 +1468,7 @@ USA, WA, Seattle - 151,200.00 - 204,600.00 USD annually
   
 Job ID: A3186544',
 'https://www.linkedin.com/jobs/view/sr-systems-engineer-iii-prime-air-at-amazon-4405885966',
-'["description", "here", "amazon", "embrace", "differences", "committed", "furthering", "culture", "diversity", "inclusion", "teams", "within", "organization", "items", "customers"]'
+'["software development", "program management", "communication", "engineering", "leadership", "management", "strategy", "medical", "agile"]'
 ),
 (
 21,
@@ -1530,7 +1530,7 @@ This role supports projects for the U.S. Department of War, historically associa
 - Bachelor’s degree in Civil Engineering, Construction Management, or related field is preferred
 - Manufacturing plant construction or large campus style project is preferred',
 'https://www.linkedin.com/jobs/view/senior-scheduler-department-of-war-at-apsi-construction-management-4406104466',
-'["title", "senior", "scheduler", "location", "arizona", "determined", "project", "name", "various", "projects", "client", "department", "range", "year", "anticipated"]'
+'["communication", "engineering", "management"]'
 ),
 (
 22,
@@ -1613,7 +1613,7 @@ Some minimal travel may be required between sites of operations.
 **Additional Information**
 Intuitive Health is an equal opportunity employer. We do not discriminate on the basis of race, color, religion, sex, national origin, age, disability, veteran status, or any other protected characteristic under applicable law. All employment decisions are based on qualifications, merit, and business needs.',
 'https://www.linkedin.com/jobs/view/radiology-ct-technologist-prn-at-intuitive-health-4405066324',
-'["company", "description", "about", "intuitive", "health", "founded", "pioneered", "combined", "emergency", "room", "urgent", "care", "model", "setting", "standard"]'
+'["communication", "patient care", "healthcare", "operations", "medical"]'
 ),
 (
 23,
@@ -1667,7 +1667,7 @@ About Binding Minds
 
 Binding Minds: Healthcare Staffing firm where your talent is valued, and your career has a true partner. Binding Minds Healthcare is a certified disability-owned healthcare staffing firm built on trust, transparency, and respect. We deeply value the dedication it takes to serve as a healthcare professional, and we believe you deserve a staffing partner who supports you with the same level of commitment. Our recruitment team connects healthcare specialists to Travel, Local, Temp, and PRN opportunities nationwide through a candidate-first approach. We focus on accurate submissions, open communication, and a seamless onboarding process, ensuring our candidates receive a transparent, efficient, and rewarding experience from start to finish.',
 'https://www.linkedin.com/jobs/view/travel-nurse-rn-or-operating-room-$2-403-per-week-at-binding-minds-inc-certified-disability-owned-business-enterprise-4406106418',
-'["binding", "minds", "seeking", "travel", "nurse", "operating", "room", "nursing", "atlanta", "georgia", "description", "requirements", "specialty", "discipline", "start"]'
+'["communication", "healthcare"]'
 ),
 (
 24,
@@ -1710,7 +1710,7 @@ This position requires a current Top Secret / Sensitive Compartmented Informatio
 
 **At V2X, we are deeply committed to both equal employment opportunity, including protection for Veterans and individuals with disabilities, and fostering an inclusive and diverse workplace. We ensure all individuals are treated with fairness, respect, and dignity, recognizing the strength that comes from a workforce rich in diverse experiences, perspectives, and skills. This commitment, aligned with our core Vision and Values of Integrity, Respect, and Responsibility, allows us to leverage differences, encourage innovation, and expand our success in the global marketplace, ultimately enabling us to best serve our clients.**',
 'https://careers.gov2x.com/jobs/40715/job?iis=Job+Board&iisn=Indeed&indeed-apply-token=73a2d2b2a8d6d5c0a62696875eaebd669103652d3f0c2cd5445d3e66b1592b0f&utm_source=indeed_integration',
-'["overview", "working", "across", "globe", "builds", "smart", "solutions", "designed", "integrate", "physical", "digital", "infrastructure", "from", "base", "battlefield"]'
+'["project management", "program management", "engineering", "management", "operations"]'
 ),
 (
 25,
@@ -1780,7 +1780,7 @@ Full-time
 **Job Posting**
 Apr 23, 2026',
 'https://www.linkedin.com/jobs/view/eh-generalist-teacher-grade-k-4-at-dallas-independent-school-district-4405060454',
-'["provide", "students", "with", "appropriate", "learning", "activities", "experience", "designed", "help", "them", "fulfill", "their", "potential", "intellectual", "emotional"]'
+'["management"]'
 ),
 (
 26,
@@ -1884,7 +1884,7 @@ We are an Equal Opportunity Employer! All qualified applicants will receive cons
   
 Disclaimer: The salary, other compensation, and benefits information is accurate as of the date of this posting. The Company reserves the right to modify this information at any time, subject to applicable law.',
 'https://www.linkedin.com/jobs/view/maintenance-leader-at-veolia-north-america-4405891811',
-'["company", "description", "veolia", "north", "america", "ranked", "environmental", "united", "states", "three", "consecutive", "years", "country", "largest", "private"]'
+'["leadership", "management", "healthcare", "operations"]'
 ),
 (
 27,
@@ -1964,7 +1964,7 @@ Qualifications:
 - This position performs additional duties as assigned to support the park’s overall success.
 - Reports to the Retail Supervisor.',
 'https://www.linkedin.com/jobs/view/retail-lead-at-six-flags-entertainment-corporation-4406101548',
-'["overview", "retail", "lead", "type", "seasonal", "rate", "category", "merchandise", "location", "flags", "fiesta", "texas", "antonio", "what", "provide"]'
+'["communication", "presentation", "leadership", "operations", "sales"]'
 ),
 (
 28,
@@ -2008,7 +2008,7 @@ Perform regular tool inspections in line with maintenance schedules, diagnosing 
 **Additional Information**
 All your information will be kept confidential according to EEO guidelines.',
 'https://www.linkedin.com/jobs/view/mold-repair-tooling-at-gerresheimer-4403272642',
-'["company", "description", "gerresheimer", "innovative", "system", "solution", "provider", "global", "partner", "pharma", "biotech", "cosmetics", "industries", "offers", "comprehensive"]'
+'["medical"]'
 ),
 (
 29,
@@ -2111,7 +2111,7 @@ If you receive outreach from someone claiming to work for VSCO, please verify th
   
 Note that VSCO will never ask for financial information or sensitive personal information during the application process.',
 'https://www.linkedin.com/jobs/view/accounting-manager-at-vsco%C2%AE-4405046861',
-'["about", "vsco", "pronounced", "platform", "that", "equips", "photographers", "with", "tools", "community", "exposure", "they", "need", "expand", "creatively"]'
+'["communication", "management", "operations", "accounting", "medical", "finance", "saas", "ai"]'
 ),
 (
 30,
@@ -2222,7 +2222,7 @@ Ability to Commute:
 
 Work Location: In person',
 'http://www.indeed.com/job/staff-accountant-d4b2f892d0783491',
-'["staff", "accountant", "critical", "member", "central", "coated", "products", "america", "accounting", "team", "reporting", "directly", "controller", "this", "role"]'
+'["data analysis", "communication", "supply chain", "leadership", "management", "operations", "accounting", "finance"]'
 ),
 (
 31,
@@ -2278,7 +2278,7 @@ Cirtec Medical Corporation considers everyone for employment and hires qualified
   
 We work to create a culture that is built on innovation, respect, transparency and communication, and hope you take pride in being a member of our team. It is Cirtec’s goal to create an enjoyable work environment and to keep the company a great place to work. We offer a wide range of benefits, resources, and competitive compensation plans designed to support you at every stage of your career and life. Our benefits include training and career development, healthcare and well-being programs including medical, dental, vision, wellness and occupational health programs, Paid Time Off and 401(k) retirement savings with a company match.',
 'https://www.linkedin.com/jobs/view/ic-design-engineer-ii-at-cirtec-medical-4405889954',
-'["description", "about", "over", "three", "decades", "cirtec", "medical", "been", "leading", "outsourcing", "partner", "complex", "devices", "specialize", "providing"]'
+'["software development", "communication", "engineering", "management", "healthcare", "medical", "python"]'
 ),
 (
 32,
@@ -2365,7 +2365,7 @@ Benefits
 - Medical benefits
 - Referral bonus',
 'https://www.linkedin.com/jobs/view/travel-registered-respiratory-therapist-$1-122-per-week-at-skyline-med-staff-llc-4406112182',
-'["skyline", "staff", "allied", "seeking", "travel", "respiratory", "therapist", "arlington", "texas", "description", "requirements", "specialty", "discipline", "health", "professional"]'
+'["patient care", "healthcare", "medical"]'
 ),
 (
 33,
@@ -2450,7 +2450,7 @@ Full-time
 **Brand**
 Doubletree by Hilton',
 'https://www.linkedin.com/jobs/view/food-and-beverage-manager-doubletree-by-hilton-crystal-city-at-doubletree-by-hilton-washington-dc-crystal-city-4406111476',
-'["beautiful", "doubletree", "hilton", "crystal", "city", "seeking", "food", "beverage", "manager", "join", "their", "team", "this", "room", "property"]'
+'["leadership", "marketing", "sales"]'
 ),
 (
 34,
@@ -2477,7 +2477,7 @@ Job Responsibilities
 **Minimum Qualifications**
 Doctorate or professional degree in dentistry from an accredited college or university and three (3) years of experience at the lower-level Dentist 3 (HCP132) or positionequivalent and current Georgia license to practice dentistry.',
 'https://www.linkedin.com/jobs/view/dentist-spv-at-georgia-department-of-public-health-4405067179',
-'["description", "under", "general", "supervision", "will", "provide", "comprehensive", "dental", "services", "public", "health", "facility", "include", "limited", "diagnosis"]'
+NULL
 ),
 (
 35,
@@ -2537,7 +2537,7 @@ We Are Proud To Share That Our Associates Have Made Us One Of Fortune''s Best Co
 - #93 in Best Workplaces for Millennials™ 2023
 - #34 in Fortune Best Workplaces for Women™ 2022',
 'https://www.linkedin.com/jobs/view/6am-brand-rep-at-altar-d-state-4406111570',
-'["promenade", "saucon", "valley", "center", "stand", "good", "rapidly", "growing", "women", "fashion", "company", "with", "unique", "brands", "locations"]'
+'["management", "sales"]'
 ),
 (
 36,
@@ -2594,7 +2594,7 @@ Expected hours: 2 – 5 per week
 
 Work Location: On the road',
 'http://www.indeed.com/job/freelancer-videographer-photographer-capture-only-riverside-rancho-cucamonga-a533b514e430c84d',
-'["about", "strattz", "based", "marketing", "agency", "delivering", "paid", "media", "social", "creative", "production", "local", "businesses", "partner", "with"]'
+'["marketing"]'
 ),
 (
 37,
@@ -2671,7 +2671,7 @@ Application Question(s):
 
 Work Location: In person',
 'http://www.indeed.com/job/retail-store-manager-12fcadabe7c4ee04',
-'["rooted", "designed", "portland", "bridge", "burn", "classic", "functional", "distinctively", "northwest", "apparel", "each", "season", "look", "natural", "beauty"]'
+'["communication", "management", "operations", "marketing", "sales"]'
 ),
 (
 38,
@@ -2753,7 +2753,7 @@ The Company will consider qualified applicants with arrest and conviction record
 **Massachusetts Candidates Only:**
 It is unlawful in Massachusetts to require or administer a lie detector test as a condition of employment or continued employment. An employer who violates this law shall be subject to criminal penalties and civil liability.',
 'https://www.linkedin.com/jobs/view/enterprise-solution-architect-at-akkodis-group-nordics-4406110167',
-'["akkodis", "seeking", "experienced", "enterprise", "solution", "architect", "contract", "position", "with", "client", "seattle", "successful", "candidate", "will", "support"]'
+'["communication", "engineering", "management", "accounting", "medical", "finance"]'
 ),
 (
 39,
@@ -2792,5 +2792,5 @@ Benefits
 - Weekly pay
 - Medical benefits',
 'https://www.linkedin.com/jobs/view/travel-physical-therapist-$2-666-per-week-at-lancesoft-inc-4406101861',
-'["lancesoft", "seeking", "travel", "physical", "therapist", "lubbock", "texas", "description", "requirements", "specialty", "discipline", "therapy", "start", "date", "duration"]'
+'["healthcare", "medical"]'
 );
